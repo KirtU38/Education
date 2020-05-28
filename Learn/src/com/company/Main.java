@@ -1,19 +1,13 @@
 package com.company;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class Main {
+
     public static void main(String[] args) {
 
-        DateFormat dateFormat = new SimpleDateFormat("d/M/y EEEE");
-        Calendar calendar = Calendar.getInstance();
+        String index1 = "add   3   first 7 monkeys";
+        String index2 = "add   -3   first  7 monkeys";
+        String index3 = "add 3rd party";
 
-        for (int i = 1994, j = 0; i < 2021; i++, j++) {
-            calendar.set(i, Calendar.DECEMBER, 12);
-            System.out.println(j + " - " + dateFormat.format(calendar.getTime()));
-        }
     }
 }
 
