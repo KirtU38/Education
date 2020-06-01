@@ -19,7 +19,10 @@ public class TodoListManager {
 
     public void addItem(int index, String item) {
 
-        if (index-START >= 0 && index - START <= list.size()) {                       // Добавление по индексу
+        if (index == -1) {
+            list.add(item);
+            System.out.printf("Добавлена задача - %d. %s%n", list.size() - 1 + START, item);
+        } else if (index - START >= 0 && index - START <= list.size()) {                       // Добавление по индексу
             list.add(index - START, item);
             System.out.printf("Добавлена задача - %d. %s%n", index, item);
         } else if (index - START > list.size()) {
@@ -31,12 +34,6 @@ public class TodoListManager {
             System.out.println("Индекс слишком мал, будет добавлена задача на 1 место");
             System.out.printf("Добавлена задача - %d. %s%n", START, item);
         }
-    }
-
-    public void addItem(String item) {
-
-        list.add(item);
-        System.out.printf("Добавлена задача - %d. %s%n", list.size() - 1 + START, item);
     }
 
     public void editItem(int index, String item) {

@@ -10,46 +10,35 @@ public class Main {
 
             TodoListManager manager = new TodoListManager();
             Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Введите команду: ");
+
             String input = scanner.nextLine().trim();
-            String item = "";
-            int index = 0;
-            boolean actionWithIndex = input.matches("\\w+\\s+-?\\d+\\s?.*");
-            boolean hasItem = input.matches("\\w+\\s+-?\\d*\\s*\\w+.*");
-            boolean matchesPrint = input.matches("list.*") || input.matches("ls.*");
-            boolean matchesAddition = input.matches("add\\s+\\d*[a-z]\\d*.*");
-            boolean matchesIndexAddition = input.matches("add\\s+-?\\d+\\s+.*");
-            boolean matchesDelete = input.matches("delete\\s+-?\\d+\\s*");
-            boolean matchesDeleteNoIndex = input.matches("delete");
-            boolean matchesEdit = input.matches("edit\\s+-?\\d+\\s+.*");
-            boolean matchesEditNoIndex = input.matches("edit");
-            boolean matchesEditNoItem = input.matches("edit\\s+-?\\d+");
-            boolean matchesBlank = input.equals("");
+            String[] words = input.split("\\s+", 3);
+            String command = words[0];
+            int index = -1;
 
-            if (hasItem) {
-                item = input.replaceAll("\\w+\\s+-?\\d*\\s*(\\w+.*)", "$1").trim();
+            if(input.matches("")){
+                System.out.println("Введено пустое поле");
+                continue;
             }
-            if (actionWithIndex) {
-                index = Integer.parseInt(input.replaceAll("\\w+\\s+(-?\\d+)\\s?.*", "$1").trim());
-            }
-
-            if (matchesPrint) {
+            if (input.equals("list") || input.equals("ls")) {
                 manager.printItems();
-            } else if (matchesAddition) {
-                manager.addItem(item);
-            } else if (matchesIndexAddition) {
+                continue;
+            }
+
+            if (words[1].matches("-?\\d+")) {
+                index = Integer.parseInt(words[1]);
+            }
+
+            if (command.equals("add")) {
+                String item = (index == -1) ? input.split("\\s+", 2)[1] : words[2];
                 manager.addItem(index, item);
-            } else if (matchesDelete) {
+            } else if (command.equals("delete")) {
                 manager.deleteItem(index);
-            } else if (matchesEdit) {
+            } else if (command.equals("edit")) {
+                String item = words[2];
                 manager.editItem(index, item);
-            } else if (matchesDeleteNoIndex) {
-                System.out.println("Выберите какой элемент удалить");
-            } else if (matchesEditNoIndex) {
-                System.out.println("Выберите какой элемент редактировать");
-            } else if (matchesEditNoItem) {
-                System.out.println("Введите имя для редактируемого элемента");
-            } else if (matchesBlank) {
-                System.out.println("Введите что-нибудь");
             } else {
                 System.out.println("Неизвестная команда");
             }

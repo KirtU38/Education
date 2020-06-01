@@ -1,3 +1,0 @@
-# IdeaProjects-New
-
-фывфывфыв
