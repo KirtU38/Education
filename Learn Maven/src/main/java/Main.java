@@ -1,73 +1,62 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 import java.io.*;
-import java.nio.file.Files;
-import java.util.Scanner;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Main {
 
-    private static Scanner scanner;
+    private static final String imagesFolder = "images/";
+    private static final String siteName = "https://lenta.ru/";
 
     public static void main(String[] args) {
-
         try {
 
-            scanner = new Scanner(System.in);
+            Document doc = Jsoup.connect(siteName).get();
+            Elements elements = doc.select("img");
 
-            System.out.print("Какую папку скопировать?: ");
-            String originalFolderInput = scanner.nextLine();
-            System.out.print("Куда скопировать папку?: ");
-            String copyFolderInput = scanner.nextLine();
+            elements.forEach(e -> {
+                try {
 
-            File originalFolder = new File(originalFolderInput);
-            File copyFolder = new File(copyFolderInput + "/" + originalFolder.getName());
+                    String imgUrl = e.attr("abs:src");
+                    String[] urlSplit = imgUrl.split("/");
+                    String imgName = urlSplit[urlSplit.length - 1];
 
-            copyFolder.mkdir();
 
-            makeCopy(originalFolder, copyFolder);
+                    URL url = new URL(imgUrl);
+                    String destName = imagesFolder + imgName;
 
-            System.out.println("Папка успешно скопирована");
+                    InputStream inStream = url.openStream();
+                    OutputStream outStream = new FileOutputStream(destName);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+                    byte[] buffer = new byte[2048];
 
-    private static void makeCopy(File from, File to) {
-        try {
+                    int length;
 
-            File[] files = from.listFiles();
+                    while ((length = inStream.read(buffer)) != -1) { // .read() возвращает кол-во прочитанных байтов
+                        outStream.write(buffer, 0, length);
+                        System.out.println(length);
+                    }
+                    inStream.close();
+                    outStream.close();
 
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    expandAndCopyFolder(file, to);
-                    continue;
+                    System.out.println("Фото: " + imgName + " - успешно сохранено");
+
+
+
+
+
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                } catch (MalformedURLException malformedURLException) {
+                    malformedURLException.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
                 }
-                copyFiles(file, to);
-            }
-
+            });
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void expandAndCopyFolder(File originalFolder, File copyFolder) {
-        try {
-
-            File newFolder = new File(copyFolder + "/" + originalFolder.getName());
-            newFolder.mkdir();
-            makeCopy(originalFolder, newFolder);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void copyFiles(File from, File to) {
-        try {
-
-            File copy = new File(to + "/" + from.getName());
-            Files.copy(from.toPath(), copy.toPath());
-
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }
