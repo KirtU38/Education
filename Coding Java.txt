@@ -1984,7 +1984,7 @@ alive.walk();
 
 Анонимные Классы:
 
-Отсортируем коллекцию работников по зарплате
+Отсортируем коллекцию работников по зарплате, Comparator пример:
 
 
 Collections.sort(staff,                                          - staff это переменная обьекта "работник"
@@ -2922,6 +2922,35 @@ file.mkdir()  - создать папку по названию file(прямо 
 
 
 
+Копирование файлов, скачиваение файлов, FileUtils
+
+ЛУЧШЕЕ ДЛЯ РАБОТЫ С ФАЙЛАМИ И ПАПКАМИ, ЛУЧШИЙ КЛАСС ДЛЯ КОПИРОВАНИЯ, ЛУЧШИЙ СПОСОБ СКОПИРОВАТЬ
+
+
+Супер офигенная библиотека для простой работы с файлами.
+
+Добавить библиотеку apache.commons.io:
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.7</version>
+        </dependency>
+
+
+
+
+Скопировать папку целиком:
+
+File dir = new File("/users/egor/downloads/Архив");
+File copyDir = new File("/users/egor/desktop/Архив");
+
+FileUtils.copyDirectory(dir, copyDir);
+
+
+
+
+Скачать файл из URL:
 
 
 
@@ -2931,10 +2960,33 @@ file.mkdir()  - создать папку по названию file(прямо 
 
 
 
-Копирование с помощью Files, file, копирование папок и файлов, копирование файлов
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Копирование с помощью Files, file, копирование папок и файлов, копирование файлов, скопировать папку
 
 
 Смотри в проектах с названием "(TESTER) Класс Files, Копирование папок и файлов"
+
+
 
 
 
@@ -2943,6 +2995,95 @@ file.mkdir()  - создать папку по названию file(прямо 
 Files.copy(from.toPath(), copy.toPath()); - оба параметра должны быть класса Path и полным путем типа 
 
 "/users/egor/DOWNLOAND/Привет.mp3" и второй параметр тоже "/users/egor/DESKTOP/Привет.mp3", плюс все папки на пути к копии должны существовать или быть созданы через mkdir()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HTML Парсинг, html parsing, html parse, парсинг html, JSOUP
+
+Для начала нудно скачать библиотеку Jsoup или добавить зависимость в Maven:
+
+<dependency>
+    <groupId>org.jsoup</groupId>
+    <artifactId>jsoup</artifactId>
+    <version>1.13.1</version>
+</dependency>
+
+
+
+
+Через // указан вывод метода
+
+
+
+Document doc = Jsoup.connect("https://lenta.ru/").get(); - подключаемся к сайту
+
+Elements elements = doc.select("img");
+// ARRAY[]: <img alt="" class="g-picture" style="max-width: 300px; width: 300px; height: 200px;" src="https://icdn.lenta.ru/images/2020/08/02/13/20200802132326488/top7_d0e496f7c490cf3ff91da9af7c61bc87.jpg" width="300" height="200">
+
+String imgUrl = elements.get(0).attr("abs:src"); - для примеру используем лишь 0 элемент в массиве, на деле можно перебрать все через forEach()
+// https://icdn.lenta.ru/images/2020/08/02/13/20200802132326488/top7_d0e496f7c490cf3ff91da9af7c61bc87.jpg
+
+String[] urlSplit = imgUrl.split("/");
+// [https:, , icdn.lenta.ru, images, 2020, 08, 02, 13, 20200802132326488, top7_d0e496f7c490cf3ff91da9af7c61bc87.jpg]
+
+String imgName = urlSplit[urlSplit.length - 1];
+// top7_d0e496f7c490cf3ff91da9af7c61bc87.jpg
+
+URL url = new URL(imgUrl);             - переменная типа URL для InputStream'а, чтобы использовать url.openStream()
+
+String destName = "images/" + imgName; - эту переменную используем как имя файла когда будет его сохранять
+
+
+
+
 
 
 
@@ -3187,19 +3328,6 @@ try {                                                                           
 
 
 .flush() - сбрасывает буфер, из-за структуры памяти, записывать в нее инфу по-символьно это очень накладно и не оптимизированно, поэтому нужно записать сразу множество инфы и потом за один раз все записать, потому что процесс "передачи" имеет "накладные расходы"
-
-
-
-
-
-
-
-
-
-
-
-
-HTML Парсинг, html parsing, html parse, парсинг html
 
 
 
