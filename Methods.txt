@@ -1,0 +1,37 @@
+Карта методов, основные методы:
+Переменная test
+
+.toString():
+[]            = Arrays.toString(test) -> "[Hello Worlds]"
+Buffer        = test.toString()
+List          = test.toString()
+
+.split():
+String        = test.split(" ")
+
+.matches():
+String        = test.matches("\\d")
+
+.replace():
+String        = test.replace(" ","")
+
+.replaceAll():
+String        = test.replaceAll(" ", "")
+
+Arrays.asList(?):
+String
+int
+[]
+Buffer
+
+.indexOf("str")
+String        = test.indexOf()
+Buffer        = test.indexOf()
+[]            = Arrays.asList(test).indexOf()
+list          = test.indexOf()
+
+.atIndex(i)
+String        = test.charAt(i)
+Buffer        = test.charAt(i)
+[]            = test[i]
+List          = test.get(i)
