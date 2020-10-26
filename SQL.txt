@@ -1,4 +1,4 @@
-Установка
+Установка с Докера
 
 Скачать Docker - это приложение которое запускает "контейнеры"
 
@@ -49,7 +49,68 @@ docker exec -i skill-sql mysql -ptest --default-character-set=utf8 skillbox < /u
 
 docker exec -it skill-sql mysql -ptest - подключаемся к mysql серверу
 
-show tables; - показать таблицы
+show tables in skillbox; - показать таблицы
+
+USE skillbox; - начать использовать таблицу
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Нормальная установка
+
+Скачать MySQL с MySQL community server в интернете
+
+Скачать установочник
+
+Установить
+
+Поставить пароль(обычно прям в установочнике)
+
+В Настойках системы в самом Маке найти новый значок MySQL и нажать там Start MySQL SERVER
+
+echo 'export PATH=/usr/local/mysql/bin:$PATH' >> ~/.bash_profile    - открыть терминал и ввести там эту строчку, это добавит знание об sql в bash_profile
+
+mysql -u root -p    - потом ввести это и ввести пароль, это подключит нас к серверу, а дальше всё просто(если сервер не запущен то ниче не будет)
+
+create database name; - создаем пустую базу данных и делаем с ней что хотим
+
+
+
+
+create database name;
+
+drop database name;
+
+show databases;
+
+use database name -> source d:/usr.sql   - загрузить в базу данных дамп
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -512,7 +573,7 @@ FROM Students                                                                   
 ORDER BY older_count;                                                              - узнать сколько преподователей старше каждого студента в списке
 
 
-
+SELECT name,price,(SELECT avg(price) from Courses) from Courses;                   - показать имя и цену на курс, а потом показать среднюю цену курса вообще
 
 
 
@@ -810,21 +871,50 @@ ORDER BY COUNT(*) DESC LIMIT 5;                    - вывести то, ско
 
 
 К уроку 3
-1) SELECT * FROM Students ORDER BY registration_date;
-2) SELECT * FROM Courses WHERE students_count > 4 AND duration > 10\G
-3) (SELECT name FROM Students ORDER BY age LIMIT 3) 
+1) SELECT * FROM Students 
+ORDER BY registration_date;
+2) SELECT * FROM Courses 
+WHERE students_count > 4 AND duration > 10;
+3) (SELECT name FROM Students 
+ORDER BY age 
+LIMIT 3) 
 UNION ALL 
-(SELECT name FROM Teachers ORDER BY age DESC LIMIT 3) 
-UNION ALL (SELECT name FROM Courses ORDER BY duration DESC LIMIT 3);
+(SELECT name FROM Teachers 
+ORDER BY age DESC 
+LIMIT 3) 
+UNION ALL 
+(SELECT name FROM Courses 
+ORDER BY duration DESC 
+LIMIT 3);
 
 
 К уроку 4
-1) SELECT AVG(age) as average_age FROM Teachers WHERE salary > 10000;
-2) SELECT SUM(price) as price_of_all_courses FROM Courses;
-3) SELECT SUM(duration * 60) as duration_of_all_courses FROM Courses;
+1) SELECT AVG(age) AS average_age FROM Teachers 
+WHERE salary > 10000;
+2) SELECT SUM(price) AS price_of_all_courses FROM Courses;
+3) SELECT SUM(duration * 60) AS duration_of_all_courses FROM Courses;
 
 
 
+
+К уроку 5
+1) SELECT Students.name, SUM(duration) AS "Duration of all courses" FROM Courses 
+JOIN Subscriptions ON Courses.id = Subscriptions.course_id
+JOIN Students ON Subscriptions.student_id = Students.id 
+GROUP BY Students.id 
+ORDER BY Students.name;
+
+2) SELECT Teachers.name, AVG(Students.age) AS "Average students age" FROM Students 
+JOIN Subscriptions ON Subscriptions.student_id = Students.id
+JOIN Courses ON Courses.id = Subscriptions.course_id 
+JOIN Teachers on Teachers.id = Courses.teacher_id 
+GROUP BY Teachers.id 
+ORDER BY Teachers.name;
+
+3) SELECT Courses.type, AVG(Teachers.salary) as 'Average salary' FROM Teachers
+JOIN Courses ON Courses.teacher_id = Teachers.id
+GROUP BY Courses.type
+ORDER BY AVG(Teachers.salary);
 
 
 

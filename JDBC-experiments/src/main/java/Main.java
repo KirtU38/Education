@@ -4,17 +4,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String url = "jdbc:mysql://localhost:3306/skillbox?useSSL=false&serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost:3306/skillbox";
         String user = "root";
         String pass = "password";
 
         try {
             Connection connection = DriverManager.getConnection(url, user, pass);
-
             Statement statement = connection.createStatement();
-
-            statement.execute("update students set name = 'Фуриков Эрнст' where id = 1;");
-
             ResultSet resultSet = statement.executeQuery("select course_name,\n" +
                     "ABS((COUNT(*)/ TIMESTAMPDIFF(MONTH ,'2018-12-31', min(subscription_date)))) as 'sales_per_month'\n" +
                     "from purchaselist\n" +
@@ -23,11 +19,13 @@ public class Main {
                     "order by sales_per_month DESC, course_name;\n");
 
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("course_name") + " - " + resultSet.getString("sales_per_month"));
+                String course_name = resultSet.getString("course_name");
+                String sales_per_month = resultSet.getString("sales_per_month");
+
+                System.out.println(course_name + " - " + sales_per_month);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
 }
