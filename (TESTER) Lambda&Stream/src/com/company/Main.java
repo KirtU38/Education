@@ -16,7 +16,7 @@ public class Main {
         people.add(new People("Clark", 45));
 
         people.stream().
-                filter((p) -> p.getAge() > 4).
+                filter(p -> p.getAge() > 4 && p.getAge() < 40).
                 sorted((o1, o2) -> {
                     return o1.getName().compareTo(o2.getName());
                 }).

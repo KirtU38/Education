@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String url = "jdbc:mysql://localhost:3306/skillbox?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost:3306/skillbox?useSSL=false&serverTimezone=UTC";
         String user = "root";
         String pass = "password";
 
@@ -20,6 +20,7 @@ public class Main {
             ResultSet resultSet = statement.executeQuery("select course_name,\n" +
                     "ABS((COUNT(*)/ TIMESTAMPDIFF(MONTH ,max(subscription_date), min(subscription_date)))) as 'sales_per_month'\n" +
                     "from purchaselist\n" +
+                    "where year(subscription_date) = 2018\n" +
                     "group by course_name\n" +
                     "order by sales_per_month DESC, course_name;");
 
