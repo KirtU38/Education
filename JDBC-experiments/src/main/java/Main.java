@@ -8,9 +8,7 @@ public class Main {
         String user = "root";
         String pass = "password";
 
-
         try {
-
             Connection connection = DriverManager.getConnection(url, user, pass);
 
             Statement statement = connection.createStatement();
@@ -18,17 +16,15 @@ public class Main {
             statement.execute("update students set name = 'Фуриков Эрнст' where id = 1;");
 
             ResultSet resultSet = statement.executeQuery("select course_name,\n" +
-                    "ABS((COUNT(*)/ TIMESTAMPDIFF(MONTH ,max(subscription_date), min(subscription_date)))) as 'sales_per_month'\n" +
+                    "ABS((COUNT(*)/ TIMESTAMPDIFF(MONTH ,'2018-12-31', min(subscription_date)))) as 'sales_per_month'\n" +
                     "from purchaselist\n" +
                     "where year(subscription_date) = 2018\n" +
                     "group by course_name\n" +
-                    "order by sales_per_month DESC, course_name;");
+                    "order by sales_per_month DESC, course_name;\n");
 
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("course_name") + " - " + resultSet.getString("sales_per_month"));
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
