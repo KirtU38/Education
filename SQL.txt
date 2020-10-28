@@ -84,9 +84,19 @@ USE skillbox; - начать использовать таблицу
 
 В Настойках системы в самом Маке найти новый значок MySQL и нажать там Start MySQL SERVER
 
-echo 'export PATH=/usr/local/mysql/bin:$PATH' >> ~/.bash_profile    - открыть терминал и ввести там эту строчку, это добавит знание об sql в bash_profile
+ПЕРВЫЙ СПОСОБ ПОДКЛЮЧЕНИЯ К MYSQL
+1) echo 'export PATH=/usr/local/mysql/bin:$PATH' >> ~/.bash_profile    - открыть терминал и ввести там эту строчку, это добавит знание об sql в bash_profile
 
 mysql -u root -p    - потом ввести это и ввести пароль, это подключит нас к серверу, а дальше всё просто(если сервер не запущен то ниче не будет)
+
+
+ВТОРОЙ СПОСОБ
+2) /usr/local/mysql/bin/mysql -u root -ppassword     - это подключит нас к sql, где сначала идет просто путь до запуска mysql, потом юзер и пароль
+
+
+
+
+
 
 create database name; - создаем пустую базу данных и делаем с ней что хотим
 
@@ -836,6 +846,17 @@ ORDER BY COUNT(*) DESC LIMIT 5;                    - вывести то, ско
 
 
 
+
+
+
+
+Работа с датами, дата, DATE
+
+TIMEDIFF(date1, date2) - показать разницу между 2 датами в секундах
+
+TIMESTAMPDIFF(MONTH, date1, date2) - показать разницу двух дат в месяцах(можно также DAY, YEAR, HOUR и тд)
+
+MONTH(date) - извлечь из строки типа DATE месяц
 
 
 

@@ -4170,12 +4170,23 @@ JUnit - библиотека для тестирования (в любом яз
 
 
 
+Настройка Intellij IDEA
 
 
 
 Release version 5 not supported
 
-Preferences -> Build, Execution, Deployment -> Compiler -> Java Compiler -> Pre-module bytecode version
+Preferences -> Build, Execution, Deployment -> Compiler -> Java Compiler -> Pre-module bytecode version -> 11
+
+Project structure -> Modules -> Sources, Dependencies   - ставим везде нужную версию Java
+
+
+
+
+
+Добавить поддержку Maven или другого Framework в проект
+
+Нажать на корневую папку проекта -> Add dramework support
 
 
 
@@ -4444,6 +4455,125 @@ Parse таблиц, парсинг таблиц, парс таблиц, парс
 Или
 
 "Текст с разделителями-запятыми.csv" - Comma separated
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JDBC
+
+JDBC - Java DataBase Connecivity
+
+Это драйвер(библиотека в Java) который позволяет подключиться к любой базе данных(MySQL, PostGre и тд)
+То есть для работы с разными базами данных используются одни и те же методы
+Каждый вендор разных баз сам создает свой драйвер в JDBC
+По сути может только делать запрос или обновлять/удалять/добавлять строки
+Главный минус это неудобство работы с Обьекатми, именно для этого и существует Hibernate
+
+
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.22</version>
+        </dependency>
+
+
+
+
+
+
+
+
+
+            String url = "jdbc:mysql://localhost:3306/skillbox";
+            String user = "root";
+            String pass = "password";
+
+            Connection connection = DriverManager.getConnection(url, user, pass);   - подключение к базе данных по урлу юзеру и паролю
+            Statement statement = connection.createStatement();                     - через эту переменную мы делает запросы к БД
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Students")  - здесь по сути результатом является таблица по вашему SQL запросу
+
+            while (resultSet.next()) {                                              - здесь выводим результат нашего запроса с resultSet'а
+                String name = resultSet.getString("name");
+                System.out.println(name);
+            }
+
+
+
+Остальное в проекте (TESTER) JDBC
+
+
+JPA - Java Persistence API - это стандарт, который ввел JCP(Java Commubity) после успеха Hibernate, и которому должны соответствовать все ORM системы
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

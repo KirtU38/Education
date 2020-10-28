@@ -1,0 +1,320 @@
+ORM система - Object Realtional Mapping
+
+Создана для того чтобы удобно было создавать обьекты в Java привязанные к relational(!) базе данных
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.2.Final</version>
+        </dependency>
+
+
+
+
+
+
+
+
+
+
+
+
+
+Создание и инициализация
+
+
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure("hibernate.cfg.xml").build();
+        Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+        
+        Session session = sessionFactory.openSession();                                    - с этой переменной работаем
+
+        // Здесь много кода
+
+        sessionFactory.close();       // В конце обязательно закрыть соединение
+
+
+
+Желательно создавать это все только 1 раз в коде
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Добавление строк, add row
+
+        Session session = sessionFactory.openSession();       - это обязательно всегда, открытие и закрытие сессии(коннекта к БД)
+        Transaction transaction = session.beginTransaction(); - отк коммит
+
+        Course course = new Course();                         - создаем обьект который привязан к нашей БД и Hibernate аннотациями и через cfg файл
+        course.setName("Лучший курс");                      
+        course.setType(CourseType.DESIGN);                    - ОБЯЗАТЕЛЬНЫ для добавления: Not null, Primary key(если он не автоинкремент), Foreign keys(все которые есть в таблице)
+        course.setTeacherId(1);
+
+        session.save(course);                                 - сохраняем в БД обьект course
+
+        transaction.commit();                                 - закрываем коммит
+        sessionFactory.close();                               - закрываем коннект
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Удаление строк, delete row
+
+        Session session = sessionFactory.openSession();       - это обязательно всегда, открытие и закрытие сессии(коннекта к БД)
+        Transaction transaction = session.beginTransaction(); - транзакция это как коммит в Git, накапливает много и потом коммитится в БД, если 1 строка с ошибкой то все отмена
+
+
+
+        Course course = session.get(Course.class, 50);        - выбираем строку по ID в таблице Courses(к которой привязан класс Course)
+        session.delete(course);                               - удалаем где аргумент - это обьекта нашей строки
+
+
+        
+        transaction.commit();                                 - закрываем транзакцию
+        sessionFactory.close();                               - закрываем коннект
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Обновления строк, update rows
+
+        Session session = sessionFactory.openSession();       - это обязательно всегда, открытие и закрытие сессии(коннекта к БД)
+        Transaction transaction = session.beginTransaction(); - отк коммит
+
+        Course course = session.get(Course.class, 51);        - выбираем строку по ID в таблице Courses(к которой привязан класс Course)
+        course.setName("Обновленный курс");
+        course.setType(CourseType.PROGRAMMING);               - обновляем нужные данные
+        course.setTeacherId(3);
+
+        session.save(course);                                 - сохраняем в БД обьект course
+
+        transaction.commit();                                 - закрываем коммит
+        sessionFactory.close();                               - закрываем коннект
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Связь ManyToOne, Many To One
+
+Проект (TESTER) Hibernate или (10.8 в Скиллбокс)
+
+В классе Courses есть вторичный ключ на учителя, который ведет этот курс teacher_id, и чтобы нам получить ИМЯ(name) учителя, который ведет нужный нам курс нужно сделат вот так:
+
+
+
+
+
+        Course course = session.get(Course.class, 1);             - выбрать нужынй курс
+        int teacherId = course.getTeacherId();                    - найти id учителя который ведет этот курс и присвоить ему переменную
+
+        Teacher teacher = session.get(Teacher.class, teacherId);  - выбрать учителя используя переменную id 
+        System.out.println(teacher.getName());                    - и получить его имя из обьекта teacher
+
+
+
+
+
+А теперь тоже самое только чеерез свзяь ManyToOne(много курсов на одного учителя)
+
+Сначала редактировать поле teacher_id в классе Course:
+
+
+
+    @Column(name = "teacher_id")         ---->      @ManyToOne(cascade = CascadeType.ALL)
+    private int teacherId;                          private Teacher teacher;              - переменная именно класса Teacher 
+
+
+И теперь можно получить тот же результат гораздо удобнее:
+
+
+
+        Course course = session.get(Course.class, 1);           - также выбираем нужный курс
+        String teacher_name = course.getTeacher().getName();    - выбираем курс, учителя этого курса, его имя и присваиваем переменную
+        System.out.println(teacher_name);                       - получаем имя
+
+
+
+То есть теперь наш метод getTeacher имеет доступ не только к ID а ко всему классу Teacher и его переменным, что позволяет работать с БД в Java как с обычными Java-обьектами и классами, которые зависят друг от друга и с ними очень удобно работать
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
