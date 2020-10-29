@@ -19,7 +19,8 @@ public class Main {
         Transaction transaction = session.beginTransaction();
 
         Subscription subscription = session.get(Subscription.class, new SubscriptionPK(1,2));
-        subscription.getStudent_id()
+        System.out.println(subscription.getStudent().getName());
+        System.out.println(subscription.getCourse().getName());
 
         transaction.commit();
         sessionFactory.close();

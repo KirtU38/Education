@@ -3,35 +3,26 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@IdClass(SubscriptionPK.class)
 @Table(name = "Subscriptions")
 public class Subscription implements Serializable {
 
-    @Id
-    private int student_id;
-
-    @Id
-    private int course_id;
+    @EmbeddedId
+    private SubscriptionPK subscriptionPK;
 
     @Column(name = "subscription_date")
     private Timestamp subscriptionDate;
 
+    @MapsId("studentId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
 
-    public int getStudent_id() {
-        return student_id;
-    }
+    @MapsId("courseId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    private Course course;
 
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
-    }
 
-    public int getCourse_id() {
-        return course_id;
-    }
-
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
-    }
 
     public Timestamp getSubscriptionDate() {
         return subscriptionDate;
@@ -39,5 +30,29 @@ public class Subscription implements Serializable {
 
     public void setSubscriptionDate(Timestamp subscriptionDate) {
         this.subscriptionDate = subscriptionDate;
+    }
+
+    public SubscriptionPK getSubscriptionPK() {
+        return subscriptionPK;
+    }
+
+    public void setSubscriptionPK(SubscriptionPK subscriptionPK) {
+        this.subscriptionPK = subscriptionPK;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }
