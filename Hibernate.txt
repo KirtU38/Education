@@ -241,7 +241,18 @@ ORM система - Object Realtional Mapping
 
 Связь ManyToOne, Many To One
 
+@ManyToOne(cascade = CascadeType.ALL)               - основная аннотация
+
 Проект (TESTER) Hibernate или (10.8 в Скиллбокс)
+
+
+
+
+
+
+
+
+
 
 В классе Courses есть вторичный ключ на учителя, который ведет этот курс teacher_id, и чтобы нам получить ИМЯ(name) учителя, который ведет нужный нам курс нужно сделат вот так:
 

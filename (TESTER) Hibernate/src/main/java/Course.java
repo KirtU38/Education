@@ -23,17 +23,6 @@ public class Course {
     @ManyToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
 
-   /* @Column(name = "teacher_id")
-    private int teacherId;*/
-
-   /* public int getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }*/
-
     public Teacher getTeacher() {
         return teacher;
     }
