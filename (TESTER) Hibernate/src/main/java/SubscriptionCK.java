@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class SubscriptionPK implements Serializable {
+public class SubscriptionCK implements Serializable {
 
     @Column(name = "student_id")
-    protected int studentId;
+    private int studentId;
 
     @Column(name = "course_id")
-    protected int courseId;
+    private int courseId;
 
-    public SubscriptionPK() {}
+    public SubscriptionCK() {}
 
-    public SubscriptionPK(int studentId, int courseId) {
+    public SubscriptionCK(int studentId, int courseId) {
         this.studentId = studentId;
         this.courseId = courseId;
     }
@@ -23,7 +23,7 @@ public class SubscriptionPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SubscriptionPK that = (SubscriptionPK) o;
+        SubscriptionCK that = (SubscriptionCK) o;
         return studentId == that.studentId &&
                 courseId == that.courseId;
     }

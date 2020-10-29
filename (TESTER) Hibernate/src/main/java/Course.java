@@ -1,6 +1,7 @@
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Courses")
@@ -22,6 +23,13 @@ public class Course {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Subscriptions",
+            joinColumns = {@JoinColumn(name = "course_id")},
+            inverseJoinColumns = {@JoinColumn(name = "student_id")})
+    private List<Student> students;
+
 
     public Teacher getTeacher() {
         return teacher;
@@ -107,4 +115,13 @@ public class Course {
     public void setPricePerHour(int pricePerHour) {
         this.pricePerHour = pricePerHour;
     }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
 }
+

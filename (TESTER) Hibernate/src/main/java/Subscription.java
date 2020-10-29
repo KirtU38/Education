@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 public class Subscription implements Serializable {
 
     @EmbeddedId
-    private SubscriptionPK subscriptionPK;
+    private SubscriptionCK subscriptionCK;
 
     @Column(name = "subscription_date")
     private Timestamp subscriptionDate;
@@ -22,7 +22,11 @@ public class Subscription implements Serializable {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 
+    public Subscription() {}
 
+    public Subscription(SubscriptionCK subscriptionCK) {
+        this.subscriptionCK = subscriptionCK;
+    }
 
     public Timestamp getSubscriptionDate() {
         return subscriptionDate;
@@ -32,12 +36,12 @@ public class Subscription implements Serializable {
         this.subscriptionDate = subscriptionDate;
     }
 
-    public SubscriptionPK getSubscriptionPK() {
-        return subscriptionPK;
+    public SubscriptionCK getSubscriptionPK() {
+        return subscriptionCK;
     }
 
-    public void setSubscriptionPK(SubscriptionPK subscriptionPK) {
-        this.subscriptionPK = subscriptionPK;
+    public void setSubscriptionPK(SubscriptionCK subscriptionCK) {
+        this.subscriptionCK = subscriptionCK;
     }
 
     public Student getStudent() {

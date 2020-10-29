@@ -18,9 +18,18 @@ public class Main {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        Subscription subscription = session.get(Subscription.class, new SubscriptionPK(1,2));
-        System.out.println(subscription.getStudent().getName());
-        System.out.println(subscription.getCourse().getName());
+
+
+        PurchaseListCK purchaseListCK = new PurchaseListCK("Абакумов Казимир", "Figma");
+        PurchaseList purchaseList = session.get(PurchaseList.class, purchaseListCK);
+        System.out.println(purchaseList.getPurchaseListCK().getCourseName() + " - "
+                + purchaseList.getPurchaseListCK().getStudentName() + " - " + purchaseList.getPrice() + " рублей");
+
+
+        SubscriptionCK subscriptionCK = new SubscriptionCK(2, 11);
+        Subscription subscription = session.get(Subscription.class, subscriptionCK);
+        System.out.println(subscription.getStudent().getName() + " - " + subscription.getCourse().getName());
+
 
         transaction.commit();
         sessionFactory.close();
