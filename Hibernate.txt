@@ -329,3 +329,334 @@ ORM система - Object Realtional Mapping
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+HQL и Query bulider
+
+
+
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure("hibernate.cfg.xml").build();
+        Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+
+        Session session = sessionFactory.openSession();                                - до сюда это стандартный код
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Course> query = builder.createQuery(Course.class);
+        Root<Course> root = query.from(Course.class);
+        query.select(root);
+        List<Course> resultList = session.createQuery(query).getResultList();          - создание обычного List из Courses обьектов
+
+        for(Course course : resultList){                                               - распечатать название каждого курса в табллице
+            System.out.println(course.getName());
+        }
+
+        sessionFactory.close();                                                        - закрытие 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HQL
+
+Можно писать запросы и вот так
+
+        String hql = "From " + Course.class.getSimpleName() + " where price > 120000"; - создаем запрос
+        List<Course> resultList = session.createQuery(hql).getResultList();            - создаем лист
+
+        for(Course course : resultList){                                               - распечатываем
+            System.out.println(course.getName() + " - " + course.getPrice());
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ленивая загрузка, lazy loading
+
+@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+НЕ ЛЕНИВАЯ загрузка(то есть загружается все сразу) - это FetchType.EAGER
+
+
+
+Когда мы создаем   List<Course> resultList = session.createQuery(query).getResultList(); - то при запросе к примеру вывести только имя курса, он запрашивает ещё и всех Teacher, потому что у нас таблица Course привязана к Teacher   @ManyToOne(cascade = CascadeType.ALL)  - а это сильно потребляет ресурсы, и загрузка длительная
+                                                      private Teacher teacher;
+
+
+Чтобы этого избежать нужно в аннотации @ManyToOne(или в другой связке) указать тип fetch = FetchType.LAZY
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Teacher teacher;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Where, Order By и Limit в Hibernate
+
+
+        query.select(root).where(builder.greaterThan(root.<Integer>get("price"), 100000)) - здесь WHERE(всегда обращаемся сначала к builder)
+        .orderBy(builder.desc(root.get("price")));                                        - здесь ORDER BY
+
+        List<Course> resultList = session.createQuery(query).setMaxResults(5).getResultList();  - setMaxResults() это тоже самое что LIMIT
+
+
+
+
+
+
+
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure("hibernate.cfg.xml").build();
+        Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();           - то как выглядит весь код
+
+        Session session = sessionFactory.openSession();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Course> query = builder.createQuery(Course.class);
+        Root<Course> root = query.from(Course.class);
+        query.select(root).where(builder.greaterThan(root.<Integer>get("price"), 100000))
+        .orderBy(builder.desc(root.get("price")));
+        List<Course> resultList = session.createQuery(query).setMaxResults(5).getResultList();
+
+        for(Course course : resultList){
+            System.out.println(course.getName() + " - " + course.getPrice());
+        }
+
+
+        sessionFactory.close();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Составной ключ, Composite key
+
+Класс составного ключа обязан:
+
+быть public;
+иметь публичный конструктор по умолчанию;
+реализовывать собственные equals(), hashCode(), публичные геттеры и сеттеры;
+имплементировать Serializable.
+
+
+
+
+@Embeddable
+public class PurchaseListCK implements Serializable {       - пример класса ключа
+
+    @Column(name = "student_name")
+    private String studentName;
+
+    @Column(name = "course_name")
+    private String courseName;
+
+    public PurchaseListCK() {}
+
+
+
+
+
+
+@Entity
+@Table(name = "PurchaseList")                               - и вот сам класс 
+public class PurchaseList implements Serializable {
+
+    @EmbeddedId
+    private PurchaseListCK purchaseListCK;
+
+    private  int price;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Heap, корзина, разное
+
+Чтобы сделать значение, способным принимать NULL, пишем вот так:
+
+    @Column(name = "students_count", nullable = true)  - вот нуллабл
+    private Integer studentsCount;                     - чтобы принять NULL значение переменная должна быть референсом а не примитивом, поэтому пишем Integer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
