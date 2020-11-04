@@ -1,11 +1,10 @@
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "Courses")
-public class Course {
+public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,13 +15,18 @@ public class Course {
     private int duration;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "enum")
+    @Column(columnDefinition = "enum", nullable = false)
     private CourseType type;
 
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Teacher teacher;
+    @Column(name = "students_count", nullable = true)
+    private Integer studentsCount;
+
+    private int price;
+
+    @Column(name = "price_per_hour")
+    private float pricePerHour;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Subscriptions",
@@ -30,6 +34,8 @@ public class Course {
             inverseJoinColumns = {@JoinColumn(name = "student_id")})
     private List<Student> students;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Teacher teacher;
 
     public Teacher getTeacher() {
         return teacher;
@@ -43,13 +49,6 @@ public class Course {
         this.pricePerHour = pricePerHour;
     }
 
-    @Column(name = "students_count")
-    private int studentCount;
-
-    private int price;
-
-    @Column(name = "price_per_hour")
-    private float pricePerHour;
 
 
     public int getId() {
@@ -92,12 +91,12 @@ public class Course {
         this.description = description;
     }
 
-    public int getStudentCount() {
-        return studentCount;
+    public int getStudentsCount() {
+        return studentsCount;
     }
 
-    public void setStudentCount(int studentCount) {
-        this.studentCount = studentCount;
+    public void setStudentsCount(int studentsCount) {
+        this.studentsCount = studentsCount;
     }
 
     public int getPrice() {

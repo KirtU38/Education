@@ -4,21 +4,21 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Subscriptions")
-public class Subscription implements Serializable {
+public class Subscription {
 
     @EmbeddedId
     private SubscriptionCK subscriptionCK;
 
-    @Column(name = "subscription_date")
+    @Column(name = "subscription_date", nullable = false)
     private Timestamp subscriptionDate;
 
     @MapsId("studentId")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 
     @MapsId("courseId")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 

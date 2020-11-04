@@ -1,3 +1,9 @@
+
+                                                            !!!ВСЁ ЧТО НУЖНО В ПРОЕКТЕ "(TESTER) Hibernate"!!!
+
+
+
+
 ORM система - Object Realtional Mapping
 
 Создана для того чтобы удобно было создавать обьекты в Java привязанные к relational(!) базе данных

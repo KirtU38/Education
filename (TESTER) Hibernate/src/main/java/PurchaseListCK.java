@@ -1,6 +1,7 @@
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class PurchaseListCK implements Serializable {
@@ -33,4 +34,19 @@ public class PurchaseListCK implements Serializable {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PurchaseListCK that = (PurchaseListCK) o;
+        return Objects.equals(studentName, that.studentName) &&
+                Objects.equals(courseName, that.courseName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentName, courseName);
+    }
 }
+

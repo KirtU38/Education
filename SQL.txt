@@ -278,13 +278,118 @@ UPDATE Courses SET price = price*0.9 WHERE type = "PROGRAMMING"; - сделат�
 
 
 
-Таблицы:
+
+
+
+
+
+
+
+
+
+
+
+Create Table, Таблицы:
 
 CREATE TABLE PurchaseList(
-student_name VARCHAR(500),   - VARCHAR = String, 500 это ограничение кол-ва знаков
+student_name VARCHAR(500) AUTO_INCREMENT PRIMARY_KEY,   - VARCHAR = String, 500 это ограничение кол-ва знаков
 course_name VARCHAR(500), 
-price INT,                   - инт есть инт
+price INT,                  
 subscription_date DATETIME); - DATETIME тип переменной даты, очень удобно
+
+
+ИЛИ
+
+
+CREATE TABLE PurchaseList(
+student_name VARCHAR(500) AUTO_INCREMENT,   - VARCHAR = String, 500 это ограничение кол-ва знаков
+course_name VARCHAR(500), 
+price INT,                  
+subscription_date DATETIME
+PRIMARY_KEY (student_name));   - PRIMARY KEY в конце
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Создание Foreign Key
+
+
+CREATE TABLE Users(       - создаем таблицу юзеров с уник ID
+id int AUTO_INCREMENT,
+name VARCHAR(50),
+age INT,
+PRIMARY KEY (id)
+);
+
+
+
+
+CREATE TABLE Messages( - создаем таблицу их сообщений
+id INT AUTO_INCREMENT,
+message VARCHAR(500),
+user_id INT,           - это поле будет Foreign Key
+PRIMARY KEY (id),
+CONSTRAINT user_id     - здесь начинается привязка
+FOREIGN KEY(user_id)   - это поле с нынешней таблицы
+REFERENCES Users(id)   - привязать к полю другой таблицы
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

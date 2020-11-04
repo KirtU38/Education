@@ -1,9 +1,11 @@
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "Students")
-public class Student {
+public class Student implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +15,12 @@ public class Student {
 
     private int age;
 
-    @Column(name = "registration_date")
+    @Column(name = "registration_date", nullable = false)
     private java.sql.Timestamp registrationDate;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private List<Subscription> subscriptions;
 
     public int getId() {
         return id;
@@ -46,5 +52,13 @@ public class Student {
 
     public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }
