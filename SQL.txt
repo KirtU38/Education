@@ -17,25 +17,7 @@ docker exec -it skill-sql mysql -ptest     - подключиться занов
 SHOW TABLES IN skillbox;        - ввести название таблицы и проверить все ли загрузилось
 
 
-
 charset utf8;    - в терминале, если ????? вместо русских букв
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -84,6 +66,9 @@ USE skillbox; - начать использовать таблицу
 
 В Настойках системы в самом Маке найти новый значок MySQL и нажать там Start MySQL SERVER
 
+СРАЗУ КАК ПОДКЛЮЧИЛИСЬ, ВВЕСТИ:
+charset utf8;    - в терминале, если ????? вместо русских букв, нужно ввести именно вначале
+
 ПЕРВЫЙ СПОСОБ ПОДКЛЮЧЕНИЯ К MYSQL
 1) echo 'export PATH=/usr/local/mysql/bin:$PATH' >> ~/.bash_profile    - открыть терминал и ввести там эту строчку, это добавит знание об sql в bash_profile
 
@@ -94,11 +79,6 @@ mysql -u root -p    - потом ввести это и ввести парол�
 2) /usr/local/mysql/bin/mysql -u root -ppassword     - это подключит нас к sql, где сначала идет просто путь до запуска mysql, потом юзер и пароль
 
 
-
-
-
-
-create database name; - создаем пустую базу данных и делаем с ней что хотим
 
 
 
@@ -126,6 +106,54 @@ use database name -> source d:/usr.sql   - загрузить в базу дан
 
 
 
+
+
+                                                                 !!!Databases, БД, базы данных, создать бащу данных!!!
+
+
+CREATE DATABASE name;
+
+DROP DATABASE name;
+
+SHOW DATABASES;        - показать все базы данных на сервере
+
+USE DATABASE name      - выбрать таблицу
+
+SOURCE d:/usr.sql      - после выбора таблицы, можно загрузить в базу данных дамп
+
+
+
+
+
+                                                                  !!!Table, таблицы, запросы к таблицам!!!
+
+
+
+CREATE TABLE PurchaseList(
+student_name VARCHAR(500) AUTO_INCREMENT,   - VARCHAR = String, 500 это ограничение кол-ва знаков
+course_name VARCHAR(500), 
+price INT,                  
+subscription_date DATETIME
+PRIMARY_KEY (student_name));   - PRIMARY KEY в конце
+
+DROP TABLE Courses;  - удалить всю таблицу Couurses;
+
+ALTER TABLE Users         - добавить в таблицу Users колонку(column) с Email'ом
+ADD Email varchar(255);
+
+ALTER TABLE Users   - удалить из таблицы колонку(column) age
+DROP COLUMN age;
+
+ALTER TABLE Users                - изменить тип данных конолнки name на VARCHAR(500)
+MODIFY COLUMN name VARCHAR(500);
+
+                                                                   !!!Rows, запросы к полям в таблице, ряды!!!
+
+INSERT INTO Students (name, age, id) VALUES ("Egor", 25, 101) - вставить
+
+DELETE FROM Users WHERE id = 24;
+
+UPDATE Students SET name = "Misha" WHERE id = 101; - изменить значение
 
 
 
@@ -264,17 +292,52 @@ describe Students\G - посмотреть структуру таблицы Stu
 
 
 
-Добавление и удаление из таблицы, модификация данных
 
 
 
-Вставка/Удаление:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         
+
+
+
+
+
+
+
+
+
+                                                   Добавление и удаление из таблицы, модификация данных, table, alter table
+
+
+
+
+
+Вставка/Удаление INSERT INTO, UPDATE, DROP:
 
 INSERT INTO Students (name, age, id) VALUES ("Egor", 25, 101) - вставить
 
 UPDATE Students SET name = "Misha" WHERE id = 101; - изменить значение
 
-UPDATE Courses SET price = price*0.9 WHERE type = "PROGRAMMING"; - сделать скидку 10% на все курсы по программированиюннпагнпа
+DROP TABLE Courses;  - удалить всю таблицу Couurses;
 
 
 
@@ -287,9 +350,7 @@ UPDATE Courses SET price = price*0.9 WHERE type = "PROGRAMMING"; - сделат�
 
 
 
-
-
-Create Table, Таблицы:
+CREATE TABLE, Таблицы:
 
 CREATE TABLE PurchaseList(
 student_name VARCHAR(500) AUTO_INCREMENT PRIMARY_KEY,   - VARCHAR = String, 500 это ограничение кол-ва знаков
@@ -387,13 +448,6 @@ REFERENCES Users(id)   - привязать к полю другой табли�
 
 
 
-
-
-
-
-
-
-
 INSERT SELECT
 
 Это когда мы вставляем в таблицу через SELECT, очень удобно и быстро
@@ -401,6 +455,66 @@ INSERT SELECT
 INSERT INTO PurchaseList(student_name, course_name, price, subscription_date) SELECT Students.name AS student_name, Courses.name AS course_name, Courses.price AS price, Subscriptions.subscription_date AS subscription_date FROM Courses JOIN Subscriptions ON Subscriptions.course_id = Courses.id JOIN Students ON Subscriptions.student_id = Students.id;
 
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ALTER TABLE, изменить таблицу
+
+ALTER TABLE Users         - добавить в таблицу Users колонку(column) с Email'ом
+ADD Email varchar(255);
+
+
+
+ALTER TABLE Users   - удалить из таблицы колонку(column) age
+DROP COLUMN age;
+
+
+
+ALTER TABLE Users                - изменить тип данных конолнки name на VARCHAR(500)
+MODIFY COLUMN name VARCHAR(500);
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -325,6 +325,12 @@ Scanner input = new Scanner(System.in);
 
 МАССИВЫ
 
+СКОПИРОВАТЬ МАССИВ
+
+System.arraycopy(files, startOffset, subArray, 0, subArray.length);  - 1) источник 2) с какого индекса источника 3) куда 4) с какого индекса 5) длина конечного массива
+                   1           2          3    4         5
+
+
 String[] words = {"one","two","three","four"}; - присвоить п-ой word массив с помощью [], сами переменные сторятся с помощью {}
 или
 int[] numbers = new int[5]; - можно так, но это муторно
@@ -1452,6 +1458,206 @@ public static void main(String[] args) {
 
 
 Threads, MultiThreading(Потоки)
+
+                                                     !!! ПРИМЕР В ПРОЕКТЕ "(TESTER) Multithread, ImageResizer" !!!
+
+
+
+
+IMPLEMENTS Runnable
+
+ImageResizer resizer = new ImageResizer(subArray, newWidth, dstFolder, start, i + 1); 
+new Thread(resizer).start();
+
+ИЛИ
+
+Thread thread = new Thread(new ImageResizer(subArray, newWidth, dstFolder, start, i + 1));
+thread.start();
+
+
+
+
+
+EXTENDS Thread
+
+ImageResizer resizer = new ImageResizer(subArray, newWidth, dstFolder, start, i + 1);
+resizer.start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Atomic variables, Атомарные переменные и многопоточность   
+
+                                                        !!! Пример в проетке "(TESTER) AtomicVariables, Атомарные переменные" !!!
+
+
+
+Атомарно - значит в одну операцию (на уровне процессора)
+
+Атомарные переменные существуют для многопоточности
+
+В примере ниже потоки будут бороться за операцию increment(), и пока в одном потоке только берется значение x и потом прибавляется, в другом потоке возможно эта единица уже прибавилась и значение увеличилось, а в пред потоке мы имеем более старое значние
+
+Этот процесс неопределенности параллелизма называется - Race condition или Состояние гонки
+
+Этот процесс происходит в Критических секциях (часть кода, который при выполнении несколькими потоками может работать неоднозначно)
+
+
+
+
+                !!! ПРИМЕР !!!
+
+public class Test{
+    private static int x = 0;        - эта переменная будет инкрементироваться (не атомарная)
+
+    public static void increment() { - метод инкремента
+        x = x + 1;
+    }
+
+    public static int getX() {
+        return x;
+    }
+}
+
+
+
+public class Main {                                  - что происходит в мейне
+    public static void main(String[] args) {
+
+        for (int i = 0; i < 5; i++) {                - 5 раз вызываем новый поток
+            new Thread(()->{                         - создаем через Лямбду
+                for (int j = 0; j < 100000; j++) {
+                    Test.increment();                - вызываем метод инкремента
+                }
+                System.out.println(Test.getX());     - выводим значение
+            }).start();                              - стартуем поток
+        }
+    }
+}
+
+
+OUTPUT:
+
+100000
+217618
+242899
+342899               - как видим до 400.000 так и не дошел потому что иногда работал с устаревшими значениями переменной
+
+
+
+
+
+А теперь создадим класс Test через Атомарную переменную
+
+public class Test{
+    private static AtomicInteger x = new AtomicInteger();  - создаем переменную
+
+    public static void increment() {
+        x.incrementAndGet();                               - метод incrementAndGet() у Класса AtomicInteger
+    }
+    public static int getX() {
+        return x.intValue();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Volatile, кэширование переменнышб хэширование                   !!! Пример в проекте "(TESTER) Volatile variables" !!!
+
+Слово volatiole в переменной защищает ее от кэширования
+
+Если переменная присваивает одним потоком, а читается другим, то может случится такое:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Synchronized метод, Синхронизированный метод          !!! Пример в проекте "(TESTER) Synchronized methods" !!!
+
+ГРУБО ГОВОРЯ это слово засталяет метод работать в ОДНОПОТОЧНОМ РЕЖИМЕ (метод будут выполнять все потоки, но поочереди) 
+
+Без слова synchronized метод работает параллельно из нескольких потоков с одной переменной
+
+Synchronized обеспечивает одновременную работу метода только в одном потоке
+
+
+
+
+
+Synchronized блоки                                     !!! Пример в проекте "(TESTER) Synchronized блоки" !!!
+
+Если нас не пугает выполнение одного процесса(хоть и не совсем правильно) разными потоками, а пугают только ошибки с этим связанные, мы может сделать ПОТОКО-БЕЗОПАСНЫМ только БЛОК кода, а не весь метод
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Чтобы сделать так, чтобы методы в программе выполнялись не поочереди, а одновременно друг с другом, нужно создать потоки:
 1 Способ(лучший через интерфейс):
