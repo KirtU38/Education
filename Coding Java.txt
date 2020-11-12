@@ -1459,8 +1459,11 @@ public static void main(String[] args) {
 
 Threads, MultiThreading(Потоки)
 
-                                                     !!! ПРИМЕР В ПРОЕКТЕ "(TESTER) Multithread, ImageResizer" !!!
+                   
+                                                     !!! Самое главное, и Deadlock в ПРОЕКТЕ (IMPORTANT) DeadLock, Explanation !!!
 
+
+                                                     !!! ПРИМЕР В ПРОЕКТЕ "(TESTER) Multithread, ImageResizer" !!!
 
 
 
