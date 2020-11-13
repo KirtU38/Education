@@ -33,6 +33,16 @@ public class Bank {
             return;
         }
 
+        // Это тест чтобы понять поочередность потоков и тд для DeadLockTester
+
+        /*synchronized (accounts.get(fromAccountNum)) {
+            System.out.println("from \"" + fromAccountNum + "\" прошел дальше   "
+                    + Thread.currentThread().getName());
+            synchronized (accounts.get(toAccountNum)) {
+                System.out.println("to \"" + toAccountNum + "\" прошел дальше   "
+                        + Thread.currentThread().getName());*/
+
+
         synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))
                 > 0 ? accounts.get(fromAccountNum) : accounts.get(toAccountNum)) {
             synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))

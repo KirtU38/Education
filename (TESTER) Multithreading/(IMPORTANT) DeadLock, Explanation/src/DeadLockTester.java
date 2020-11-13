@@ -37,7 +37,7 @@ public class DeadLockTester {
 
         for (int i = 0; i < iterationsForEachThread; i++) {
             int randomAmount = random.nextInt(40000);  // 5% что сумма будет > 50.000
-            bank.transfer("1","2", randomAmount);
+            bank.transfer("7","2", randomAmount);
         }
         System.out.println("Закончил   " + Thread.currentThread().getName());
     }
