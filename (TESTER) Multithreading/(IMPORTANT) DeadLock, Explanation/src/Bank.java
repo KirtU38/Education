@@ -35,7 +35,8 @@ public class Bank {
 
         synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))
                 > 0 ? accounts.get(fromAccountNum) : accounts.get(toAccountNum)) {
-            synchronized (accounts.get(toAccountNum)) {
+            synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))
+                    > 0 ? accounts.get(toAccountNum) : accounts.get(fromAccountNum)) {
 
                 Account fromAcc = accounts.get(fromAccountNum);
                 Account toAcc = accounts.get(toAccountNum);

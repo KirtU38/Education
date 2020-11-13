@@ -172,7 +172,8 @@ public class MainTester {                         // Обьяснение в к�
 //
 //        synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))
 //                > 0 ? accounts.get(fromAccountNum) : accounts.get(toAccountNum)) {
-//            synchronized (accounts.get(toAccountNum)) {
+//            synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))
+//                    > 0 ? accounts.get(toAccountNum) : accounts.get(fromAccountNum)) {
 //
 //
 //                         from       to     |  from       to     |
@@ -187,5 +188,13 @@ public class MainTester {                         // Обьяснение в к�
 //                                           |                    |
 //                         превращается в:
 //
-//                          1    ->    1
+//                          1    ->    2
 //                         wait       wait
+//
+// По сути задача просто превращать зеркальные связки в односторонние:
+//
+// 8->2                    2->8
+// 5->1   превращаются в   5->1   и обрабатываются по правилу первого synchronized блока
+// 7->3                    7->3
+// 9->6                    9->6
+//
