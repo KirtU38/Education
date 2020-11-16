@@ -45,8 +45,12 @@ public class Bank {
 
         synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))
                 > 0 ? accounts.get(fromAccountNum) : accounts.get(toAccountNum)) {
+            System.out.println("from \"" + fromAccountNum + "\"(" + toAccountNum + ") прошел дальше   "
+                    + Thread.currentThread().getName());
             synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))
                     > 0 ? accounts.get(toAccountNum) : accounts.get(fromAccountNum)) {
+                System.out.println("to (" + fromAccountNum + ")\"" + toAccountNum + "\" прошел дальше   "
+                        + Thread.currentThread().getName());
 
                 Account fromAcc = accounts.get(fromAccountNum);
                 Account toAcc = accounts.get(toAccountNum);

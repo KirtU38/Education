@@ -1,16 +1,25 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Thread> threads = new ArrayList<>(); // Создаем Лист потоков
-        for (int i = 0; i < 10; i++) {                 // Заполняем его 10 потоками
-            Task task = new Task();                    // Создаем обьект с методом run()
-            threads.add(new Thread(task));         // Можно вот так через Лямбду задать что каждый поток будет выполнять метод go()
-        }
+        HashSet<Test> set = new HashSet<>();
 
-        threads.forEach(Thread::start);                // Запускаем все 10 потоков
+        Test test = new Test();
+        Test test1 = new Test();
+        test1.id = 10;
+
+        System.out.println(test.hashCode());
+        System.out.println(test1.hashCode());
+
+        set.add(test);
+        set.add(test1);
+        System.out.println(set.size());
+
+
+
     }
 }
 

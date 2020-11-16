@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class MainTester {                         // Обьяснение в конце
 
-    static int numOfThreads = 100;
-    static int iterationsForEachThread = 5;
+    static int numOfThreads = 10;
+    static int iterationsForEachThread = 50;
     static long accountStartingBalance = 500000;
     static Random random = new Random();
     static Bank bank = new Bank();
@@ -34,14 +34,14 @@ public class MainTester {                         // Обьяснение в к�
             String randomAccTo = String.valueOf(random.nextInt(100));
             boolean isTransaction = random.nextBoolean(); // Транзакия или проверка баланса
 
-            if (isTransaction) {
+            //if (isTransaction) {
             int randomAmount = random.nextInt(60000);  // 5% что сумма будет > 50.000
             bank.transfer(randomAccFrom, randomAccTo, randomAmount);
 
-            } else {
+            /*} else {
                 bank.getBalance(randomAccFrom);
                 System.out.printf("ID: %s Balance: %d   %s%n", randomAccFrom, bank.getBalance(randomAccFrom), Thread.currentThread().getName());
-            }
+            }*/
         }
         System.out.println("СДЕЛАЛ ВСЕ ОПЕРАЦИИ  " + Thread.currentThread().getName());
     }
