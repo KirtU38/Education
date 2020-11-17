@@ -42,7 +42,7 @@ public class Bank {
                 System.out.println("to \"" + toAccountNum + "\" прошел дальше   "
                         + Thread.currentThread().getName());*/
 
-
+        // БЛОК СИНХРОНИЗАЦИИ
         synchronized (accounts.get(fromAccountNum).compareTo(accounts.get(toAccountNum))
                 > 0 ? accounts.get(fromAccountNum) : accounts.get(toAccountNum)) {
             System.out.println("from \"" + fromAccountNum + "\"(" + toAccountNum + ") прошел дальше   "

@@ -14,13 +14,14 @@ public class Main {
 
         // Потоки на один обьект класса со всеми synchronized методами
         /*Test test = new Test();
+        long start = System.currentTimeMillis();
 
-        new Thread(new RunnerAll(test), "All").start();
-        new Thread(new RunnerA(test), "A-Runner").start();
-        new Thread(new RunnerB(test), "B-Runner").start();
-        new Thread(new RunnerC(test), "C-Runner").start();
-        new Thread(new RunnerD(test), "D-Runner").start();
-        new Thread(new RunnerE(test), "E-Runner").start();
+        new Thread(new RunnerAll(test, start), "All").start();
+        new Thread(new RunnerA(test, start), "A-Runner").start();
+        new Thread(new RunnerB(test, start), "B-Runner").start();
+        new Thread(new RunnerC(test, start), "C-Runner").start();
+        new Thread(new RunnerD(test, start), "D-Runner").start();
+        new Thread(new RunnerE(test, start), "E-Runner").start();
 
         scanner.nextLine();
         System.out.printf(" a-%d%n b-%d%n c-%d%n d-%d%n e-%d%n", test.a, test.b, test.c, test.d, test.e);*/
@@ -53,31 +54,33 @@ public class Main {
 
 
         // Потоки на один обьект, но с synchronized блоками, а не методами
-        /*TestWithBlocks testWB = new TestWithBlocks();
+        TestWithBlocks testWB = new TestWithBlocks();
+        long start = System.currentTimeMillis();
 
-        new Thread(new RunnerAllWB(testWB), "All").start();
-        new Thread(new RunnerAWB(testWB), "A-Runner").start();
-        new Thread(new RunnerBWB(testWB), "B-Runner").start();
-        new Thread(new RunnerCWB(testWB), "C-Runner").start();
-        new Thread(new RunnerDWB(testWB), "D-Runner").start();
-        new Thread(new RunnerEWB(testWB), "E-Runner").start();
+        new Thread(new RunnerAllWB(testWB, start), "All").start();
+        new Thread(new RunnerAWB(testWB, start), "A-Runner").start();
+        new Thread(new RunnerBWB(testWB, start), "B-Runner").start();
+        new Thread(new RunnerCWB(testWB, start), "C-Runner").start();
+        new Thread(new RunnerDWB(testWB, start), "D-Runner").start();
+        new Thread(new RunnerEWB(testWB, start), "E-Runner").start();
 
         scanner.nextLine();
-        System.out.printf(" a-%d%n b-%d%n c-%d%n d-%d%n e-%d%n", testWB.a, testWB.b, testWB.c, testWB.d, testWB.e);*/
+        System.out.printf(" a-%d%n b-%d%n c-%d%n d-%d%n e-%d%n", testWB.a, testWB.b, testWB.c, testWB.d, testWB.e);
 
 // Здесь мы лочим только переменные a,b,c,d,e по отедльности, когда они используются методами, и поэтому потоки выполняются
 // по настоящему одновременно даже на один обьект
 
         // Потоки на static методы(можно сказать на static класс)
-        new Thread(new RunnerAllST(), "All").start();
-        new Thread(new RunnerAST(), "A-Runner").start();
-        new Thread(new RunnerBST(), "B-Runner").start();
-        new Thread(new RunnerCST(), "C-Runner").start();
-        new Thread(new RunnerDST(), "D-Runner").start();
-        new Thread(new RunnerEST(), "E-Runner").start();
+        /*long start = System.currentTimeMillis();
+        new Thread(new RunnerAllST(start), "All").start();
+        new Thread(new RunnerAST(start), "A-Runner").start();
+        new Thread(new RunnerBST(start), "B-Runner").start();
+        new Thread(new RunnerCST(start), "C-Runner").start();
+        new Thread(new RunnerDST(start), "D-Runner").start();
+        new Thread(new RunnerEST(start), "E-Runner").start();
 
         scanner.nextLine();
-        System.out.printf(" a-%d%n b-%d%n c-%d%n d-%d%n e-%d%n", TestStatic.a, TestStatic.b, TestStatic.c, TestStatic.d, TestStatic.e);
+        System.out.printf(" a-%d%n b-%d%n c-%d%n d-%d%n e-%d%n", TestStatic.a, TestStatic.b, TestStatic.c, TestStatic.d, TestStatic.e);*/
 
 // Здесь ситуация похожая с первой
     }
