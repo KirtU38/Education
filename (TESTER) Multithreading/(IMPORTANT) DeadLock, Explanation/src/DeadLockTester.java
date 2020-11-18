@@ -20,15 +20,16 @@ public class DeadLockTester {
 
         Scanner scanner = new Scanner(System.in); // Баланс банка выводится по клавише Enter
         scanner.nextLine();
-        System.out.println("Конечный баланс 1 - " + bank.getBalance("1"));
-        System.out.println("Конечный баланс 2 - " + bank.getBalance("2"));
     }
 
     public static void go() {
 
         for (int i = 0; i < iterationsForEachThread; i++) {
             int randomAmount = random.nextInt(40000);  // 5% что сумма будет > 50.000
-            bank.transfer("1","2", randomAmount);
+            Account fromAccount = bank.getAccounts().get("1");
+            Account toAccount = bank.getAccounts().get("2");
+
+            bank.transfer(fromAccount,toAccount, randomAmount);
         }
         System.out.println("Закончил   " + Thread.currentThread().getName());
     }
@@ -37,7 +38,10 @@ public class DeadLockTester {
 
         for (int i = 0; i < iterationsForEachThread; i++) {
             int randomAmount = random.nextInt(40000);  // 5% что сумма будет > 50.000
-            bank.transfer("7","2", randomAmount);
+            Account fromAccount = bank.getAccounts().get("7");
+            Account toAccount = bank.getAccounts().get("2");
+
+            bank.transfer(fromAccount,toAccount, randomAmount);
         }
         System.out.println("Закончил   " + Thread.currentThread().getName());
     }
