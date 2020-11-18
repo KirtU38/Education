@@ -25,6 +25,14 @@ public class Account implements Comparable<Account> {
         isBlocked = blocked;
     }
 
+    public String getAccNumber() {
+        return accNumber;
+    }
+
+    public void setAccNumber(String accNumber) {
+        this.accNumber = accNumber;
+    }
+
     @Override
     public int compareTo(Account account) {
         return this.accNumber.compareTo(account.accNumber);

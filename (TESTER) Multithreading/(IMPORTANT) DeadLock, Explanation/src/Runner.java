@@ -20,8 +20,11 @@ public class Runner implements Runnable {
             String randomAccFrom = String.valueOf(random.nextInt(numOfAccounts));
             String randomAccTo = String.valueOf(random.nextInt(numOfAccounts));
 
+            Account fromAccount = bank.getAccounts().get(randomAccFrom);
+            Account toAccount = bank.getAccounts().get(randomAccTo);
+
             int randomAmount = random.nextInt(60000);  // 5% что сумма будет > 50.000
-            bank.transfer(randomAccFrom, randomAccTo, randomAmount);
+            bank.transfer(fromAccount, toAccount, randomAmount);
 
             /*} else {
                 bank.getBalance(randomAccFrom);

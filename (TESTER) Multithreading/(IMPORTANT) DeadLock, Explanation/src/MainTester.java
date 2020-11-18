@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class MainTester {                         // Обьяснение в конце
@@ -50,7 +49,8 @@ public class MainTester {                         // Обьяснение в к�
         for (int i = 0; i < bank.getAccounts().size(); i++) { // Вывести все счета
 
             String id = String.valueOf(i);
-            System.out.println("\"" + id + "\"" + " " + bank.getBalance(id));
+            Account account = bank.getAccounts().get(id);
+            System.out.println("\"" + id + "\"" + " " + bank.getBalance(account));
         }
     }
 
@@ -60,7 +60,8 @@ public class MainTester {                         // Обьяснение в к�
         for (int i = 0; i < bank.getAccounts().size(); i++) { // Сложить все счета заново, должна получиться начальная сумма банка
 
             String id = String.valueOf(i);
-            checkBankBalance = checkBankBalance + bank.getBalance(id);
+            Account account = bank.getAccounts().get(id);
+            checkBankBalance = checkBankBalance + bank.getBalance(account);
             System.out.println(i + " Сложить все счета обратно " + checkBankBalance);
         }
     }
