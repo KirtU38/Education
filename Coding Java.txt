@@ -1489,6 +1489,61 @@ public synchronized void out();          - если один поток зайд
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+Различия Runnable и Callable(Runnable void, а Callable возвращает значение) - !!! Класс "ExecuteVsSubmit") !!!
+
+Различия Executor и ExecutorService - !!! Класс "ExecutorVsExecutorService") !!! 
+
+Различия execute() и submit() - - !!! Класс "ExecuteVsSubmit") !!!
+
+Executor service                                                      !!! Пример в проекте "(IMPORTANT) ExecutorService & ThreadPools" !!!
+
+Смотри в проекте или в видосе
+
+Java ExecutorService - Part 1 - Introduction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 IMPLEMENTS Runnable
 
 ImageResizer resizer = new ImageResizer(subArray, newWidth, dstFolder, start, i + 1); 

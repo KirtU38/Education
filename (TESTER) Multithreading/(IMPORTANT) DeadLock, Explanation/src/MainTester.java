@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class MainTester {                         // Обьяснение в конце
 
     static int numOfThreads = 10;
-    static int iterationsForEachThread = 50;
+    static int iterationsForEachThread = 100;
+    static int numOfAccounts = 10;
     static long accountStartingBalance = 500000;
-    static Random random = new Random();
     static Bank bank = new Bank();
 
     public static void main(String[] args) {
@@ -27,28 +27,9 @@ public class MainTester {                         // Обьяснение в к�
         printSumOfAllAccounts();
     }
 
-    public static void go() {
-
-        for (int i = 0; i < iterationsForEachThread; i++) {
-            String randomAccFrom = String.valueOf(random.nextInt(100));
-            String randomAccTo = String.valueOf(random.nextInt(100));
-            boolean isTransaction = random.nextBoolean(); // Транзакия или проверка баланса
-
-            //if (isTransaction) {
-            int randomAmount = random.nextInt(60000);  // 5% что сумма будет > 50.000
-            bank.transfer(randomAccFrom, randomAccTo, randomAmount);
-
-            /*} else {
-                bank.getBalance(randomAccFrom);
-                System.out.printf("ID: %s Balance: %d   %s%n", randomAccFrom, bank.getBalance(randomAccFrom), Thread.currentThread().getName());
-            }*/
-        }
-        System.out.println("СДЕЛАЛ ВСЕ ОПЕРАЦИИ  " + Thread.currentThread().getName());
-    }
-
     public static void fillBankWithAccounts() {
 
-        for (int i = 0; i < 100; i++) {  // Заполнить банк 100 аккаунтами с 500.000 на счету у каждого
+        for (int i = 0; i < numOfAccounts; i++) {  // Заполнить банк 100 аккаунтами с 500.000 на счету у каждого
             String accountId = String.valueOf(i);
             bank.getAccounts().put(accountId, new Account(accountId, accountStartingBalance));
             Bank.bankBalance += accountStartingBalance;
@@ -59,7 +40,7 @@ public class MainTester {                         // Обьяснение в к�
 
         ArrayList<Thread> threads = new ArrayList<>(); // Создаем и запускам потоки
         for (int i = 0; i < numOfThreads; i++) {
-            threads.add(new Thread(MainTester::go));
+            threads.add(new Thread(new Runner(iterationsForEachThread, bank, numOfAccounts)));
         }
         threads.forEach(Thread::start);
     }
