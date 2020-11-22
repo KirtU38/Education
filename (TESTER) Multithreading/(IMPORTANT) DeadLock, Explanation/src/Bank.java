@@ -14,6 +14,26 @@ public class Bank {
         return random.nextBoolean();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void transfer(Account fromAccount, Account toAccount, long amount) {
 
         System.out.printf("Запрос к \"%s\" И \"%s\"   %s%n",
