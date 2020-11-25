@@ -13,6 +13,7 @@
 		https://skillbox.ru/payments/
 		https://skillbox.ru/media/
 			https://skillbox.ru/media/gamedev/
+				https://skillbox.ru/media/gamedev/interview_evgeniy_vasilev/
 				https://skillbox.ru/media/gamedev/chto_takoe_t_poza_i_a_poza_i_zachem_oni_3d_animatoram/
 				https://skillbox.ru/media/gamedev/story_brendakov/
 				https://skillbox.ru/media/gamedev/igry_na_linux_kakie_uzhe_est_i_stoit_li_razrabatyvat_novye/
@@ -26,7 +27,6 @@
 				https://skillbox.ru/media/gamedev/uravnivaem_shansy_kak_rabotaet_sluchaynost_v_igrakh/
 				https://skillbox.ru/media/gamedev/kak_sdelat_igru_dostupnoy_dlya_lyudey_s_narusheniyami_slukha_i_zreniya/
 				https://skillbox.ru/media/gamedev/kak_igry_rasskazyvayut_istorii_cherez_geympley/
-				https://skillbox.ru/media/gamedev/kak_zashchitit_igru_ot_vzloma/
 			https://skillbox.ru/media/design/
 				https://skillbox.ru/media/design/zachem_nuzhen_adobe_illustrator_razbiraemsya_s_funktsiyami_vektornogo_redaktora/
 				https://skillbox.ru/media/design/15_sovetskikh_plakatov_s_interesnymi_dizaynerskimi_priyemami/
@@ -43,6 +43,7 @@
 				https://skillbox.ru/media/design/ot_interfeysov_do_multfilmov/
 				https://skillbox.ru/media/design/firmennyy_stil_territoriy_primery_i_osobennosti/
 			https://skillbox.ru/media/code/
+				https://skillbox.ru/media/code/java_ili_kotlin_chto_vybrat_nachinayushchemu_android_razrabotchiku/
 				https://skillbox.ru/media/code/7_aktualnykh_programmistskikh_memov_s_obyasneniyami/
 				https://skillbox.ru/media/code/interview_oyslender/
 				https://skillbox.ru/media/code/story_vasiliy_poryadin/
@@ -56,8 +57,8 @@
 				https://skillbox.ru/media/code/kak_proverit_pravilnost_validnost_gotovogo_html_koda/
 				https://skillbox.ru/media/code/kak_sdelat_prevyu_dlya_video_na_javascript/
 				https://skillbox.ru/media/code/story_daria_bokareva/
-				https://skillbox.ru/media/code/kak_vybrat_pervyy_yazyk_programmirovaniya/
 			https://skillbox.ru/media/marketing/
+				https://skillbox.ru/media/marketing/interview_ilyana_levina/
 				https://skillbox.ru/media/marketing/13_podkastov_o_tom_kak_delat_kontent/
 				https://skillbox.ru/media/marketing/story_juliya_ponomareva/
 				https://skillbox.ru/media/marketing/kak_nastroit_avtootvety_v_direkt_instagram_i_facebook_messenger/
@@ -71,7 +72,6 @@
 				https://skillbox.ru/media/marketing/7_servisov_otlozhennogo_postinga_v_sotsialnykh_setyakh/
 				https://skillbox.ru/media/marketing/10_priemov_chtoby_povysit_effektivnost_targetinga/
 				https://skillbox.ru/media/marketing/zachem_nuzhna_multissylka_v_instagram/
-				https://skillbox.ru/media/marketing/interview_tatyana_glushkova_2/
 			https://skillbox.ru/media/management/
 				https://skillbox.ru/media/management/11_tipichnykh_oshibok_pri_sozdanii_prezentatsiy/
 				https://skillbox.ru/media/management/story_khorokhordin/
@@ -94,6 +94,13 @@
 				https://skillbox.ru/media/topic/guides/marketing/
 				https://skillbox.ru/media/topic/guides/management/
 				https://skillbox.ru/media/topic/guides/growth/
+			https://skillbox.ru/media/topic/articles/
+				https://skillbox.ru/media/topic/articles/design/
+				https://skillbox.ru/media/topic/articles/code/
+				https://skillbox.ru/media/topic/articles/gamedev/
+				https://skillbox.ru/media/topic/articles/marketing/
+				https://skillbox.ru/media/topic/articles/management/
+				https://skillbox.ru/media/topic/articles/growth/
 			https://skillbox.ru/media/topic/history/
 				https://skillbox.ru/media/topic/history/design/
 				https://skillbox.ru/media/topic/history/code/
@@ -108,16 +115,8 @@
 				https://skillbox.ru/media/topic/collections/marketing/
 				https://skillbox.ru/media/topic/collections/management/
 				https://skillbox.ru/media/topic/collections/growth/
-			https://skillbox.ru/media/topic/articles/
-				https://skillbox.ru/media/topic/articles/design/
-				https://skillbox.ru/media/topic/articles/code/
-				https://skillbox.ru/media/topic/articles/gamedev/
-				https://skillbox.ru/media/topic/articles/marketing/
-				https://skillbox.ru/media/topic/articles/management/
-				https://skillbox.ru/media/topic/articles/growth/
 			https://skillbox.ru/media/marketing/10_poleznykh_prilozheniy_dlya_soobshchestv_vkontakte/
 			https://skillbox.ru/media/design/7_primerov_raboty_s_kompozitsiey_v_dizayne_miltona_gleyzera/
-			https://skillbox.ru/media/marketing/6_besplatnykh_konstruktorov_saytov/
 			https://skillbox.ru/media/design/15_shriftov_ot_skillbox/
 			https://skillbox.ru/media/topic/interview/
 				https://skillbox.ru/media/topic/interview/design/
@@ -126,7 +125,6 @@
 				https://skillbox.ru/media/topic/interview/marketing/
 				https://skillbox.ru/media/topic/interview/management/
 				https://skillbox.ru/media/topic/interview/growth/
-			https://skillbox.ru/media/marketing/interview_tatyana_glushkova/
 			https://skillbox.ru/media/topic/actions/
 				https://skillbox.ru/media/topic/actions/design/
 				https://skillbox.ru/media/topic/actions/code/

@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class MainTester {                         // Обьяснение в конце
 
     static int numOfThreads = 10;
-    static int iterationsForEachThread = 100;
+    static int iterationsForEachThread = 10;
     static int numOfAccounts = 10;
     static long accountStartingBalance = 500000;
     static Bank bank = new Bank();
@@ -42,6 +42,15 @@ public class MainTester {                         // Обьяснение в к�
             threads.add(new Thread(new Runner(iterationsForEachThread, bank, numOfAccounts)));
         }
         threads.forEach(Thread::start);
+
+        /*threads.forEach(t -> {
+            t.start();
+            try {
+                t.join();
+            } catch (InterruptedException e) {   // Это для понимания метода join() у Thread
+                e.printStackTrace();
+            }
+        });*/
     }
 
     public static void printAllAccountsBalance() {

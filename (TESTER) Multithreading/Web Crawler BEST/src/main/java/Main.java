@@ -17,8 +17,6 @@ public class Main {
         PrintWriter writer = new PrintWriter("src/skillbox.txt");
         int numOfTabs = 0;
         exploreAndWriteURL(ROOT_URL, ROOT_URL, true, numOfTabs, writer);
-        writer.flush();
-        writer.close();
     }
 
     /*Программа входит в URL и сначала проходит по всем относительным ссылкам,
