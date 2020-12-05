@@ -5,45 +5,124 @@ import java.util.stream.IntStream;
 
 public class Main {
 
+    static int number = 10;
+
     public static void main(String[] args) {
 
         //int[] array = {8, 1, 4, 9, 2, 5, 0, 6, 7};
         Random random = new Random();
 
-        int[] array = IntStream.range(1, 1000001).toArray();
+        int[] array = IntStream.range(1, number).toArray();
 
         for (int i = 0; i < array.length; i++) {
-            int randomIndex = random.nextInt(1000000);
+            int randomIndex = random.nextInt(number - 1);
             int changedNumber = array[randomIndex];
             array[randomIndex] = array[i];
             array[i] = changedNumber;
         }
 
+        // MergeSort value
         long start = System.currentTimeMillis();
-        int[] newArr = split(array);
-        System.out.println(System.currentTimeMillis() - start + " ms"); // 230 ms
+        int[] mergeSort = splitValue(array);
+        System.out.println(System.currentTimeMillis() - start + " ms"); // 38 ms 100.000
 
-        long start = System.currentTimeMillis();
-        int[] newArr1 = bubble(array);
-        System.out.println(System.currentTimeMillis() - start + " ms"); // 230 ms
+        /*// MergeSort void
+        long start1 = System.currentTimeMillis();
+        splitVoid(array);
+        System.out.println(System.currentTimeMillis() - start1 + " ms"); // 38 ms 100.000*/
+
+        /*// BubbleSort value
+        long start2 = System.currentTimeMillis();
+        int[] bubbleValue = bubbleValue(array);
+        System.out.println(System.currentTimeMillis() - start2 + " ms"); // 24.465 ms 100.000
+        //System.out.println(Arrays.toString(bubbleValue));*/
+
+        /*// BubbleSort value
+        long start3 = System.currentTimeMillis();
+        bubbleValue(array);
+        System.out.println(System.currentTimeMillis() - start3 + " ms"); // 24.283 ms 100.000
+        //System.out.println(Arrays.toString(array));*/
+
+        /*long start4 = System.currentTimeMillis();
+        insertSortVoid(array);
+        System.out.println(System.currentTimeMillis() - start4 + " ms"); // 4356 ms 100.000*/
+
+        /*System.out.println(Arrays.toString(array));
+        long start5 = System.currentTimeMillis();
+        int[] insertSortValue = insertSortValue(array);
+        System.out.println(System.currentTimeMillis() - start5 + " ms"); // 4356 ms 100.000
+        System.out.println(Arrays.toString(insertSortValue));*/
+
     }
 
-    private static int[] bubble(int[] array) {
+    public static int[] bubbleValue(int[] array) {
 
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] > array[i + 1]) {
-                int changedNumber = array[i];
-                array[i] = array[i + 1];
-                array[i + 1] = changedNumber;
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = 0; j < array.length - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    int changedNumber = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = changedNumber;
+                }
             }
         }
-
 
         return array;
     }
 
-    public static int[] split(int[] array) {
-        //System.out.println(Arrays.toString(array));
+    public static void bubbleVoid(int[] array) {
+
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = 0; j < array.length - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    int changedNumber = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = changedNumber;
+                }
+            }
+        }
+    }
+
+    public static int[] insertSortValue(int[] array) {
+
+        int[] finalArray = new int[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            int minNumber = array[i];
+            int indexOfMin = i;
+            for (int j = i; j < array.length; j++) {
+                if(array[j] < minNumber){
+                    minNumber = array[j];
+                    indexOfMin = j;
+                }
+            }
+            int swapped = array[i];
+            array[i] = minNumber;
+            array[indexOfMin] = swapped;
+            finalArray[i] = minNumber;
+        }
+        return finalArray;
+    }
+
+    public static void insertSortVoid(int[] array) {
+
+        for (int i = 0; i < array.length; i++) {
+            int minNumber = array[i];
+            int indexOfMin = i;
+            for (int j = i; j < array.length; j++) {
+                if(array[j] < minNumber){
+                    minNumber = array[j];
+                    indexOfMin = j;
+                }
+            }
+            int swapped = array[i];
+            array[i] = minNumber;
+            array[indexOfMin] = swapped;
+        }
+    }
+
+    // MergeSort
+    public static int[] splitValue(int[] array) {
 
         if (array.length <= 1) {
             return array;
@@ -55,14 +134,13 @@ public class Main {
         int[] rightArray = new int[array.length - mid];
         System.arraycopy(array, mid, rightArray, 0, array.length - mid);
 
-        leftArray = split(leftArray);
-        rightArray = split(rightArray);
+        leftArray = splitValue(leftArray);
+        rightArray = splitValue(rightArray);
 
-        return merge(leftArray, rightArray);
+        return mergeValue(leftArray, rightArray);
     }
 
-    private static int[] merge(int[] leftArray, int[] rightArray) {
-        //System.out.println(Arrays.toString(leftArray) + Arrays.toString(rightArray) + " ВОШЛИ В MERGE");
+    private static int[] mergeValue(int[] leftArray, int[] rightArray) {
 
         int[] finalArray = new int[leftArray.length + rightArray.length];
         int leftArrow = 0;
@@ -91,9 +169,56 @@ public class Main {
             }
         }
 
-
-        //System.out.println(Arrays.toString(finalArray) + " ВЫШЛИ ИЗ MERGE");
         return finalArray;
+    }
+
+    // MergeSort
+    public static void splitVoid(int[] array) {
+
+        if (array.length <= 1) {
+            return;
+        }
+
+        int mid = array.length / 2;
+        int[] leftArray = new int[mid];
+        System.arraycopy(array, 0, leftArray, 0, mid);
+        int[] rightArray = new int[array.length - mid];
+        System.arraycopy(array, mid, rightArray, 0, array.length - mid);
+
+        splitVoid(leftArray);
+        splitVoid(rightArray);
+
+        mergeVoid(leftArray, rightArray, array);
+    }
+
+    private static void mergeVoid(int[] leftArray, int[] rightArray, int[] array) {
+
+        int leftArrow = 0;
+        int rightArrow = 0;
+
+        for (int i = 0; leftArrow < leftArray.length && rightArrow < rightArray.length; i++) {
+            if (leftArray[leftArrow] < rightArray[rightArrow]) {
+                array[i] = leftArray[leftArrow];
+                leftArrow++;
+            } else {
+                array[i] = rightArray[rightArrow];
+                rightArrow++;
+            }
+        }
+
+        int commonIndex = leftArrow + rightArrow;
+
+        if (leftArrow == leftArray.length) {
+            for (int i = commonIndex; i < array.length; i++) {
+                array[i] = rightArray[rightArrow];
+                rightArrow++;
+            }
+        } else {
+            for (int i = commonIndex; i < array.length; i++) {
+                array[i] = leftArray[leftArrow];
+                leftArrow++;
+            }
+        }
     }
 }
 
