@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-    static int number = 50000000;
+    static int number = 10000000;
 
     public static void main(String[] args) throws Exception {
 
@@ -25,16 +25,16 @@ public class Main {
         /*// MergeSort value
         long start = System.currentTimeMillis();
         int[] mergeSort = splitValue(array);                             // 38 ms 100.000 // 308 ms 1.000.000
-        System.out.println(System.currentTimeMillis() - start + " ms");  // 2335 ms 10 mil // 10774 ms 50 mil(thres 1.000.000)
+        System.out.println(System.currentTimeMillis() - start + " ms");  // 1426 ms 10 mil // 10774 ms 50 mil(thres 1.000.000)
 */
 
-       /* // MergeSort ForkJoin
+        // MergeSort ForkJoin
         ForkJoinPool pool = new ForkJoinPool(8);
         //ForkJoinPool pool = ForkJoinPool.commonPool();
         long start6 = System.currentTimeMillis();
         int[] fj = pool.invoke(new ForkJoinMerge(array));
         System.out.println(System.currentTimeMillis() - start6 + " ms"); // 1.155 ms 1.000.000 // 1587 ms 10 mil
-        System.out.println(fj.length);                                   // 6272 ms 1.000.000 thres на 50 mil*/
+        System.out.println(fj.length);                                   // 6272 ms 1.000.000 thres на 50 mil
 
 
         /*// MergeSort 2 threads
