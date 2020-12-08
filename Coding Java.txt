@@ -1532,6 +1532,29 @@ Java ExecutorService - Part 1 - Introduction
 
 
 
+fork, join, ForkJoinPool, invoke, invokeAll, compute      !!! (TESTER) fork() join(), invoke(), invokeAll, compute() - ГРОКНУТЫ !!!
+                                                          !!! (IMPORTANT) Web Crawler, fork() join(), ForkJoinPool, Recursive !!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
