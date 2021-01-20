@@ -112,7 +112,7 @@ public class Main {
             int minNumber = array[i];
             int indexOfMin = i;
             for (int j = i; j < array.length; j++) {
-                if(array[j] < minNumber){
+                if (array[j] < minNumber) {
                     minNumber = array[j];
                     indexOfMin = j;
                 }
@@ -131,7 +131,7 @@ public class Main {
             int minNumber = array[i];
             int indexOfMin = i;
             for (int j = i; j < array.length; j++) {
-                if(array[j] < minNumber){
+                if (array[j] < minNumber) {
                     minNumber = array[j];
                     indexOfMin = j;
                 }
