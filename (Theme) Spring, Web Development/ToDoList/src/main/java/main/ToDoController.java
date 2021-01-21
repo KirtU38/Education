@@ -1,40 +1,63 @@
 package main;
 
 import main.response.ToDo;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.LinkedHashMap;
 
 @RestController
 public class ToDoController {
 
-    @GetMapping(value = "/todos/")
+    @GetMapping("/todos/")
     public LinkedHashMap<Integer, ToDo> list() {
 
         return Storage.getAllToDos();
     }
 
-    @PostMapping(value = "/todos/")
-    public int add(@RequestBody ToDo toDo) {
+    @GetMapping("/todos/{id}")
+    public ResponseEntity<ToDo> getToDoById(@PathVariable("id") int id) {
+
+        ToDo toDo = Storage.getToDoById(id);
+        if (toDo == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return new ResponseEntity<>(toDo, HttpStatus.OK);
+    }
+
+    @PostMapping("/todos/")
+    public Integer add(@RequestBody ToDo toDo) {
 
         return Storage.addToDo(toDo);
     }
 
-    @GetMapping(value = "/todos/{id}")
-    public ToDo getToDoById(@PathVariable("id") int id) {
-
-        return Storage.selectToDoById(id);
-    }
-
-    @DeleteMapping(value = "/todos/{id}")
-    public int delete(@PathVariable("id") int id) {
-
-        return Storage.deleteToDo(id);
-    }
-
     @PutMapping(value = "/todos/{id}")
-    public int updateToDoById(@PathVariable("id") int id, @RequestBody ToDo toDo) {
+    public ResponseEntity<ToDo> updateToDoById(@PathVariable("id") int id, @RequestBody ToDo toDo) {
 
-        return Storage.updateToDoById(id, toDo);
+        ToDo OldToDo = Storage.getToDoById(id);
+        if (OldToDo == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Storage.updateToDoById(id, toDo);
+        return ResponseEntity.ok(toDo);
+    }
+
+    @DeleteMapping("/todos/")
+    public LinkedHashMap<Integer, ToDo> deleteAll() {
+
+        return Storage.deleteAllToDos();
+    }
+
+    @DeleteMapping("/todos/{id}")
+    public ResponseEntity<ToDo> delete(@PathVariable("id") int id) {
+
+        ToDo toDo = Storage.getToDoById(id);
+        if (toDo == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Storage.deleteToDo(id);
+        return ResponseEntity.ok(toDo);
     }
 
 }

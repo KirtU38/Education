@@ -1,38 +1,48 @@
 package main;
 
 import main.response.ToDo;
+
 import java.util.*;
 
 public class Storage {
 
+    private static int currentId = 1;
     private static final LinkedHashMap<Integer, ToDo> toDoList = new LinkedHashMap<>();
 
     public static LinkedHashMap<Integer, ToDo> getAllToDos() {
+
         return toDoList;
     }
 
-    public static int addToDo(ToDo toDo) {
-        int id = toDoList.size();
-        toDo.setId(id);
-        toDoList.put(id, toDo);
-        return id;
-    }
+    public static ToDo getToDoById(int id) {
 
-    public static int deleteToDo(int id) {
-
-        toDoList.remove(id);
-        return id;
-    }
-
-    public static ToDo selectToDoById(int id) {
-
+        if (!toDoList.containsKey(id)) {
+            return null;
+        }
         return toDoList.get(id);
     }
 
-    public static int updateToDoById(int id, ToDo toDo) {
+    public static int addToDo(ToDo toDo) {
+
+        toDo.setId(currentId);
+        toDoList.put(currentId, toDo);
+        return currentId++;
+    }
+
+    public static void updateToDoById(int id, ToDo toDo) {
 
         toDo.setId(id);
         toDoList.put(id, toDo);
-        return id;
+    }
+
+    public static void deleteToDo(int id) {
+
+        toDoList.remove(id);
+    }
+
+    public static LinkedHashMap<Integer, ToDo> deleteAllToDos() {
+
+        toDoList.clear();
+        return toDoList;
     }
 }
