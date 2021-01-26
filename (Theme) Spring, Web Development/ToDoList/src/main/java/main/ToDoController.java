@@ -6,33 +6,34 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @RestController
+@RequestMapping("/todos/")
 public class ToDoController {
 
-    @GetMapping("/todos/")
-    public LinkedHashMap<Integer, ToDo> list() {
-
+    @GetMapping
+    public List<ToDo> list() {
         return Storage.getAllToDos();
     }
 
-    @GetMapping("/todos/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<ToDo> getToDoById(@PathVariable("id") int id) {
 
         ToDo toDo = Storage.getToDoById(id);
         if (toDo == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return new ResponseEntity<>(toDo, HttpStatus.OK);
+        return new ResponseEntity<ToDo>(toDo, HttpStatus.OK);
     }
 
-    @PostMapping("/todos/")
+    @PostMapping
     public Integer add(@RequestBody ToDo toDo) {
 
         return Storage.addToDo(toDo);
     }
 
-    @PutMapping(value = "/todos/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<ToDo> updateToDoById(@PathVariable("id") int id, @RequestBody ToDo toDo) {
 
         ToDo OldToDo = Storage.getToDoById(id);
@@ -43,13 +44,13 @@ public class ToDoController {
         return ResponseEntity.ok(toDo);
     }
 
-    @DeleteMapping("/todos/")
+    @DeleteMapping
     public LinkedHashMap<Integer, ToDo> deleteAll() {
 
         return Storage.deleteAllToDos();
     }
 
-    @DeleteMapping("/todos/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<ToDo> delete(@PathVariable("id") int id) {
 
         ToDo toDo = Storage.getToDoById(id);

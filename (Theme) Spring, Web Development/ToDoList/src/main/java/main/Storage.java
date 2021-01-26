@@ -9,9 +9,9 @@ public class Storage {
     private static int currentId = 1;
     private static final LinkedHashMap<Integer, ToDo> toDoList = new LinkedHashMap<>();
 
-    public static LinkedHashMap<Integer, ToDo> getAllToDos() {
+    public static List<ToDo> getAllToDos() {
 
-        return toDoList;
+        return new ArrayList<>(toDoList.values());
     }
 
     public static ToDo getToDoById(int id) {

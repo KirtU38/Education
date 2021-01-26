@@ -5192,7 +5192,12 @@ JPA - Java Persistence API - это стандарт, который ввел JC
 
 
 
-                                                                                        Spring Framework
+                                                                                        Spring Boot, Spring Framework
+
+
+
+                  !!! Лучшие видео по теме в избранном на YouTube "Spring Boot Tutorial | Full Course [2021] [NEW]" и "Spring Boot Tutorial for Beginners (Java Framework)" !!!
+
 
 Controller - класс, который выдает информацию в ответ на запрос. Получает запрос -> отправляет ответ
 
