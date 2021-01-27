@@ -1,63 +1,66 @@
 package main;
 
-import main.response.ToDo;
-import org.springframework.http.HttpStatus;
+import main.model.ToDo;
+import main.service.ToDoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
 @RequestMapping("/todos/")
 public class ToDoController {
 
+    @Autowired
+    private ToDoService toDoService;
+
     @GetMapping
     public List<ToDo> list() {
-        return Storage.getAllToDos();
+
+        return toDoService.getAllToDos();
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ToDo> getToDoById(@PathVariable("id") int id) {
 
-        ToDo toDo = Storage.getToDoById(id);
+        ToDo toDo = toDoService.getToDoById(id);
         if (toDo == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<ToDo>(toDo, HttpStatus.OK);
+        return ResponseEntity.ok(toDo);
     }
 
     @PostMapping
     public Integer add(@RequestBody ToDo toDo) {
 
-        return Storage.addToDo(toDo);
+        return toDoService.addToDo(toDo);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ToDo> updateToDoById(@PathVariable("id") int id, @RequestBody ToDo toDo) {
+    public ResponseEntity<ToDo> updateToDoById(@PathVariable("id") int id, @RequestParam String text) {
 
-        ToDo OldToDo = Storage.getToDoById(id);
-        if (OldToDo == null) {
+        ToDo replacedToDo = toDoService.getToDoById(id);
+        if (replacedToDo == null) {
             return ResponseEntity.notFound().build();
         }
-        Storage.updateToDoById(id, toDo);
-        return ResponseEntity.ok(toDo);
+        toDoService.updateToDoById(id, text);
+        return ResponseEntity.ok(replacedToDo);
     }
 
     @DeleteMapping
-    public LinkedHashMap<Integer, ToDo> deleteAll() {
+    public List<ToDo> deleteAll() {
 
-        return Storage.deleteAllToDos();
+        return toDoService.deleteAllToDos();
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<ToDo> delete(@PathVariable("id") int id) {
 
-        ToDo toDo = Storage.getToDoById(id);
+        ToDo toDo = toDoService.getToDoById(id);
         if (toDo == null) {
             return ResponseEntity.notFound().build();
         }
-        Storage.deleteToDo(id);
+        toDoService.deleteToDo(id);
         return ResponseEntity.ok(toDo);
     }
 

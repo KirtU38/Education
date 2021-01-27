@@ -1,15 +1,25 @@
-package main.response;
+package main.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity
 public class ToDo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String text;
     private String date;
+
+    public ToDo() {
+    }
 
     public ToDo(@JsonProperty("text") String text) {
         this.text = text;
