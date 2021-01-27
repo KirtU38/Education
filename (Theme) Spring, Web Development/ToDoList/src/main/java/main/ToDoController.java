@@ -1,18 +1,18 @@
 package main;
 
+import lombok.RequiredArgsConstructor;
 import main.model.ToDo;
 import main.service.ToDoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/todos/")
+@RequiredArgsConstructor
 public class ToDoController {
 
-    @Autowired
-    private ToDoService toDoService;
+    private final ToDoService toDoService;
 
     @GetMapping
     public List<ToDo> list() {
@@ -31,7 +31,7 @@ public class ToDoController {
     }
 
     @PostMapping
-    public Integer add(@RequestBody ToDo toDo) {
+    public Integer add(ToDo toDo) {
 
         return toDoService.addToDo(toDo);
     }

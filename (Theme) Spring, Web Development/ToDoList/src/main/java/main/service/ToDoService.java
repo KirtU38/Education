@@ -1,22 +1,37 @@
 package main.service;
 
+import lombok.RequiredArgsConstructor;
 import main.model.ToDo;
 import main.model.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ToDoService {
 
-    @Autowired
-    private ToDoRepository toDoRepository;
+    private final ToDoRepository toDoRepository;
 
     public List<ToDo> getAllToDos() {
 
+        ToDo toDo1 = new ToDo();
+        ToDo toDo2 = new ToDo();
+        ToDo toDo3 = new ToDo();
+        ToDo toDo4 = new ToDo();
+        toDo1.setText("Do laundry");
+        toDo2.setText("Go to the gym");
+        toDo3.setText("Have a fuck");
+        toDo4.setText("Walk around");
+        addToDo(toDo1);
+        addToDo(toDo2);
+        addToDo(toDo3);
+        addToDo(toDo4);
         return new ArrayList<>(toDoRepository.findAll());
     }
 
@@ -30,8 +45,9 @@ public class ToDoService {
 
     public Integer addToDo(ToDo toDo) {
 
-        ToDo newToDo = toDoRepository.save(toDo);
-        return newToDo.getId();
+        toDo.setDate(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date()));
+        toDoRepository.save(toDo);
+        return toDo.getId();
     }
 
     public void updateToDoById(int id, String text) {
@@ -40,6 +56,7 @@ public class ToDoService {
         if (updatedToDo.isPresent()) {
             updatedToDo.get().setId(id);
             updatedToDo.get().setText(text);
+            updatedToDo.get().setDate(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date()));
             toDoRepository.save(updatedToDo.get());
         }
     }
