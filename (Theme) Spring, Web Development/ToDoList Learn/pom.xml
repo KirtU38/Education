@@ -11,6 +11,7 @@
     <build>
         <plugins>
             <plugin>
+                <!--Чтобы при каждой перезагрузке pom файла не менялся language level-->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
@@ -20,6 +21,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <!--Чтобы создать jar файл-->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.4.RELEASE</version>
@@ -28,6 +30,7 @@
     </build>
 
     <parent>
+        <!--Это чтобы конфигурация была нормальной, без него он не мог найти index.html-->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.3.RELEASE</version>
@@ -35,26 +38,31 @@
 
     <dependencies>
         <dependency>
+            <!--Это собственно сам Spring boot-->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>2.1.4.RELEASE</version>
         </dependency>
         <dependency>
+            <!--Для работы с базами данных, позволяет extend JpaRepository-->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>2.1.4.RELEASE</version>
         </dependency>
         <dependency>
+            <!--Ну это просто для работы с MySQL-->
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.22</version>
         </dependency>
         <dependency>
+            <!--Для работы с шаблонами и привязке наших данных к интерфейсу страницы в инете-->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>2.1.4.RELEASE</version>
         </dependency>
         <dependency>
+            <!--Просто ломбок-->
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>

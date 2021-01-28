@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
+
+<h1>Список дел (<span th:text="${todosCount}">:0</span>)</h1>
+
+<button id="show-add-todo-form">Добавить дело</button>
+<br><br>
+
 <div id="todo-form">
     <form>
         <h2>Добавление дела</h2>
@@ -16,15 +22,13 @@
         <button id="save-todo">Сохранить</button>
     </form>
 </div>
-<h1>Список дел (<span th:text="${todosCount}">:0</span>)</h1>
-<button id="show-add-todo-form">Добавить дело</button>
-<br><br>
+
 <div id="todo-list">
-    <ol>
-        <div th:each="todo : ${todos}">
-            <li><a href="#" class="todo-link" th:attr="data-id=${todo.id}" th:text="${todo.text}"></a></li>
-        </div>
-    </ol>
+    <div th:each="todo : ${todos}">
+        <li>
+            <a href="#" class="todo-link" th:attr="data-id=${todo.id}" th:text="${todo.text}"></a>
+        </li>
+    </div>
 </div>
 </body>
 </html>

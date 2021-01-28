@@ -1,19 +1,11 @@
 $(function(){
 
     const appendTodo = function(data){
-        var todoCode = '<a href="#" class="todo-link" data-id="' +
-            data.id + '">' + data.name + '</a><br>';
-        $('#todo-list')
-            .append('<div>' + todoCode + '</div>');
-    };
-
-    //Loading books on load page
-//    $.get('/books/', function(response)
-//    {
-//        for(i in response) {
-//            appendBook(response[i]);
-//        }
-//    });
+       var todoCode = '<a href="#" class="todo-link" data-id="' +
+                   data.id + '">' + data.text + '</a>';
+               $('#todo-list')
+                   .append('<div><li>' + todoCode + '</li></div>');
+           };
 
     //Show adding todo form
     $('#show-add-todo-form').click(function(){
@@ -60,13 +52,7 @@ $(function(){
             success: function(response)
             {
                 $('#todo-form').css('display', 'none');
-                var todo = {};
-                todo.id = response;
-                var dataArray = $('#todo-form form').serializeArray();
-                for(i in dataArray) {
-                    todo[dataArray[i]['text']] = dataArray[i]['value'];
-                }
-                appendTodo(todo);
+                appendTodo(response);
             }
         });
         return false;

@@ -31,7 +31,7 @@ public class ToDoController {
     }
 
     @PostMapping
-    public Integer add(ToDo toDo) {
+    public ToDo add(ToDo toDo) {
 
         return toDoService.addToDo(toDo);
     }

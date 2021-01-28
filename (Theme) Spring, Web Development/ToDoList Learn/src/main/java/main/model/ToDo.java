@@ -1,5 +1,6 @@
 package main.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,5 +15,6 @@ public class ToDo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String text;
+    @JsonProperty
     private String date;
 }

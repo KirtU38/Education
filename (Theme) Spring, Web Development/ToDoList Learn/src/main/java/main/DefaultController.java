@@ -19,8 +19,11 @@ public class DefaultController {
 
         List<ToDo> toDoList = toDoRepository.findAll();
 
+        // Здесь мы создаем переменные "todos" и "todosCount" которые потом сможем использовать в index.html
+        // как параметры для Thymeleaf(сказали его редко щас используют)
         model.addAttribute("todos", toDoList);
         model.addAttribute("todosCount", toDoList.size());
         return "index";
+        // здесь не надо подписывать .html потому что он и так понимает(в конфиге вроде задано это)
     }
 }
