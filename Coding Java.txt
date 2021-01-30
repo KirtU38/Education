@@ -5262,3 +5262,54 @@ Controller - класс, который выдает информацию в о�
 
 
 
+
+                                                                   HTML, CSS. JavaScriipt, Java Script, js
+
+
+
+                                            !!! В проекте "IdeaProjects/js-basics/index.html" все более менее написано про HTML и CSS и JS !!!
+  
+                                    
+                                                    !!! В проекте "(Theme) Spring, Web Development/ToDoList" много JS !!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
