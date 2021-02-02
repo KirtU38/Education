@@ -32,16 +32,14 @@ public class Main {
         List<Student> students = parseStudents();
 
         // Из листа студентов в MongoDB
-        List<Document> listOfStudentDocuments = new ArrayList<>();
         students.forEach(s -> {
             Document studentDocument = new Document()
                     .append("name", s.getName())
                     .append("age", s.getAge())
                     .append("courses", s.getCourses());
 
-            listOfStudentDocuments.add(studentDocument);
+            collection.insertOne(studentDocument);
         });
-        collection.insertMany(listOfStudentDocuments);
 
         // Общее количество студентов в базе
         long numberOfStudents = collection.countDocuments();
