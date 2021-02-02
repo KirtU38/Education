@@ -14,34 +14,32 @@ public class RedisTest {
 
 
         for (; ; ) {
+
             addUsers();
 
-            String lastUserInIteration = redis.lastUser();
             List<String> usersBeforeChange = (List<String>) redis.getUsersSet().valueRange(0, 20);
-            System.out.println(usersBeforeChange);
 
             System.out.println("ITERATION:");
+
             for (; ; ) {
                 int randomUser = RANDOM.nextInt(20) + 1;
 
                 int randomNumber = RANDOM.nextInt(100);
                 if (randomNumber < 10) {
-                    if(randomUser == Integer.parseInt(lastUserInIteration)){
-                        lastUserInIteration = usersBeforeChange.get(1);
-                    }
-                    payForPromotion(randomUser, lastUserInIteration);
+                    usersBeforeChange.remove(String.valueOf(randomUser));
+                    payForPromotion(randomUser);
                 }
+                usersBeforeChange.remove(String.valueOf(redis.displayedUser()));
 
                 log(redis.displayedUser());
                 redis.moveToTheEnd(redis.displayedUser(), redis.endOfTheList());
                 Thread.sleep(1000);
 
-                if (redis.displayedUser().equals(lastUserInIteration)) {
-                    log(redis.displayedUser());
-                    redis.moveToTheEnd(redis.displayedUser(), redis.endOfTheList());
+                if (usersBeforeChange.size() == 0) {
                     Thread.sleep(1000);
                     break;
                 }
+                System.out.println(usersBeforeChange.size());
             }
         }
 
@@ -51,7 +49,7 @@ public class RedisTest {
         System.out.println("— На главной странице показываем пользователя " + user_id);
     }
 
-    private static void payForPromotion(int randomUser, String lastUserInIteration) {
+    private static void payForPromotion(int randomUser) {
         redis.addUser(randomUser);
         System.out.printf("> Пользователь %s оплатил платную услугу\n", randomUser);
         log(redis.displayedUser());

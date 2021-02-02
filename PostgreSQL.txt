@@ -1,3 +1,9 @@
+
+                    !!! Learn PostgreSQL Tutorial - Full Course for Beginners !!!
+
+                               !!! Сгенерировать базу данных для теста: 
+
+
 Создание базы данных
 
 Запускается все через приложение Postgre.app, там 2 раза кликнуть на любую БД и появится терминал
@@ -14,3 +20,114 @@
 6) \c student; - подключиться к student
 7) \d - это показать взаимоотноения, то есть если база задействована где то через Hibernate, то ее будет видно
 8) \d student; - показать таблицу student
+
+
+
+
+psql --help    - список команд, ниже важные команды оттуда
+Connection options:
+  -h, --host=HOSTNAME      database server host or socket directory (default: "local socket")
+  -p, --port=PORT          database server port (default: "5432")
+  -U, --username=USERNAME  database user name (default: "egor")
+  -w, --no-password        never prompt for password
+  -W, --password           force password prompt (should happen automatically)
+
+
+psql -h localhost -p 5432 -U egor test     - хост localhost, порт 5432, юзер egor, БД test подключиться 
+\q - выйти из psql
+\l - показать все БД
+
+
+
+Типы данных, доступные в PostgreSQL, Data types:
+
+!!! https://www.postgresql.org/docs/9.5/datatype.html !!!
+
+
+
+
+Вставить ДАМП в БД, вставка информации в базу данных, загрузить:
+
+\i /Users/egor/Downloads/person.sql   
+
+
+
+
+
+
+
+
+
+
+
+
+
+Команды:
+
+Database:
+
+CREATE DATABASE test;
+DROP DATABASE test;
+
+
+
+
+
+
+
+Table:
+
+
+\d             - describe, показыбвает все таблицы в БД
+\dt            - показывает тольок таблицы, без sequence
+\d person      - показать именно таблицу person в выбранной БД
+DROP TABLE person;
+
+CREATE TABLE:
+
+CREATE TABLE person(                - вот как создается таблица                                                            
+id BIGSERIAL NOT NULL PRIMARY KEY,  - BIGSERIAL значит автоинкрементирующееся число                                                                  
+first_name VARCHAR(50) NOT NULL,                                                                      
+last_name VARCHAR(50) NOT NULL,                                                                       
+gender VARCHAR(7) NOT NULL,                                                                           
+date_of_birth DATE  NOT NULL,                                                                        
+email VARCHAR(150) );
+
+
+
+INSERT INTO:
+
+INSERT INTO person(first_name, last_name, gender, date_of_birth) 
+VALUES ('Anne','Smith','FEMALE','1994-01-25');                   - в дате год/месяц/число, VALUES должны придерживаться порядка который мы написали выше в person(...)
+
+
+
+
+
+
+
+
+
+SELECT:
+SELECT * FROM person;                          - показать все поля таблицы
+
+SELECT first_name, email FROM person           - показать только 6 id
+WHERE id=6;
+
+SELECT * FROM person                           - показать все поля из person, у который пол=Муж и отсортировать их по имени по возрастающей
+WHERE gender='Male'
+ORDER BY first_name ASC;                       - можно DESC        
+
+SELECT DISTINCT country_of_birth FROM person   - показать все УНИКАЛЬНЫЕ страны из таблицы и отсортировать их по имени                                                                                                                               ORDER BY country_of_birth;
+
+SELECT * FROM person                                                                                                                                                          ORDER BY country_of_birth ASC, first_name DESC; - сначала сорт по стране ASC, а если страна одинакова, то по имени DESC
+
+SELECT COUNT(*) FROM person                    - посчитать сколько людей из таблицы из России                                                                                                                                       WHERE country_of_birth='Russia';
+
+
+
+
+
+
+
+
