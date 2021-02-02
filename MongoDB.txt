@@ -1,0 +1,198 @@
+MongoDB оперирует данными в формате JSON
+
+     
+               !!! В видео "MongoDB Crash Course" !!!
+
+
+                         
+Установка:
+Должен быть установлен homebrew
+
+1) brew tap mongodb/brew
+2) brew tap | grep mongodb
+3) brew install mongodb-community@4.4
+4) brew services start mongodb-community@4.4
+   brew services stop mongodb-community@4.4   - остановить сервис
+5) mongo - запустит MongoDB
+
+
+
+Команды:
+db                - посмотреть к какой БД ты подключен
+show dbs          - показать все ДБ
+use test          - подключиться к БД test
+show collections  - показать коллекции кнутри этой БД, коллекции что-то вроде таблиц
+db.dropDatabase() - удалить выбранную базу данных
+use egor          - создать базу данных (если такой БД не было, он её создаст)
+db.createCollection('posts') - создать коллекцию posts внутри выбранной БД, add collection
+db.posts.find()   - покажет все документы внутри выбранной ДБ в коллекции posts
+db.posts.find().pretty() - то же самое, только красиво
+db.posts.drop()   - удалить коллекцию posts
+
+
+
+Вставка INSERT, POST, ADD:
+
+db.posts.insert({             - единичная вставка
+	title: 'Post one',
+	body: 'Hello Im cool',
+	category: 'News',
+	likes: '4',
+	tags: ['news', 'events','cool things'], - можно вставлять массивы
+	user:{                                  - или вложенные обьекты со своими значениями внутри
+	   name: 'Egor',
+	   status: 'author'
+	},
+	date: Date()
+})
+
+
+
+
+db.posts.insertMany([             - множественная вставка
+	{
+      title: 'Post two',
+      body: 'Hello Im cool yeah',
+	  category: 'Recreation',
+	  date: Date()
+	},
+	{
+      title: 'Post three',
+      body: 'Go fuck youself',
+	  category: 'Swearing',
+	  date: Date()
+	}
+	
+])
+
+
+
+
+
+
+
+Аналог WHERE:
+
+db.posts.find({ category: 'Swearing'}).pretty() - найти в выбранной БД в коллекции posts документы где {category : 'Swearing'}
+db.students.find({ age: {$gt: 25} }).pretty()   - показать студентов, которым больше 25 лет
+db.students.find({ age: {$lt: 25} }).pretty()   - то же самое, только меньше 25 лет
+
+
+
+
+
+
+
+
+
+Аналог SORT, ORDER BY:
+ 1 = ASC
+-1 = DESC
+
+db.posts.find().sort({title: 1}).pretty() - отсортировать по полю title по возрастающей
+
+
+
+
+
+
+
+
+
+
+
+
+
+Аналог COUNT:
+
+db.posts.find({title: 'Post one'}).count() - посчитать сколько документов с полем {title: 'Post one'}
+
+
+
+
+
+
+
+
+
+
+
+LIMIT:
+
+db.posts.find().limit(2).pretty() - показать только 2 записи
+
+db.posts.find().sort({category: -1}).limit(2).pretty() - показать только 2 записи в коллекции, отсортированной по {category: -1} -1 знач по убывающей
+
+
+
+
+
+
+
+
+
+PRINT, forEach, конкатенация:
+
+db.posts.find().forEach(function(doc){print('Blog post: ' + doc.title)})
+
+output:
+Blog post: Post one
+Blog post: Post two
+Blog post: Post three
+Blog post: Post four
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Удалить из коллекции, remove, delete
+
+db.posts.remove({title: 'Post two'}) - удалить из коллекции документ где {title: 'Post two'}
+db.posts.remove({})                  - удалить все документы в коллекции
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dune  	                 Frank Herbert  1965
+
+The Gulag Archipelago    Aleksandr Solzhenitsyn 1968
+
+The Master and Margarita  Mikhail Bulgakov   1940
+
+The Alchemist          Paulo Coelho      1988
+
+Harry Potter and the Prisoner of Azkaban   J. K. Rowling   1999
+
+
