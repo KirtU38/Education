@@ -168,6 +168,89 @@ db.posts.remove({})                  - удалить все документы 
 
 
 
+UPDATE, add to array, добавить в массив
+
+// Вставить в коллекцию Stores, в документ с именем "магнит", в массив products - элемент "молоко"
+
+db.Stores.update(
+{name: "магнит"}, 
+{$push: {products: "молоко"}})
+
+
+// Вставить в коллекцию Stores, в документ с именем "магнит", в массив products - обьект с именем "молоко" и ценой "54"
+
+db.Stores.update({name: "магнит"}, {$push: {products: {name: "молоко", price: 54}}})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AGGREGATION ,Агрегация, aggregation, посчитать количество в массиве
+
+{$group: {}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Посчитать кол-во элементов в массиве products у каждого документа в коллекции Stores
+
+db.Stores.aggregate([{ $project: {numberOfProducts: {$size: "$products"}}}])
+
+
+// Посчитать кол-во элементов в массиве products у каждого документа в коллекции Stores и вывести имя документа
+db.Stores.aggregate([{ $project: {name: "$name", numberOfProducts: {$size: "$products"}}}])
+
+
+// // Посчитать кол-во элементов в массиве products у каждого документа в коллекции Stores и вывести имя документа и среднюю ценю продуктов
+db.Stores.aggregate([{ $project: {name: "$name",avgprice: {$avg: "$products.price"}, numberOfProducts: {$size: "$products"}}}])
+
+
+
+db.Stores.aggregate([
+{ 
+$project: {
+name: "$name",
+avgPrice: {$avg: "$products.price"}, 
+biggestPrice: {$max: "$products.price"}, 
+lowestPrice: {$min: "$products.price"}, 
+numberOfProducts: {$size: "$products"},
+}
+}
+])
+
+
+// Показать товары дороже 40 во всех документах коллекции Stores
+db.Stores.aggregate([{$unwind: {path:"$products"}}, {$match:{"products.price":{$gt: 40}}}, {$group:{_id: "$name", count: {$sum: 1}}}])
+
+
+
 
 
 

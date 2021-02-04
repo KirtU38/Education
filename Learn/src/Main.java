@@ -5,8 +5,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        TestInterface testInterface = new Test();
-        testInterface.print("asdasd");
+        TestInterface test = new Test();
+        test.print("asdasd");
+        test.getName();
     }
 }
 

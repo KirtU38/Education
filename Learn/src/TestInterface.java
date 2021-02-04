@@ -1,7 +1,7 @@
 public interface TestInterface {
 
     default void print(String text){
-        System.out.println("fuck");
+        System.out.println("Hello");
     }
 
     String getName();
