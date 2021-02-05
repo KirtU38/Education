@@ -1,6 +1,7 @@
 package mongo.commands;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Updates;
 import mongo.commands.parent.ShoppingCommand;
 import org.bson.BsonDocument;
 import org.bson.Document;
@@ -22,13 +23,15 @@ public class AddProductToStore implements ShoppingCommand {
         if (productDocument == null) {
             System.out.println("Такого товара нет");
         } else {
-            BsonDocument storeQuery = BsonDocument.parse("{name: \"" + storeName + "\"}");
-            BsonDocument updateQuery = BsonDocument.parse("{$push: {products: \"" + productDocument.get("name") + "\"}}");
-
-            collectionOfStores.updateOne(storeQuery, updateQuery);
+            collectionOfStores.updateOne(
+                    BsonDocument.parse("{name: \"" + storeName + "\"}"),
+                    Updates.addToSet("products", productName));
         }
-
-
-        // db.Stores.update({name: "Магнит"}, {$push: {products: {name: "Молоко", price: 54}}})
     }
 }
+/*
+db.Stores.update(
+  {name: "Магнит"},
+  {$push: {products: {name: "Молоко"}}}
+)
+*/

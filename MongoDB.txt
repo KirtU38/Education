@@ -33,17 +33,22 @@ db.posts.drop()   - удалить коллекцию posts
 
 Вставка INSERT, POST, ADD:
 
-db.posts.insert({             - единичная вставка
-	title: 'Post one',
-	body: 'Hello Im cool',
-	category: 'News',
-	likes: '4',
-	tags: ['news', 'events','cool things'], - можно вставлять массивы
-	user:{                                  - или вложенные обьекты со своими значениями внутри
-	   name: 'Egor',
-	   status: 'author'
-	},
+db.posts.insert({               - единичная вставка
+	title: "Post one",
+	body: "Hello Im cool",
+	category: "News",
+	likes: 4,
+	tags: ["news", "events","cool things"],   - можно вставлять массивы
+	user:{                                    - или вложенные обьекты со своими значениями внутри
+	   name: "Egor",
+	   status: "author"},
 	date: Date()
+})
+
+
+db.Products.insert({
+  name: "Херня",
+  price: 47
 })
 
 

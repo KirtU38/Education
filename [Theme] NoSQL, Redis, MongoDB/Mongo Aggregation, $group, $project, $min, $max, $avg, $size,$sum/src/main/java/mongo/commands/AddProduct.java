@@ -12,11 +12,19 @@ public class AddProduct implements ShoppingCommand {
                                MongoCollection<Document> collectionOfProducts) {
 
         String[] nodes = nameAndPriceOfProduct.split("\\s", 2);
+        String productName = nodes[0];
+        int productPrice = Integer.parseInt(nodes[1]);
 
-        Document storeDocument = new Document()
-                .append("name", nodes[0])
-                .append("price", Integer.parseInt(nodes[1]));
+        Document productDocument = new Document()
+                .append("name", productName)
+                .append("price", productPrice);
 
-        collectionOfProducts.insertOne(storeDocument);
+        collectionOfProducts.insertOne(productDocument);
     }
 }
+/*
+db.Products.insert({
+  name: "Молоко",
+  price: 69
+})
+*/

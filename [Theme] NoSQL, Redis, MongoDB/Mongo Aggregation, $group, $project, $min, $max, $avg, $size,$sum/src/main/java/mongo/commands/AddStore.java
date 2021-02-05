@@ -23,3 +23,9 @@ public class AddStore implements ShoppingCommand {
         collectionOfStores.insertOne(storeDocument);
     }
 }
+/*
+db.Stores.insert({
+  name: "Магнит",
+  products: []
+})
+*/

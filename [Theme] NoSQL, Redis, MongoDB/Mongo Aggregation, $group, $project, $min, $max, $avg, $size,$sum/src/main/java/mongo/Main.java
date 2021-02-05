@@ -22,8 +22,8 @@ public class Main {
         MongoCollection<Document> collectionOfStores = database.getCollection("Stores");
         MongoCollection<Document> collectionOfProducts = database.getCollection("Products");
 
-        //collectionOfStores.drop();
-        //collectionOfProducts.drop();
+        collectionOfStores.drop();
+        collectionOfProducts.drop();
 
         HashMap<String, ShoppingCommand> mapOfCommands = new HashMap<>();
 
@@ -46,7 +46,8 @@ public class Main {
                 } else {
                     System.out.println("Нет такой команды");
                 }
-            } catch (NullPointerException ignored) {}
+            } catch (NullPointerException ignored) {
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ import static com.mongodb.client.model.Filters.gt;
 
 public class ShowStatistics implements ShoppingCommand {
 
-    public static final Long PRICE = 1000L;
+    public static final Long PRICE = 100L;
 
     @Override
     public void executeCommand(String command,
@@ -81,3 +81,38 @@ public class ShowStatistics implements ShoppingCommand {
         listOfStores.forEach(System.out::println);
     }
 }
+/*
+Статистика товаров:
+db.Stores.aggregate(
+  [
+    {$lookup: {
+      from: 'Products',
+      localField: 'products',
+      foreignField: 'name',
+      as: 'productsArray'}},
+    {$unwind: {path: "$productsArray"} },
+    {$group: {
+      _id: "$name",
+      avgPrice: {$avg: "$productsArray.price"},
+      biggestPrice: {$max: "$productsArray.price"},
+      lowestPrice: {$min: "$productsArray.price"},
+      numberOfProducts: {$sum: 1} }}
+  ]
+)
+
+Дороже чем:
+db.Stores.aggregate(
+  [
+    {$lookup: {
+      from: 'Products',
+      localField: 'products',
+      foreignField: 'name',
+      as: 'productsArray'}},
+    {$unwind: {path: "$productsArray"}},
+    {$match: {"productsArray.price": {$gt: 40}}},
+    {$group: {
+      _id: "$name",
+      numberOfProducts: {$sum: 1}}}
+  ]
+)
+*/
