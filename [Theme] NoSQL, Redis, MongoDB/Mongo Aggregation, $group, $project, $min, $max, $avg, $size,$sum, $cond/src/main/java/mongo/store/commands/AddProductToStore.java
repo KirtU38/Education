@@ -1,8 +1,8 @@
-package mongo.commands;
+package mongo.store.commands;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
-import mongo.commands.parent.ShoppingCommand;
+import mongo.store.commands.parent.ShoppingCommand;
 import org.bson.BsonDocument;
 import org.bson.Document;
 

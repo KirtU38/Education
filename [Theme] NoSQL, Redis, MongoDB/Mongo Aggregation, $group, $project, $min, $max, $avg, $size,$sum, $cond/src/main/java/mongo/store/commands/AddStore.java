@@ -1,7 +1,7 @@
-package mongo.commands;
+package mongo.store.commands;
 
 import com.mongodb.client.MongoCollection;
-import mongo.commands.parent.ShoppingCommand;
+import mongo.store.commands.parent.ShoppingCommand;
 import org.bson.Document;
 
 import java.util.ArrayList;

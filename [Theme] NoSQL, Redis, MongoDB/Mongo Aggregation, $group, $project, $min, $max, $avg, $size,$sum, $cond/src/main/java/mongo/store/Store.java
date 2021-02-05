@@ -1,8 +1,8 @@
-package mongo;
+package mongo.store;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mongo.commands.ShowStatistics;
+import mongo.store.commands.ShowStatistics;
 
 import java.util.Objects;
 
@@ -14,12 +14,8 @@ public class Store {
     private double avgPrice;
     private int biggestPrice;
     private int lowestPrice;
-    private Long numberOfProducts;
-    private Long numberOfGreaterThanProducts;
-
-    public Store(String storeName) {
-        this.storeName = storeName;
-    }
+    private Long productsCount;
+    private int lessThan100Count;
 
     @Override
     public boolean equals(Object o) {
@@ -40,8 +36,8 @@ public class Store {
                 "Средняя цена товаров: " + avgPrice + "\n" +
                 "Самый дорогой товар : " + biggestPrice + " рублей\n" +
                 "Самый дешевый товар : " + lowestPrice + " рублей\n" +
-                "Количество товаров : " + numberOfProducts + "\n" +
-                "Количество товаров дороже " + ShowStatistics.PRICE + " рублей : " + numberOfGreaterThanProducts + "\n\n";
+                "Количество товаров : " + productsCount + "\n" +
+                "Количество товаров дешевле " + ShowStatistics.PRICE + " рублей : " + lessThan100Count + "\n\n";
 
     }
 }

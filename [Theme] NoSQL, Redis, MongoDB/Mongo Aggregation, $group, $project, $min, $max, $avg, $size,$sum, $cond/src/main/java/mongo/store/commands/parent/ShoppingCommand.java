@@ -1,4 +1,4 @@
-package mongo.commands.parent;
+package mongo.store.commands.parent;
 
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
