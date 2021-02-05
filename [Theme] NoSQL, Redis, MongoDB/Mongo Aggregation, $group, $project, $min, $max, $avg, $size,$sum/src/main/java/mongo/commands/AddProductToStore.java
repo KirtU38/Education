@@ -19,11 +19,15 @@ public class AddProductToStore implements ShoppingCommand {
         BsonDocument productQuery = BsonDocument.parse("{name: \"" + productName + "\" }");
         Document productDocument = collectionOfProducts.find(productQuery).limit(1).first();
 
-        BsonDocument storeQuery = BsonDocument.parse("{name: \"" + storeName + "\"}");
-        BsonDocument updateQuery = BsonDocument.parse("{$push: {products: {name: \"" + productDocument.get("name") +
-                "\", price: " + productDocument.get("price") + "}}}");
+        if (productDocument == null) {
+            System.out.println("Такого товара нет");
+        } else {
+            BsonDocument storeQuery = BsonDocument.parse("{name: \"" + storeName + "\"}");
+            BsonDocument updateQuery = BsonDocument.parse("{$push: {products: \"" + productDocument.get("name") + "\"}}");
 
-        collectionOfStores.updateOne(storeQuery, updateQuery);
+            collectionOfStores.updateOne(storeQuery, updateQuery);
+        }
+
 
         // db.Stores.update({name: "Магнит"}, {$push: {products: {name: "Молоко", price: 54}}})
     }

@@ -14,7 +14,7 @@ public class Store {
     private double avgPrice;
     private int biggestPrice;
     private int lowestPrice;
-    private int numberOfProducts;
+    private Long numberOfProducts;
     private Long numberOfGreaterThanProducts;
 
     public Store(String storeName) {

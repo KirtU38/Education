@@ -11,16 +11,14 @@ import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import static com.mongodb.client.model.Accumulators.sum;
+import static com.mongodb.client.model.Accumulators.*;
 import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.gt;
-import static com.mongodb.client.model.Sorts.ascending;
 
 public class ShowStatistics implements ShoppingCommand {
 
-    public static final Long PRICE = 100L;
+    public static final Long PRICE = 1000L;
 
     @Override
     public void executeCommand(String command,
@@ -28,22 +26,23 @@ public class ShowStatistics implements ShoppingCommand {
                                MongoCollection<Document> collectionOfProducts) {
 
         // Средняя цена, наибольшая цена, наименьшая цена и общее число товаров в каждом магазине
-        // Через билдер не получилось, выдавал ошибку "Can't find a codec for class com.mongodb.client.model.BsonField"
         List<Bson> pipelineStats = Arrays.asList(
-                new Document("$project",
-                        new Document("name", "$name")
-                                .append("avgPrice", new Document("$avg", "$products.price"))
-                                .append("biggestPrice", new Document("$max", "$products.price"))
-                                .append("lowestPrice", new Document("$min", "$products.price"))
-                                .append("numberOfProducts", new Document("$size", "$products"))),
-                new Document("$sort", new Document("name", 1L)));
+                lookup("Products", "products", "name", "productsArray"),
+                unwind("$productsArray"),
+                group("$name",
+                        avg("avgPrice", "$productsArray.price"),
+                        max("biggestPrice", "$productsArray.price"),
+                        min("lowestPrice", "$productsArray.price"),
+                        sum("numberOfProducts", 1L)));
 
         // Количество товаров, цена которых выше нужной (100 рублей)
         List<Bson> pipelineGreaterThan = Arrays.asList(
-                unwind("$products"),
-                match(gt("products.price", PRICE)),
-                group("$name", sum("number", 1L)),
-                sort(ascending("_id")));
+                lookup("Products", "products", "name", "productsArray"),
+                unwind("$productsArray"),
+                match(
+                        gt("productsArray.price", PRICE)),
+                group("$name",
+                        sum("numberOfGreaterThanProducts", 1L)));
 
         AggregateIterable<Document> result = collectionOfStores.aggregate(pipelineStats);
         AggregateIterable<Document> resultGreaterThan = collectionOfStores.aggregate(pipelineGreaterThan);
@@ -56,11 +55,11 @@ public class ShowStatistics implements ShoppingCommand {
         while (iterator.hasNext()) {
             Document document = iterator.next();
             Store store = new Store();
-            store.setStoreName(document.get("name").toString());
+            store.setStoreName(document.get("_id").toString());
             store.setAvgPrice(document.getDouble("avgPrice"));
             store.setBiggestPrice(document.getInteger("biggestPrice"));
             store.setLowestPrice(document.getInteger("lowestPrice"));
-            store.setNumberOfProducts(document.getInteger("numberOfProducts"));
+            store.setNumberOfProducts(document.getLong("numberOfProducts"));
             store.setNumberOfGreaterThanProducts(0L);
 
             listOfStores.add(store);
@@ -69,12 +68,9 @@ public class ShowStatistics implements ShoppingCommand {
         while (iteratorGreaterThan.hasNext()) {
             Document document2;
             Long numberOfGreaterThanProducts;
-            try {
-                document2 = iteratorGreaterThan.next();
-                numberOfGreaterThanProducts = document2.getLong("number");
-            } catch (NoSuchElementException e) {
-                break;
-            }
+
+            document2 = iteratorGreaterThan.next();
+            numberOfGreaterThanProducts = document2.getLong("numberOfGreaterThanProducts");
 
             Store storeToFind = new Store(document2.get("_id").toString());
             int indexOfStore = listOfStores.indexOf(storeToFind);
