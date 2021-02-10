@@ -12,9 +12,7 @@ public class Main {
         TestInterface test = new Test();
         test.print("asdasd");
         test.getName();
-        System.out.println("Fuck");
-        System.out.println("Fuck");
-        System.out.println("Fuck");
+        System.out.println("MASTER");
     }
 }
 
