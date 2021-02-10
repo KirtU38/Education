@@ -12,6 +12,9 @@ public class Main {
         test.getName();
         System.out.println("MASTER");
 
+
+        System.out.println("KILLER JAVA");
+
     }
 }
 
