@@ -6,8 +6,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        HashMap<Integer, String> map = new HashMap<>();
-        m
+
+        TestInterface test = new Test();
+        test.print("asdasd");
+        test.getName();
+        System.out.println("MASTER");
+
     }
 }
 
