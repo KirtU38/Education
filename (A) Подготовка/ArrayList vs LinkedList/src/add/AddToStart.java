@@ -10,10 +10,9 @@ public class AddToStart {
 
     public static void main(String[] args) {
 
-        // LinkedList быстрее
+        // LinkedList намного быстрее
 
         List<Long> list = new ArrayList<>();
-
         long start = System.currentTimeMillis();
         for (long i = 0; i < numOfElements; i++) {
             list.add(0, i);
@@ -23,7 +22,6 @@ public class AddToStart {
 
 
         List<Long> linked = new LinkedList<>();
-
         long start1 = System.currentTimeMillis();
         for (long i = 0; i < numOfElements; i++) {
             linked.add(0, i);
