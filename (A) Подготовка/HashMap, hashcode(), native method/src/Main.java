@@ -11,6 +11,24 @@ public class Main {
         System.out.println(d.hashCode() + " String");
         System.out.println(a.hashCode() + " String");
 
+        // hashcode чисел
+        // У целочисленных он равен самому числу, даже если они wrapped в Обьект, например Long
+        // вообще их называют Wrapper классы
+        // У нуля 0 всегда hashcode=0 в любом численном классе, даже double, однако остальные значения отличаются
+        // float и double тоже отличаются на одинаковых числах
+        byte byteNumber = 126;
+        System.out.println(Byte.hashCode(byteNumber) + " byte");
+        int intNumber = 126;
+        System.out.println(Integer.hashCode(intNumber) + " int");
+        long longNumber = 29875678;
+        System.out.println(Long.hashCode(longNumber) + " long");
+        Long longNumberObject = 29875678L;
+        System.out.println(longNumberObject.hashCode() + " Long ");
+        double doubleNumber = 126D;
+        System.out.println(Double.hashCode(doubleNumber) + " double");
+        float floatNumber = 126F;
+        System.out.println(Float.hashCode(floatNumber) + " float");
+
         // По дефолту у класса Object хэш генерируется по местоположению в памяти(числовое значение положения в памяти)
         // Если мы переписали хэш у класса Human по полям name и age, то они будут равны хэшу массива класса Object
         // со значениями {"Egor", 25}
@@ -22,9 +40,6 @@ public class Main {
         System.out.println(copy.hashCode() + " egor копия");
         System.out.println(egor1.hashCode() + " egor1 новый обьект с такими же полями");
         System.out.println(object + " new Object[]{\"Egor\", 25}");
-
-        Byte byteNumber = 126;
-        System.out.println();
 
         // Мапа с заданным capacity будет быстрее
         long start = System.currentTimeMillis();
@@ -44,10 +59,6 @@ public class Main {
         System.out.println(map.size());
         System.out.println(System.currentTimeMillis() - start + " ms");
         map.clear();
-
-
-
-
     }
 }
 // Сам хэш это нативный метод, значит он написан на другом языке, в Джаве хэш взять с C++
