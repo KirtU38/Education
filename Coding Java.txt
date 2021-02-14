@@ -1,3 +1,94 @@
+Вопросы к собеседованию:
+1) equals() ,hashcode() и HashMap, всё о хэше и HashMap, HashSet, коллизии, LinkedHashSet и LinkedHashMap, и TreeSet
+2) ArrayList vs LinkedList
+3) Interface vs Absctract class, как в джаве решается Diamond problem, default  методы в Интерфейсахё
+4) Inner classes vs Static inner classes
+5) Serializable
+6) Iterable, Iterator
+7) StringBuilder и StringBuffer, почему не добавлять просто в String всё
+8) Дженерики, Generics
+9) Collections, все коллекции, что относится к коллекциям и тд
+	a) List vs Set (Лист упорядочен, может содержать дубликаты и у него есть доступ по индеку, а у Сета нет) 
+10) Comparator, 1, -1 и 0 тд, какие коллекции могут использовать его
+11) O(n), Collections time and space complexity, constant time = O(1) моментально, 1 опперация, linear = O(n) значит с кол0вом элементов растет кол-во операций и log(n)
+12) Stream API - глубоко затестить все методы и запомнить
+	a) Терминальные операции, terminal operations(collect, forEach)
+	b) Вообще какие есть типы операций
+	с) Что означает что Стримы "lazy"
+	d) Spliterator - хотябы базовые знания
+13) Лямбды вообще впринципе
+14) Функциональные интерфейсы(Runnable) - интерфейсы с 1 методом, их круто использовать с Лямбдами
+15) Маркерные интерфейсы типа Serializable
+16) Многопоточность, concurrency
+	a) Thread vs Runnable
+	b) synchronized методы, static synchronized, synchronized блок
+	с) Мониотор, mutex
+	d) Atomic переменные
+	e) double checked patter and why it doesn't work
+17) Mutable Immutable, разобраться
+18) КОдировки UTF-8 и тд, Стринг UTF-16
+19) Java Time, Calendar и тд
+20) Spring разобратсья под копотом
+	a) @Bean
+	b) @Transient
+	c) @Component
+	d) @Configuration
+	e) Что такое IoT
+	f) Dependency injection
+21) Вообще все принципы ООП: Наследование, Абстракция, Полиформизм, Инкапсуляция. Что такое вообще ООП, почему оно лучше, зачем его применять(реюзабл код)
+22) Принципы SOLID - очень важно
+23) Функциональное программирование, functional programming (стримы, лямбды, имьютаблес и тд)
+24) AOP - Аспектно ориентрированное программирование (Spring, Lombok)
+25) JDBC драйвер
+25) JPA и Hibernate, ORM, Spring Data JPA
+26) PostgreSQL потренить
+27) MongoDB
+28) Redis
+29) Log4j
+30) HTTP изучить четко, OAuth2
+31) REST - понять что именно это и расщифровывается (Representational State Transfer)
+32) CI/CD - Continious Integration, Continious Delivery
+33) Microservices, что такое микросервисы
+	a) Kafka, JMS - для общения микросервисов (message queues)
+34) Big Data, Spark
+35) Тестирование: отличия юнит тестов, интеграционные тесты, JUnit
+	a) TDD - Test Driven Development, почитать
+	b) Test coverage
+	c) Whitebox, blackbox
+36) Алгоритмы и задачки (leetcode.com, codingbat.com)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Полезные ссылки:
+1) https://www.youtube.com/watch?v=oNFf_Bi1Wko    - Собеседование по Java с Алексом Шестеровым
+
+
+
+
+
+
+
+
+
+
 public class Egor {
     public static void main(String[] args){
 

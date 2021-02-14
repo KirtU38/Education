@@ -21,10 +21,10 @@ public class AddToEnd {
         System.out.println(list.size());
 
 
-        List<Long> linked = new LinkedList<>();
+        LinkedList<Long> linked = new LinkedList<>();
         long start1 = System.currentTimeMillis();
         for (long i = 0; i < numOfElements; i++) {
-            linked.add(i);
+            linked.addLast(i);
         }
         System.out.println(System.currentTimeMillis() - start1 + " ms"); // 2200 ms 10 mil
         System.out.println(linked.size());

@@ -27,7 +27,7 @@ public class RemoveFromEnd {
         System.out.println(list.size());
 
 
-        List<Long> linked = new LinkedList<>();
+        LinkedList<Long> linked = new LinkedList<>();
         for (long i = 0; i < numOfElements; i++) {
             linked.add(i);
         }
@@ -35,9 +35,9 @@ public class RemoveFromEnd {
 
         long start1 = System.currentTimeMillis();
         for (int i = 0; i < half; i++) {
-            linked.remove(linked.size() - 1);
+            linked.removeLast();
         }
-        System.out.println(System.currentTimeMillis() - start1 + " ms"); // 176 ms
+        System.out.println(System.currentTimeMillis() - start1 + " ms"); // 84 ms
         System.out.println(linked.size());
     }
 }

@@ -1,14 +1,11 @@
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Loader {
 
     private static final String FILE_NAME = "res/data-1572M.xml";
     public static int SIZE = 20_000_000;
-    public static ExecutorService service = Executors.newFixedThreadPool(4);
 
     public static void main(String[] args) throws Exception {
 
@@ -21,27 +18,16 @@ public class Loader {
         // Передаем обьект БД в handler
         XMLHandler handler = new XMLHandler(dbConnection);
 
-        service.submit(() -> {
+        Thread parserThread = new Thread(()->{
             try {
                 parser.parse(new File(FILE_NAME), handler);
                 dbConnection.printVoterCounts();
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-        });
+            }});
 
-
-        /*Thread parserThread = new Thread(() -> {
-            try {
-                parser.parse(new File(FILE_NAME), handler);
-                dbConnection.printVoterCounts();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });*/
-        /*service.hashCode()
         parserThread.start();
-        parserThread.join();*/
+        parserThread.join();
         System.out.println(System.currentTimeMillis() - start + " ms");
     }
 }

@@ -10,7 +10,7 @@ public class GetFromMiddle {
 
     public static void main(String[] args) {
 
-        // ArrayList НАМНОГО быстрее
+        // ArrayList намного быстрее
 
         List<Long> list = new ArrayList<>();
         for (long i = 0; i < numOfElements; i++) {

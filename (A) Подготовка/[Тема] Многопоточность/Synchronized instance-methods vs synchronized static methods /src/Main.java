@@ -2,6 +2,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Test test = new Test();
+
         new Thread(() -> {
             try {
                 Test.print();
@@ -12,7 +14,7 @@ public class Main {
 
         new Thread(() -> {
             try {
-                Test.wtf();
+                test.wtf();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

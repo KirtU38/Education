@@ -150,9 +150,7 @@ MODIFY COLUMN name VARCHAR(500);
                                                                    !!!Rows, запросы к полям в таблице, ряды!!!
 
 INSERT INTO Students (name, age, id) VALUES ("Egor", 25, 101) - вставить
-
 DELETE FROM Users WHERE id = 24;
-
 UPDATE Students SET name = "Misha" WHERE id = 101; - изменить значение
 
 

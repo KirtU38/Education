@@ -21,7 +21,7 @@ public class AddToMiddle {
         System.out.println(list.size());
 
 
-        List<Long> linked = new LinkedList<>();
+        LinkedList<Long> linked = new LinkedList<>();
         long start1 = System.currentTimeMillis();
         for (long i = 0; i < numOfElements; i++) {
             linked.add(linked.size() / 2, i);

@@ -1,0 +1,29 @@
+ForkJoinPool-1-worker-3
+ForkJoinPool-1-worker-3
+ForkJoinPool-1-worker-3
+ForkJoinPool-1-worker-3
+leftTask is joined()
+ForkJoinPool-1-worker-3
+rightTask is joined()
+leftTask is joined()
+ForkJoinPool-1-worker-3
+ForkJoinPool-1-worker-3
+leftTask is joined()
+ForkJoinPool-1-worker-3
+rightTask is joined()
+rightTask is joined()
+leftTask is joined()
+ForkJoinPool-1-worker-3
+ForkJoinPool-1-worker-3
+ForkJoinPool-1-worker-3
+leftTask is joined()
+ForkJoinPool-1-worker-3
+rightTask is joined()
+leftTask is joined()
+ForkJoinPool-1-worker-3
+ForkJoinPool-1-worker-3
+leftTask is joined()
+ForkJoinPool-1-worker-3
+rightTask is joined()
+rightTask is joined()
+rightTask is joined()

@@ -1,21 +1,15 @@
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 public class XMLHandler extends DefaultHandler {
 
     private Thread savingThread;
     private DBConnection dbConnection;
     public static StringBuilder insertQuery;
-    private ExecutorService singleThread;
 
     public XMLHandler(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
         insertQuery = new StringBuilder(Loader.SIZE);
-        singleThread = Executors.newSingleThreadExecutor();
     }
 
     @Override
@@ -31,11 +25,10 @@ public class XMLHandler extends DefaultHandler {
                 // Буфер Билдера, если size больше 20мил то сбрасывает всё отдельному потоку в БД и очищает Билдер
                 if (insertQuery.length() > Loader.SIZE) {
                     System.out.println("Набралось в оригинал");
-                    //savingThread.join();
-                    singleThread.submit(() -> dbConnection.multiInsert(insertQuery.toString()));
-                    //savingThread = new Thread(() -> dbConnection.multiInsert(insertQuery.toString()));
+                    savingThread.join();
+                    savingThread = new Thread(() -> dbConnection.multiInsert(insertQuery.toString()));
                     System.out.println("String передался в Multi-insert");
-                    //savingThread.start();
+                    savingThread.start();
                     insertQuery.delete(0, insertQuery.length());
                     System.out.println("Удалился оригинал");
                 }

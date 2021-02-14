@@ -21,13 +21,12 @@ public class AddToStart {
         System.out.println(list.size());
 
 
-        List<Long> linked = new LinkedList<>();
+        LinkedList<Long> linked = new LinkedList<>();
         long start1 = System.currentTimeMillis();
         for (long i = 0; i < numOfElements; i++) {
-            linked.add(0, i);
+            linked.addFirst(i);
         }
         System.out.println(System.currentTimeMillis() - start1 + " ms"); // 27 ms 100.000
         System.out.println(linked.size());
-
     }
 }
