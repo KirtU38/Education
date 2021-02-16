@@ -1,18 +1,14 @@
 package com;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.RecursiveTask;
 
-public class Fib extends RecursiveTask<Long> {
+public class FibForkJoinWithArray extends RecursiveTask<Integer> {
 
-    long index;
-    public static long[] listOfNumbers = new long[1000];
+    int index;
+    public static int[] listOfNumbers = new int[1000];
 
 
-    public Fib(long index) {
+    public FibForkJoinWithArray(int index) {
         this.index = index;
     }
 
@@ -21,26 +17,25 @@ public class Fib extends RecursiveTask<Long> {
     // из-за этого программе не нужно вручную опускаться вниз до 1 и 0 чтобы найти число, а она сначала проверяет
     // есть ли число в массиве, а только потом по надобности опускается вниз
     @Override
-    protected Long compute() {
-        long fibNumber;
+    protected Integer compute() {
+        int fibNumber;
 
-        if(listOfNumbers[(int) index] == 0){
-            if (index <= 1) {
-                fibNumber = index;
+        if (listOfNumbers[index] == 0) {
+            if (index <= 2) {
+                fibNumber = 1;
             } else {
-                Fib firstTask = new Fib(index - 1);
+                FibForkJoinWithArray firstTask = new FibForkJoinWithArray(index - 1);
                 firstTask.fork();
-                Fib secondTask = new Fib(index - 2);
+                FibForkJoinWithArray secondTask = new FibForkJoinWithArray(index - 2);
                 secondTask.fork();
 
-                Long first = firstTask.join();
-                Long second = secondTask.join();
-                //System.out.println(first + "   " + second + "  " + Thread.currentThread().getName());
+                int first = firstTask.join();
+                int second = secondTask.join();
                 fibNumber = first + second;
             }
-            listOfNumbers[(int) index] = fibNumber;
+            listOfNumbers[index] = fibNumber;
         } else {
-            fibNumber = listOfNumbers[(int) index];
+            fibNumber = listOfNumbers[index];
         }
         return fibNumber;
     }

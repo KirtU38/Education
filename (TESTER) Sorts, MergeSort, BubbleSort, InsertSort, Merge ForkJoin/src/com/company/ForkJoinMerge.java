@@ -26,7 +26,7 @@ public class ForkJoinMerge extends RecursiveTask<int[]> {
         ForkJoinMerge leftTask = new ForkJoinMerge(leftArray);
         ForkJoinMerge rightTask = new ForkJoinMerge(rightArray);
 
-        if (array.length < 2000000) {
+        if (array.length < 2_000_000) {
             leftArray = leftTask.compute();
             rightArray = rightTask.compute();
         } else {
@@ -34,7 +34,7 @@ public class ForkJoinMerge extends RecursiveTask<int[]> {
             rightTask.fork();
 
             leftArray = leftTask.join();
-            rightArray = rightTask.join();;
+            rightArray = rightTask.join();
         }
         return mergeValue(leftArray, rightArray);
 

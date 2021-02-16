@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-    static int number = 10000000;
+    static int number = 10_000_000;
 
     public static void main(String[] args) throws Exception {
 
