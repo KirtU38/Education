@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AddToMiddle {
 
-    static int numOfElements = 100000; // 100.000
+    static int numOfElements = 100_000; // 100.000
 
     public static void main(String[] args) {
 

@@ -162,6 +162,7 @@ hs_err_pid*
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
 *.iml
+*.mp4
 # modules.xml
 # .idea/misc.xml
 # *.ipr
