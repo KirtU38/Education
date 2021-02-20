@@ -1,19 +1,22 @@
-public class Task implements Runnable{
+public class Task implements Runnable {
 
     static int counter;
-    //static boolean isRunning;  // Обычная переменная
     static volatile boolean isRunning; // Слово volatile говорит "кэшировать эту переменную не нужно"
 
-    public Task() {       // Задается значение в конструкторе, что поток идет
+    // Задается значение в конструкторе, что поток идет
+    public Task() {
         isRunning = true;
     }
+
+    // Пока поток идет, инкрементим без остановки значение counter
     public void run() {
-        while(isRunning){  // Пока поток идет, инкрементим без остановки значение counter
+        while (isRunning) {
             counter++;
         }
-        System.out.println("Task: " + counter); // В конце выводим счетчик с пометкой Task
+        System.out.println("Task: " + counter);
     }
-    public void stop(){
+
+    public void stop() {
         isRunning = false;
     }
 }

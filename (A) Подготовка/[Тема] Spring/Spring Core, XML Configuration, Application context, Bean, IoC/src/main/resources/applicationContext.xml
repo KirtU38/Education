@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- Так можно передавать значения переменных нашим Бинам, это удобнее, потому что не всегда
+    хочется лезть в огромный файл Контекста как здесь, для того чтобы поменять одну переменную-->
+    <context:property-placeholder location="classpath:musicPlayer.properties"/>
+
+    <bean id="testBean"
+          class="simpleExample.TestBean">
+        <constructor-arg value="Neil"/>
+    </bean>
+    <bean id="classicalMusic"
+          class="IoC.Classes.ClassicalMusic">
+    </bean>
+    <!-- Это Bean для обьект Music, если мы захотим поменять во всем приложении тип музыки, то просто изменим
+     здесь RockMusic на ClassicalMusic -->
+    <bean id="musicBean"
+          class="IoC.Classes.RockMusic">
+    </bean>
+    <!-- Здесь мы говорим Спрингу "При создании Бина musicPlayerBean передай ему в Конструктор другой Бин musicBean"
+     По другому "При создании Обьекта musicPlayerBeann, передай ему в Конструктор Обьект musicBean с тем типом Music,
+      который там указан(сейчас RockMusic)"
+      Все Бины это Обьекты, поэтому у них не value, а reference(ссылки на этот обьект)-->
+    <bean id="musicPlayerBean"
+          class="IoC.DependencyType.Basic.MusicPlayerIoC">
+        <constructor-arg ref="musicBean"/>
+    </bean>
+
+    <!-- Это как создавать Бины через Сеттеры, в Классе должны быть Сеттеры(неожиданно) и дефолтный Конструктор
+    (если Конструкторов вообще нет, значит Джава всегда создает один дефолтный)
+    Все Бины это Обьекты, поэтому у них не value, а reference(ссылки на этот обьект)-->
+    <!--<bean id="musicPlayerBeanWithSetter"
+          class="IoC.DependencyType.MusicPlayerWithSetter">
+        <property name="name" value="MusicPlayerPhillips"/>
+        <property name="music" ref="musicBean"/>
+    </bean>-->
+
+    <!-- А здесь мы передали значение переменной name через отдельный файл .properties, и прям оттуда теперь можем
+    менять нужные значение, не заходя в этот огромный applicationContext.xml
+    Разкомментируй и закоментируй предыдущий Бин чтобы проверить-->
+    <bean id="musicPlayerBeanWithSetter"
+          class="IoC.DependencyType.MusicPlayerWithSetter">
+        <property name="name" value="${musicPlayerName}"/>
+        <property name="music" ref="${musicPlayerMusic}"/>
+    </bean>
+
+
+    <!-- Создаем Обьект Класса MusicPlayerWithList c Листом из Обьектов Класса Music, чтобы потом сыграть все песни-->
+
+    <!-- Сначала создадим Обьекты всех классов-->
+    <!-- ClassicalMusic уже был создан выше-->
+    <bean id="rapMusic"
+          class="IoC.Classes.RapMusic">
+    </bean>
+    <bean id="rockMusic"
+          class="IoC.Classes.RockMusic">
+    </bean>
+
+    <!-- Чтобы создать Лист нужно сверху добавить xmlns:util="http://www.springframework.org/schema/util",
+    а потом в xsi:schemaLocation добавить
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd
+    также можно добавлять обычные не ссылочные значение, то тэг будет <value> </value>-->
+    <util:list id="listOfMusic" list-class="java.util.ArrayList" value-type="IoC.Classes.Music">
+        <ref bean="classicalMusic"/>
+        <ref bean="rapMusic"/>
+        <ref bean="rockMusic"/>
+    </util:list>
+
+    <!-- Здесь просто создаем Бин из Класса MusicPlayerWithList и кидаем ему в Конструктор Бин Листа-->
+    <bean id="musicPlayerBeanWithList"
+          class="IoC.DependencyType.MusicPlayerWithList">
+        <constructor-arg ref="listOfMusic"/>
+    </bean>
+
+</beans>
+        <!-- Это как создавать Бины через XML файл-->
+        <!-- <constructor-arg value="Neil"/>  здесь мы передаем аргумент в параметр конструктора класса TestBean-->
