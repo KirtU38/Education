@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class Main {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static HashMap<String, String> mapOfCities = fillListWithCities();
+    public static HashMap<String, String> mapOfCities = fillListWithCities();
     // Если товары на 50% дешевле средней стоимости, то они не учитываются
     public static final int PRICE_THRESHOLD = 50;
     // Сколько страниц считать
@@ -225,14 +225,18 @@ public class Main {
             put("нижний Новгород", "nizhniy_novgorod");
             put("ноябрьск", "noyabrsk");
             put("норильск", "norilsk");
-            put("", "");
-            put("", "");
+            //////////////////////////////////
+            put("ростов-на-дону", "rostov-na-donu");
+            put("ханты-мансийск", "hanty-mansiysk");
             put("майма", "mayma");
             put("сант-питербург", "sankt-peterburg");
             put("сант-петербург", "sankt-peterburg");
             put("санкт-питербург", "sankt-peterburg");
             put("санкт-петербург", "sankt-peterburg");
             put("питер", "sankt-peterburg");
+            put("новосибирск", "novosibirsk");
+            put("новосиб", "novosibirsk");
+            put("сиб", "novosibirsk");
         }};
         return map;
     }
