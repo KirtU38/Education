@@ -15,7 +15,7 @@
     <context:property-placeholder location="classpath:musicPlayer.properties"/>
 
     <bean id="testBean"
-          class="exampleWithXml.TestBean">
+          class="simpleExample.TestBean">
         <constructor-arg value="Neil"/>
     </bean>
     <bean id="classicalMusic"
@@ -80,6 +80,27 @@
     <bean id="musicPlayerBeanWithList"
           class="IoC.DependencyType.MusicPlayerWithList">
         <constructor-arg ref="listOfMusic"/>
+    </bean>
+
+
+    <!-- Тестим Bean Life Cycle, что создается первым, инит метод, конструктор или тд-->
+    <bean id="injectedClass"
+          class="BeanLifeCycle.InjectedClass">
+    </bean>
+
+    <bean id="testClass"
+          class="BeanLifeCycle.TestClass"
+          init-method="myInitMethod"
+          destroy-method="myDestroyMethod"
+          scope="prototype">
+        <constructor-arg ref="injectedClass"/>
+    </bean>
+
+    <!-- Тест FactoryMethod-->
+
+    <bean id="factoryClass"
+          class="BeanLifeCycle.factoryMethod.FactoryClass"
+          factory-method="getFactoryObject">
     </bean>
 
 </beans>
