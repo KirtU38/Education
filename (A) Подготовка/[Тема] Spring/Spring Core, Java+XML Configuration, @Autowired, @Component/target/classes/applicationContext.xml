@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--    Это наш @ComponentScan через XML-->
+    <context:component-scan base-package="egor"/>
+    <!--    Это как в пред проекте, можно быстро менять значения переменных через внешний файл,
+    применение смотри в MusicPlayer-->
+    <context:property-placeholder location="musicPlayer.properties"/>
+
+
+</beans>
+        <!-- Это как создавать Бины через XML файл-->
+        <!-- <constructor-arg value="Neil"/>  здесь мы передаем аргумент в параметр конструктора класса TestBean-->
