@@ -9,4 +9,4 @@ public class Main {
     SpringApplication.run(Main.class);
     }
 }
-// Смотри в LoggongAdvice и аннотация в SpringConfig
+// Смотри в LoggongAdvice, PointcutAround и аннотация в SpringConfig

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
+// Здесь Логгер Advice работающий через @Before, @After и тд
+
 @Component
 @Aspect
 public class LoggingAdvice {
@@ -49,11 +51,9 @@ public class LoggingAdvice {
 // Join point - метод, которого мы достигли через Pointcut, мы можем получить его имя, аргументы и
 // тд
 
-
 // @Before - значит Advice будет выполняться вначале метода
 // @After - в конце метода
 // @AfterReturning - после того, как метод вернет значение
-
 
 // Pointcut выражение
 // "execution(* ru.beloshitsky.SpringAOP.Controller.*(..))"
