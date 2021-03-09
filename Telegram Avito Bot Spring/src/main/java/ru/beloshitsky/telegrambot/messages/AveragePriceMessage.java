@@ -26,7 +26,6 @@ public class AveragePriceMessage implements Message {
   InputParses inputParses;
 
   public SendMessage getMessage(String text, String chatId) {
-    log.info("Raw input: {}", text);
     SendMessage message = new SendMessage();
     message.setChatId(chatId);
     Map<String, String> parsedInput = inputParses.getParsedInput(text);
@@ -34,17 +33,17 @@ public class AveragePriceMessage implements Message {
     if (parsedInput != null) {
       String city = parsedInput.get("city");
       String product = parsedInput.get("product");
-      log.info("Parsed - city: {}, product: {}", city, product);
-
       String cityInEnglish = parsedInput.get("cityInEnglish");
-      log.info("cityInEnglish: {}", cityInEnglish);
       double averagePrice = avgPriceMessageService.getAvgOnAllPages(cityInEnglish, product);
-      message.setText(String.format("Средняя цена в городе %s = %,.0f ₽", city, averagePrice));
-      message.setReplyMarkup(getInlineKeyboardMarkup(cityInEnglish, product));
+      if (averagePrice > 0) {
+        message.setText(String.format("Средняя цена в городе %s = %,.0f ₽", city, averagePrice));
+        message.setReplyMarkup(getInlineKeyboardMarkup(cityInEnglish, product));
+      } else {
+        message.setText(String.format("В городе %s нет товара %s", city, product));
+      }
     } else {
       message.setText("Нет такого города");
     }
-
     return message;
   }
 

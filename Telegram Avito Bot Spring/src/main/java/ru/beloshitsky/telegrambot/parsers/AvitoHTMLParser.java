@@ -7,10 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import ru.beloshitsky.telegrambot.configuration.BotConfig;
-import ru.beloshitsky.telegrambot.messages.AveragePriceMessage;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,11 +21,11 @@ import java.util.stream.Collectors;
 public class AvitoHTMLParser {
   BotConfig botConfig;
   AvitoTagsParser tagsParser;
-  Logger logError;
 
-  public List<Double> getListOfPricesFromURL(String URLCityPageProduct) {
+  public List<Double> getListOfPricesFromURL(String URLCityPageProduct)
+      throws NullPointerException {
     Document htmlDoc = getHTML(URLCityPageProduct);
-    if(htmlDoc == null){
+    if (htmlDoc == null) {
       return null;
     }
     Elements elementsPrices = tagsParser.selectPrices(htmlDoc);
@@ -44,17 +42,21 @@ public class AvitoHTMLParser {
   }
 
   private Document getHTML(String URL) {
-    Document htmlDoc;
     log.info(URL);
+    Document htmlDoc;
 
     try {
-      htmlDoc = Jsoup.connect(URL).get();
+      htmlDoc =
+          Jsoup.connect(URL)
+              .userAgent(
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36")
+              .referrer("http://www.google.com")
+              .get();
     } catch (IOException e) {
-      logError.error("Couldn't fetch the URL");
+      log.error("Couldn't fetch the URL");
       e.printStackTrace();
       return null;
     }
-
     return htmlDoc;
   }
 }

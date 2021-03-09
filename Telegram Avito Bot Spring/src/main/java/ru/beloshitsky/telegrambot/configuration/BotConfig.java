@@ -1,31 +1,24 @@
 package ru.beloshitsky.telegrambot.configuration;
 
+import lombok.AccessLevel;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Getter
+@Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@ConfigurationProperties(prefix = "telegrambot")
 @Component
 public class BotConfig {
-
-  @Value("${telegrambot.token}")
   String token;
-
-  @Value("${telegrambot.userName}")
   String userName;
-
-  @Value("${telegrambot.priceThreshold}")
+  String webHookPath;
   int priceThreshold;
-
-  @Value("${telegrambot.pagesLimit}")
   int pagesLimit;
-
-  @Value("${telegrambot.delayBetweenConnections}")
   int delayBetweenConnections;
-
-  @Value("${telegrambot.citiesFile}")
   String citiesFile;
-
-  @Value("${telegrambot.rootURL}")
   String rootURL;
 }

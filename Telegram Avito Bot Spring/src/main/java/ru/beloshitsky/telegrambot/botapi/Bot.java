@@ -2,14 +2,13 @@ package ru.beloshitsky.telegrambot.botapi;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -22,10 +21,14 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Component
-public class Bot extends TelegramLongPollingBot {
+public class Bot extends TelegramWebhookBot {
   BotService botService;
   BotConfig botConfig;
-  Logger logError;
+
+  @Override
+  public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
+    return botService.processUpdate(update);
+  }
 
   @Override
   public String getBotUsername() {
@@ -37,20 +40,19 @@ public class Bot extends TelegramLongPollingBot {
     return botConfig.getToken();
   }
 
-  @SneakyThrows
   @Override
-  public void onUpdateReceived(Update update) {
-    SendMessage message = botService.processUpdate(update);
-    execute(message);
+  public String getBotPath() {
+    return botConfig.getWebHookPath();
   }
 
   @PostConstruct
   public void registerBot() {
     try {
-      TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-      botsApi.registerBot(this);
+      TelegramBotsApi api = new TelegramBotsApi(DefaultBotSession.class);
+      api.registerBot(this, new SetWebhook(botConfig.getWebHookPath()));
+      log.info("Bot Registered");
     } catch (TelegramApiException e) {
-      logError.error("Couldn't register a Bot");
+      log.error("Couldn't register a Bot");
       e.printStackTrace();
     }
   }
