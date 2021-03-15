@@ -3,10 +3,10 @@ package ru.beloshitsky.telegrambot.parsers;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import ru.beloshitsky.telegrambot.configuration.BotConfig;
 
@@ -14,16 +14,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Component
 public class AvitoHTMLParser {
+  Logger log;
   BotConfig botConfig;
   AvitoTagsParser tagsParser;
 
-  public List<Double> getListOfPricesFromURL(String URLCityPageProduct)
-      throws NullPointerException {
+  public List<Double> getListOfPricesFromURL(String URLCityPageProduct) {
     Document htmlDoc = getHTML(URLCityPageProduct);
     if (htmlDoc == null) {
       return null;
@@ -42,9 +41,7 @@ public class AvitoHTMLParser {
   }
 
   private Document getHTML(String URL) {
-    log.info(URL);
     Document htmlDoc;
-
     try {
       htmlDoc =
           Jsoup.connect(URL)

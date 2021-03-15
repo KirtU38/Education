@@ -1,20 +1,27 @@
 package ru.beloshitsky.telegrambot.advices;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-@Slf4j
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Aspect
 @Component
 public class LoggingAdvice {
+  Logger log;
 
-  @Pointcut(value = "execution(* ru.beloshitsky.telegrambot.controller.Controller.*(..))")
+  @Pointcut("execution(* ru.beloshitsky.telegrambot.controller.Controller.*(..))")
   public void controllerPointcut() {}
 
   @Pointcut("execution(* ru.beloshitsky.telegrambot.services.BotService.processUpdate(..))")
@@ -24,17 +31,16 @@ public class LoggingAdvice {
   public void messagesPointcut() {}
 
   @Around("controllerPointcut() || botServicePointcut()")
-  public SendMessage logSendMessageReturnSendMessage(ProceedingJoinPoint proceedingJoinPoint)
+  public SendMessage logSendMessageReturnSendMessage(ProceedingJoinPoint proceedingJP)
       throws Throwable {
 
-    String className =
-        proceedingJoinPoint.getThis().getClass().getSimpleName().replaceAll("(^\\w+).*", "$1");
-    String methodName = proceedingJoinPoint.getSignature().getName();
-    Update update = (Update) proceedingJoinPoint.getArgs()[0];
+    String className = proceedingJP.getThis().getClass().getSimpleName();
+    String methodName = proceedingJP.getSignature().getName();
+    Update update = (Update) proceedingJP.getArgs()[0];
     String text = update.getMessage().getText();
     Long chatId = update.getMessage().getChatId();
     log.info("{}.{} ARGS: text: \"{}\", chatId: \"{}\"", className, methodName, text, chatId);
-    SendMessage returnMessage = (SendMessage) proceedingJoinPoint.proceed();
+    SendMessage returnMessage = (SendMessage) proceedingJP.proceed();
     String returnText = returnMessage.getText();
     String returnChatId = returnMessage.getChatId();
     log.info(
@@ -47,17 +53,16 @@ public class LoggingAdvice {
   }
 
   @Around("messagesPointcut()")
-  public SendMessage logTextAndChatIdReturnSendMessage(ProceedingJoinPoint proceedingJoinPoint)
+  public SendMessage logTextAndChatIdReturnSendMessage(ProceedingJoinPoint proceedingJP)
       throws Throwable {
 
-    String className =
-        proceedingJoinPoint.getThis().getClass().getSimpleName().replaceAll("(^\\w+).*", "$1");
-    String methodName = proceedingJoinPoint.getSignature().getName();
-    Object[] args = proceedingJoinPoint.getArgs();
+    String className = proceedingJP.getThis().getClass().getSimpleName();
+    String methodName = proceedingJP.getSignature().getName();
+    Object[] args = proceedingJP.getArgs();
     Object text = args[0];
     Object chatId = args[1];
     log.info("{}.{} ARGS: text: \"{}\", chatId: \"{}\"", className, methodName, text, chatId);
-    SendMessage returnMessage = (SendMessage) proceedingJoinPoint.proceed();
+    SendMessage returnMessage = (SendMessage) proceedingJP.proceed();
     String returnText = returnMessage.getText();
     String returnChatId = returnMessage.getChatId();
     log.info(
@@ -68,4 +73,14 @@ public class LoggingAdvice {
         returnChatId);
     return returnMessage;
   }
+
+  @Before("execution(* ru.beloshitsky.telegrambot.parsers.AvitoHTMLParser.*(..))")
+  public void logAvitoHTMLParserGetHTML(JoinPoint jp) throws Throwable {
+
+      String className = jp.getThis().getClass().getSimpleName();
+      String methodName = jp.getSignature().getName();
+      Object[] args = jp.getArgs();
+      Object URL = args[0];
+      log.info("{}.{} ARGS: URL: \"{}\"", className, methodName, URL);
+    }
 }

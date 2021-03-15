@@ -1,13 +1,14 @@
 Установка
 
-1) запустить docker
-2) скачать hadoop: docker pull harisekhon/hadoop
-3) docker run -ti -p 8020:8020  -p 8042:8042 -p 8088:8088 -p 19888:19888 -p 50010:50010 -p 50070:50070 -p 50075:50075 harisekhon/hadoop  - запустить наш контейнер с нормальными соответствующими портами
+1) Запустить docker
+2) Скачать hadoop: docker pull harisekhon/hadoop
+3) docker run -ti -p 4040:4040 -p 8020:8020  -p 8032:8032 -p 8088:8088 -p 9000:9000 -p 10020:10020 -p 19888:19888 -p 50010:50010 -p 50020:50020 -p 50070:50070 -p 50075:50075 -p 50090:50090 harisekhon/hadoop     - запустить наш контейнер с нормальными соответствующими портами, 4040 для SPark
 4) 0.0.0.0:50070 - ввести в браузер чтобы попасть в веб интерфейс
 5) sudo vi /etc/hosts - чтобы начать редактировать hosts файл чтобы мы могли получить доступ к нодам по ссылкам
 6) i - чтобы начать редактировать
-7) добавить 0.0.0.0 ИМЯ КОНТЕЙНЕРА
+7) Добавить 0.0.0.0 ИМЯ КОНТЕЙНЕРА
 
+50070 - веб интерфейс
 
 
 1) docker exec -it ИМЯ /bin/bash - зайти внутрь hadoop
@@ -16,15 +17,21 @@
 4) hadoop fs -rmdir /folder/  - удалить папку "folder"
 
 
-50070 - веб интерфейс
-
-
-
-
 docker ps - посмотреть порты hadoop
 docker stop ИМЯ - остановить контейнер
 docker rm ИМЯ - удалить контейнер
+docker cp ОТКУДА КУДА - скопировать файл в докер в какой-то контейнер
+docker cp SparkExample.jar d812d723ccfc:/spark/  - скачать jar файл SparkExample в контейнер d812d723ccfc в папку spark/
 
+
+
+Внутри Hadoop после docker exec -it ИМЯ /bin/bash:
+ll       - показать все файлы
+cd       - перейти в папку
+tar ФАЙЛ - разарзивировать файл
+rm ФАЙЛ  - удалить файл
+mv СТАРЫЙ НОВЫЙ - переименовать
+more ФАЙЛ - посмотреть внутрь файла
 
 
 
@@ -32,3 +39,55 @@ docker rm ИМЯ - удалить контейнер
 
 Name Node - главная нода, которая контролирует Data Nodes
 Data Node - это непосредственно места, где хранятся данные и на которые хранятся replica данных с других Дата нод
+
+
+
+
+
+
+Spark
+
+1) docker exec -it ИМЯ /bin/bash    - подключаемся к Hadoop
+2) Заходим на сайт https://spark.apache.org/downloads.html
+3) Выбираем нужную версию и жмем download
+4) Там находим в HTTP разделе и копируем ссылку
+5) yum install wget - устанавливаем команду wget для скачивания Spark внутрь
+6) wget https://apache-mirror.rbc.ru/pub/apache/spark/spark-2.4.7/spark-2.4.7-bin-hadoop2.7.tgz  - устанавливаем Spark внутрь Hadoop
+7) tar -xvf spark-2.4.7-bin-hadoop2.7.tgz    - разархевируем
+8) rm spark-2.4.7-bin-hadoop2.7.tgz - удалим старый
+9) mv spark-2.4.7-bin-hadoop2.7/ spark - поменяем имя на spark
+10) chown -R root:root ./spark/  - меняем владельца на root, -R означает рекурсивно у всех вложенных файлов и папок
+11) cd spark/  - зайходим внутрь Spark
+
+12) bin/spark-submit --deploy-mode client --class org.apache.spark.examples.SparkPi examples/jars/spark-examples_2.11-2.4.7.jar 10    - отправляет jar файл на Ноду и он там исполняется, deploy-mode бывает Клиент, то есть на машине, на которой запускается, есть также Кластер, class это путь к Классу который будет запускаться в jar файле, и в конце путь к jar файлу, в конце кол-во итераций, то есть 10
+
+
+
+
+
+Запустить свой jar файл - смотри здесь https://go.skillbox.ru/profession/profession-java/java-s-nulya/9879aa9b-bf3d-4677-8c3c-192169f237bf/videolesson
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

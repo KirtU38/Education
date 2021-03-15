@@ -3,7 +3,6 @@ package ru.beloshitsky.telegrambot.messages;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Component
@@ -30,20 +28,20 @@ public class AveragePriceMessage implements Message {
     message.setChatId(chatId);
     Map<String, String> parsedInput = inputParses.getParsedInput(text);
 
-    if (parsedInput != null) {
-      String city = parsedInput.get("city");
-      String product = parsedInput.get("product");
-      String cityInEnglish = parsedInput.get("cityInEnglish");
-      double averagePrice = avgPriceMessageService.getAvgOnAllPages(cityInEnglish, product);
-      if (averagePrice > 0) {
-        message.setText(String.format("Средняя цена в городе %s = %,.0f ₽", city, averagePrice));
-        message.setReplyMarkup(getInlineKeyboardMarkup(cityInEnglish, product));
-      } else {
-        message.setText(String.format("В городе %s нет товара %s", city, product));
-      }
-    } else {
+    if (parsedInput == null) {
       message.setText("Нет такого города");
+      return message;
     }
+    String city = parsedInput.get("city");
+    String product = parsedInput.get("product");
+    String cityInEnglish = parsedInput.get("cityInEnglish");
+    double averagePrice = avgPriceMessageService.getAvgOnAllPages(cityInEnglish, product);
+    if (averagePrice == 0) {
+      message.setText(String.format("В городе %s нет товара %s", city, product));
+      return message;
+    }
+    message.setText(String.format("Средняя цена в городе %s = %,.0f ₽", city, averagePrice));
+    message.setReplyMarkup(getInlineKeyboardMarkup(cityInEnglish, product));
     return message;
   }
 

@@ -2,7 +2,6 @@ package ru.beloshitsky.telegrambot.services;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -12,7 +11,6 @@ import ru.beloshitsky.telegrambot.messages.Message;
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Service
 public class BotService {
