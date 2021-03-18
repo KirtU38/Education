@@ -2,7 +2,7 @@
 1) equals() ,hashcode() и HashMap, всё о хэше и HashMap, HashSet, коллизии, LinkedHashSet и LinkedHashMap, и TreeSet
 2) ArrayList vs LinkedList
 3) Interface vs Absctract class, как в джаве решается Diamond problem, default  методы в Интерфейсахё
-4) Inner classes vs Static inner classes
+4) Inner classes vs Static inner classes, Anonymous, анонимные классы
 5) Serializable
 6) Iterable, Iterator
 7) StringBuilder и StringBuffer, почему не добавлять просто в String всё
@@ -60,6 +60,7 @@
 36) Алгоритмы и задачки (leetcode.com, codingbat.com)
 37) Участи памяти в JVM: Stack, Heap
 38) ENUM
+39) 
 
 
 
@@ -1424,10 +1425,21 @@ Void - тип возвращаемого значения метода, кото
 
 Модификаторы доступа(private, public, protected)
 
-public - доступ везде
-protected - доступ у класса, наследников и в папке класса
-private - доступ только в классе(ничего private не наследуется)
+public:
+1) Везде
 
+protected:
+1) Внутри класса
+2) Наследники
+3) Внутри пакета (в папке)
+
+private:
+1) Внутри класса (всё private не наследуется)
+
+Без модификатора доступа
+package private:
+1) Внутри класса
+2) Внутри пакета (наследникам не передается)
 
 
 
