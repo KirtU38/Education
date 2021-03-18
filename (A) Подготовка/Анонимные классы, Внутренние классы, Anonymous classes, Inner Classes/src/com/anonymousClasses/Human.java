@@ -8,6 +8,15 @@ public class Human {
   }
 
   public void speak() {
-    System.out.println("My age is " + salary);
+    System.out.println("My salary is " + salary);
+    saySecretCode();
+  }
+
+  private void saySecretCode() {
+    System.out.println("My code is 1901923");
+  }
+
+  public int getSalary() {
+    return salary;
   }
 }
