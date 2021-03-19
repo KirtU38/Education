@@ -1,12 +1,11 @@
 package com.Wildcards;
 
-import com.Classes.Human;
-import com.Classes.HumanChild;
+import com.Classes.Humanoid;
+import com.Classes.HumanoidChild;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 public class WildcardAndTypeParameter {
 
@@ -38,11 +37,11 @@ public class WildcardAndTypeParameter {
     // В параметр зайдет "Любая Коллекция наследник Collection в type parameter который наследует от Human"
     // Это "ограничение сверху", то есть отрезаем Классы сверху по Иерархии
     // Метод просто проходит по Коллекции и возвращает её обратно
-    public static <C extends Collection<? extends Human>> C getCollectionOfHumanOrChild(C collection) {
+    public static <C extends Collection<? extends Humanoid>> C getCollectionOfHumanOrChild(C collection) {
 
         System.out.println("Collection<? extends Human>");
-        for (Human human : collection) {
-            System.out.println(human);
+        for (Humanoid humanoid : collection) {
+            System.out.println(humanoid);
         }
         System.out.println();
         return collection;
@@ -53,7 +52,7 @@ public class WildcardAndTypeParameter {
     // В параметр зайдет "Любая Коллекция наследник Collection в type parameter который является Родителем Human"
     // Это "ограничение снизу", то есть отрезаем Классы снизу по Иерархии
     // Метод просто проходит по Коллекции и возвращает её обратно
-    public static <C extends Collection<? super Human>> C getCollectionOfHumanOrParent(C collection) {
+    public static <C extends Collection<? super Humanoid>> C getCollectionOfHumanOrParent(C collection) {
 
         System.out.println("Collection<? extends Human>");
         for (Object o : collection) {
@@ -80,13 +79,13 @@ public class WildcardAndTypeParameter {
 
         // Метод принимает Collection и её наследников с Дженериком Human или его Наследников
         getCollectionOfHumanOrChild(new ArrayList<>());
-        getCollectionOfHumanOrChild(new ArrayList<Human>(List.of(new Human())));
-        getCollectionOfHumanOrChild(new ArrayList<HumanChild>(List.of(new HumanChild())));
+        getCollectionOfHumanOrChild(new ArrayList<Humanoid>(List.of(new Humanoid())));
+        getCollectionOfHumanOrChild(new ArrayList<HumanoidChild>(List.of(new HumanoidChild())));
         // WildcardGenericClass.printCollectionOfHumanOrChild(new ArrayList<LivingOrganism>(List.of(new LivingOrganism())));
 
         // Метод принимает Collection и её наследников с Дженериком Human или его Родителей
         getCollectionOfHumanOrParent(new ArrayList<Object>(List.of(new Object())));
-        getCollectionOfHumanOrParent(new ArrayList<Human>(List.of(new Human())));
+        getCollectionOfHumanOrParent(new ArrayList<Humanoid>(List.of(new Humanoid())));
         // WildcardGenericClass.printCollectionOfHumanOrParent(new ArrayList<HumanChild>(List.of(new HumanChild())));
 
         // Тест List<?>

@@ -1,6 +1,6 @@
 package com.Classes;
 
-public class Human extends LivingOrganism {
+public class Humanoid extends LivingOrganism {
 
     @Override
     public void speak() {

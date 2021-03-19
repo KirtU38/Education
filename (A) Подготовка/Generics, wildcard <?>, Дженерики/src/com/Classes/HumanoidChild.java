@@ -1,6 +1,6 @@
 package com.Classes;
 
-public class HumanChild extends Human {
+public class HumanoidChild extends Humanoid {
 
 
     @Override

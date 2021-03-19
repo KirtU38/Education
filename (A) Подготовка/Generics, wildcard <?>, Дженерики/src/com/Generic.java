@@ -1,15 +1,7 @@
 package com;
 
-import com.Classes.Human;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Generic {
-
     public static void main(String[] args) {
-
-
     }
 }
 // Generic - это средства языка для реализации обобщённого программирования. Это обобщение стирается в рантайме.
