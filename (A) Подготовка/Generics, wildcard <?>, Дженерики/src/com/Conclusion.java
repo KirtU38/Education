@@ -1,6 +1,5 @@
 package com;
 
-import com.Classes.Humanoid;
 import com.test.classes.human.Human;
 import com.test.classes.human.Man;
 

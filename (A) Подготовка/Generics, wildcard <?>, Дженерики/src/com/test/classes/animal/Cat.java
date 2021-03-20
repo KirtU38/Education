@@ -1,4 +1,4 @@
 package com.test.classes.animal;
 
-public class Bird extends Animal{
+public class Cat extends Animal{
 }

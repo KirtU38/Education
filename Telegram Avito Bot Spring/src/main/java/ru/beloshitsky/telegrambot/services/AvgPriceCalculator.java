@@ -15,13 +15,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Service
-public class AvgPriceMessageService {
+public class AvgPriceCalculator {
   BotConfig botConfig;
   AvitoHTMLParser avitoHTMLParser;
 
-  public double getAvgOnAllPages(String cityInEnglish, String product) {
-    List<List<Double>> listOfPricesOnEveryPage = new ArrayList<>();
+  public double getAvgPrice(String cityInEnglish, String product) {
+    List<List<Double>> listOfPricesOnAllPages = getPricesFromEveryPage(cityInEnglish, product);
+    if (listOfPricesOnAllPages == null) {
+      return 0;
+    }
+    return avgPriceFromAllPages(listOfPricesOnAllPages);
+  }
 
+  private List<List<Double>> getPricesFromEveryPage(String cityInEnglish, String product) {
+    List<List<Double>> listOfPricesOnAllPages = new ArrayList<>();
+    
     for (int page = 1; page <= botConfig.getPagesLimit(); page++) {
       String URLCityPageProduct =
           botConfig.getRootURL() + cityInEnglish + "?p=" + page + "&q=" + product;
@@ -30,16 +38,15 @@ public class AvgPriceMessageService {
       if (listOfPricesOnPage == null) {
         break;
       }
-      listOfPricesOnEveryPage.add(listOfPricesOnPage);
+      listOfPricesOnAllPages.add(listOfPricesOnPage);
     }
-
-    if (listOfPricesOnEveryPage.size() == 0) {
-      return 0;
+    if (listOfPricesOnAllPages.size() == 0) {
+      return null;
     }
-    return calculateAvgPriceFromAllPages(listOfPricesOnEveryPage);
+    return listOfPricesOnAllPages;
   }
 
-  private double calculateAvgPriceFromAllPages(List<List<Double>> listOfResultsOnEveryPage) {
+  private double avgPriceFromAllPages(List<List<Double>> listOfResultsOnEveryPage) {
     List<Double> listOfPricesFromAllPages =
         listOfResultsOnEveryPage.stream()
             .filter(list -> list != null)

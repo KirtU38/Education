@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.beloshitsky.telegrambot.configuration.BotConfig;
 import ru.beloshitsky.telegrambot.parsers.InputParses;
-import ru.beloshitsky.telegrambot.services.AvgPriceMessageService;
+import ru.beloshitsky.telegrambot.services.AvgPriceCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,30 +19,29 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Component
 public class AveragePriceMessage implements Message {
-  AvgPriceMessageService avgPriceMessageService;
-  BotConfig botConfig;
+  AvgPriceCalculator avgPriceCalculator;
   InputParses inputParses;
+  BotConfig botConfig;
+  KeyboardMarkup keyboard;
 
-  public SendMessage getMessage(String text, String chatId) {
-    SendMessage message = new SendMessage();
-    message.setChatId(chatId);
+  public void generateMessage(SendMessage message, String text) {
     Map<String, String> parsedInput = inputParses.getParsedInput(text);
 
     if (parsedInput == null) {
       message.setText("Нет такого города");
-      return message;
+      return;
     }
     String city = parsedInput.get("city");
     String product = parsedInput.get("product");
     String cityInEnglish = parsedInput.get("cityInEnglish");
-    double averagePrice = avgPriceMessageService.getAvgOnAllPages(cityInEnglish, product);
+    double averagePrice = avgPriceCalculator.getAvgPrice(cityInEnglish, product);
+
     if (averagePrice == 0) {
       message.setText(String.format("В городе %s нет товара %s", city, product));
-      return message;
+      return;
     }
     message.setText(String.format("Средняя цена в городе %s = %,.0f ₽", city, averagePrice));
-    message.setReplyMarkup(getInlineKeyboardMarkup(cityInEnglish, product));
-    return message;
+    message.setReplyMarkup(keyboard.getAvitoLinkMarkup(cityInEnglish, product));
   }
 
   private InlineKeyboardMarkup getInlineKeyboardMarkup(String cityInEnglish, String product) {
@@ -60,7 +59,6 @@ public class AveragePriceMessage implements Message {
     // Клавиатура
     InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
     keyboard.setKeyboard(rowList);
-
     return keyboard;
   }
 

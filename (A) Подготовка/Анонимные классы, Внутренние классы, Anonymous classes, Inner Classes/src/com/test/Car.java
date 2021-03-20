@@ -12,8 +12,8 @@ public class Car {
   public Car(
       String carName, int numberOfWheels, String wheelsBrand, int enginePower, String engineName) {
 
-    wheels = this.new Wheels(numberOfWheels, wheelsBrand);
-    engine = this.new Engine(enginePower, engineName);
+    wheels = new Wheels(numberOfWheels, wheelsBrand);
+    engine = new Engine(enginePower, engineName);
     this.carName = carName;
   }
 

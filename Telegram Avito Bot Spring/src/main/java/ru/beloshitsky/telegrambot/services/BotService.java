@@ -16,25 +16,32 @@ import java.util.Map;
 public class BotService {
   Map<String, Message> mapOfMessages;
 
-  public BotService(@Qualifier("mapOfMessages") Map<String, Message> mapOfMessages) {
+  public BotService(
+      @Qualifier("mapOfMessages") Map<String, Message> mapOfMessages) {
     this.mapOfMessages = mapOfMessages;
   }
 
   public SendMessage processUpdate(Update update) {
-    SendMessage message = null;
+    SendMessage message = new SendMessage();
 
     if (update.hasMessage() && update.getMessage().hasText()) {
       String text = update.getMessage().getText().toLowerCase(Locale.ROOT);
-      String chatId = String.valueOf(update.getMessage().getChatId());
-      String command = text;
-
-      if (matchesCityAndProduct(command)) {
-        command = "найти среднюю цену";
-      }
-
-      message = mapOfMessages.getOrDefault(command, mapOfMessages.get("ошибка")).getMessage(text, chatId);
+      String command = validateInput(text);
+      generateMessage(message, command, text);
     }
+    message.setChatId(String.valueOf(update.getMessage().getChatId()));
     return message;
+  }
+
+  private void generateMessage(SendMessage message, String command, String text) {
+    mapOfMessages.getOrDefault(command, mapOfMessages.get("ошибка")).generateMessage(message, text);
+  }
+
+  private String validateInput(String command) {
+    if (matchesCityAndProduct(command)) {
+      command = "найти среднюю цену";
+    }
+    return command;
   }
 
   private boolean matchesCityAndProduct(String text) {

@@ -1,17 +1,21 @@
 package ru.beloshitsky.telegrambot.messages;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Component
 public class WrongCommandMessage implements Message {
+    KeyboardMarkup keyboardMarkup;
 
     @Override
-    public SendMessage getMessage(String text, String chatId) {
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
+    public void generateMessage(SendMessage message, String text) {
         message.setText("Неверная команда");
-        return message;
+        message.setReplyMarkup(keyboardMarkup.getHelpButtonMarkup());
     }
 
     @Override
