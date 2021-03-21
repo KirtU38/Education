@@ -18,6 +18,7 @@ public class Controller {
 
   @PostMapping("/")
   public BotApiMethod<?> receiveUpdate(@RequestBody Update update) throws Exception {
+    System.out.println(update);
     return bot.onWebhookUpdateReceived(update);
   }
 }

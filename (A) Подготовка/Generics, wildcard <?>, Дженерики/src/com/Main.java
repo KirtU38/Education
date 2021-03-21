@@ -6,7 +6,7 @@ import com.test.classes.human.Man;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Conclusion {
+public class Main {
   public static void main(String[] args) {
 
     // Обычные массивы в Джаве Ковариантны

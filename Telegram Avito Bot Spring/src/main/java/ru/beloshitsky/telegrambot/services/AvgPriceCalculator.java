@@ -21,7 +21,7 @@ public class AvgPriceCalculator {
 
   public double getAvgPrice(String cityInEnglish, String product) {
     List<List<Double>> listOfPricesOnAllPages = getPricesFromEveryPage(cityInEnglish, product);
-    if (listOfPricesOnAllPages == null) {
+    if (listOfPricesOnAllPages.size() == 0) {
       return 0;
     }
     return avgPriceFromAllPages(listOfPricesOnAllPages);
@@ -29,7 +29,7 @@ public class AvgPriceCalculator {
 
   private List<List<Double>> getPricesFromEveryPage(String cityInEnglish, String product) {
     List<List<Double>> listOfPricesOnAllPages = new ArrayList<>();
-    
+
     for (int page = 1; page <= botConfig.getPagesLimit(); page++) {
       String URLCityPageProduct =
           botConfig.getRootURL() + cityInEnglish + "?p=" + page + "&q=" + product;
@@ -40,13 +40,10 @@ public class AvgPriceCalculator {
       }
       listOfPricesOnAllPages.add(listOfPricesOnPage);
     }
-    if (listOfPricesOnAllPages.size() == 0) {
-      return null;
-    }
     return listOfPricesOnAllPages;
   }
 
-  private double avgPriceFromAllPages(List<List<Double>> listOfResultsOnEveryPage) {
+  public double avgPriceFromAllPages(List<List<Double>> listOfResultsOnEveryPage) {
     List<Double> listOfPricesFromAllPages =
         listOfResultsOnEveryPage.stream()
             .filter(list -> list != null)
@@ -55,15 +52,12 @@ public class AvgPriceCalculator {
 
     double averagePriceCommon =
         listOfPricesFromAllPages.stream().mapToDouble(e -> e).average().getAsDouble();
-
     double deletionThreshold = (averagePriceCommon / 100) * botConfig.getPriceThreshold();
-    double averagePriceFiltered =
-        listOfPricesFromAllPages.stream()
-            .filter(p -> (averagePriceCommon - p) < deletionThreshold)
-            .mapToDouble(p -> p)
-            .average()
-            .getAsDouble();
 
-    return averagePriceFiltered;
+    return listOfPricesFromAllPages.stream()
+        .filter(p -> (averagePriceCommon - p) < deletionThreshold)
+        .mapToDouble(p -> p)
+        .average()
+        .getAsDouble();
   }
 }
