@@ -14,11 +14,11 @@ import ru.beloshitsky.telegrambot.botapi.Bot;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
 public class Controller {
+  
   Bot bot;
 
   @PostMapping("/")
   public BotApiMethod<?> receiveUpdate(@RequestBody Update update) throws Exception {
-    System.out.println(update);
     return bot.onWebhookUpdateReceived(update);
   }
 }

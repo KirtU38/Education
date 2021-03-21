@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.beloshitsky.telegrambot.advices.annotations.LogArgsAndRetval;
 import ru.beloshitsky.telegrambot.messages.Message;
 
 import java.util.Locale;
@@ -21,6 +22,7 @@ public class BotService {
     this.mapOfMessages = mapOfMessages;
   }
 
+  @LogArgsAndRetval
   public SendMessage processUpdate(Update update) {
     SendMessage message = new SendMessage();
 

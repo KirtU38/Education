@@ -3,6 +3,7 @@ package ru.beloshitsky.telegrambot.advices;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.juli.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -10,6 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -45,22 +47,28 @@ public class LoggingAdvice {
   @Pointcut("messageGenerateMessageMethods() || avitoHTMLParserMethods()")
   public void argsPointcuts() {}
 
-  @Around("argsAndRetvalPointcuts()")
+  // @Around("argsAndRetvalPointcuts()")
+  @Around("@annotation(LogArgsAndRetval)")
   public Object logMethodArgsAndRetval(ProceedingJoinPoint pjp) throws Throwable {
-    String className = pjp.getThis().getClass().getSimpleName();
+    String className = pjp.getTarget().toString();
+    Logger log = LoggerFactory.getLogger(className);
     String methodName = pjp.getSignature().getName();
     String args = Arrays.toString(pjp.getArgs());
-    log.info("{}.{} ARGS: {}", className, methodName, args);
+    log.info("{} ARGS: {}", methodName, args);
     Object retval = pjp.proceed();
-    log.info("{}.{} RETVAL: {} ", className, methodName, retval);
+    log.info("{} RETVAL: {} ", methodName, retval);
     return retval;
   }
 
   @Before("argsPointcuts()")
   public void logMethodArgs(JoinPoint jp) throws Throwable {
-    String className = jp.getThis().getClass().getSimpleName();
+    String className = jp.getTarget().toString();
+    Logger log = LoggerFactory.getLogger(className);
     String methodName = jp.getSignature().getName();
     String args = Arrays.toString(jp.getArgs());
-    log.info("{}.{} ARGS: {}", className, methodName, args);
+    log.info("{} ARGS: {}", methodName, args);
   }
 }
+
+
+// старый аспект telegram bot old aspect,  

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import ru.beloshitsky.telegrambot.advices.annotations.LogArgs;
 import ru.beloshitsky.telegrambot.util.KeyboardMarkup;
 
 @RequiredArgsConstructor
@@ -13,6 +14,7 @@ import ru.beloshitsky.telegrambot.util.KeyboardMarkup;
 public class StartMessage implements Message {
   KeyboardMarkup keyboardMarkup;
 
+  @LogArgs
   @Override
   public void generateMessage(SendMessage message, String text) {
     message.setText(

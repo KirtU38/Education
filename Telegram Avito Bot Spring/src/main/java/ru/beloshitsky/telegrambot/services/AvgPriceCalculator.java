@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import ru.beloshitsky.telegrambot.advices.annotations.LogArgsAndRetval;
 import ru.beloshitsky.telegrambot.configuration.BotConfig;
 import ru.beloshitsky.telegrambot.parsers.AvitoHTMLParser;
 
@@ -19,6 +20,7 @@ public class AvgPriceCalculator {
   BotConfig botConfig;
   AvitoHTMLParser avitoHTMLParser;
 
+  @LogArgsAndRetval
   public double getAvgPrice(String cityInEnglish, String product) {
     List<List<Double>> listOfPricesOnAllPages = getPricesFromEveryPage(cityInEnglish, product);
     if (listOfPricesOnAllPages.size() == 0) {

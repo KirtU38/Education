@@ -1,11 +1,8 @@
 package ru.beloshitsky.telegrambot.configuration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import ru.beloshitsky.telegrambot.botapi.Bot;
 import ru.beloshitsky.telegrambot.messages.Message;
 
 import java.io.IOException;
@@ -38,10 +35,5 @@ public class SpringConfig {
   @Bean("mapOfMessages")
   public Map<String, Message> mapOfMessages(List<Message> listOfMessages) {
     return listOfMessages.stream().collect(Collectors.toMap(Message::getId, Function.identity()));
-  }
-
-  @Bean
-    public Logger log(){
-      return LoggerFactory.getLogger(Bot.class);
   }
 }
