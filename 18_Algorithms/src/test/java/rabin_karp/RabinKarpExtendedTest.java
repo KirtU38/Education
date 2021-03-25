@@ -12,7 +12,7 @@ class RabinKarpExtendedTest {
 
     @Test
     @DisplayName("Искомая подстрока есть в тексте")
-    public void foundTest(){
+    public void foundTest() throws Exception {
         String text = "ASDFGHJKLASDDSADFAAFASFASFASSDASASDASDASFASFASFASFDASFAFGDSAGFADAFDSFA";
         String query = "AFASFASFAS";
         RabinKarpExtended rabin = new RabinKarpExtended(text);
@@ -27,7 +27,7 @@ class RabinKarpExtendedTest {
 
     @Test
     @DisplayName("Искомой подстраки в тексте нет")
-    public void notFoundTest(){
+    public void notFoundTest() throws Exception {
         String text = "ASDF";
         String query = "SDFA";
         RabinKarpExtended rabin = new RabinKarpExtended(text);
@@ -44,7 +44,7 @@ class RabinKarpExtendedTest {
 
     @Test
     @DisplayName("В искомой подстроке есть символ не из алфавита")
-    public void withAnotherCharSetTest(){
+    public void withAnotherCharSetTest() throws Exception {
         String text = "asdfgadasfgsdgsadgasgsadgasdgasdgsdgasdgasdgasdfasg";
         String query = "asdfga7";
         RabinKarpExtended rabin = new RabinKarpExtended(text);
@@ -54,7 +54,7 @@ class RabinKarpExtendedTest {
 
     @Test
     @DisplayName("Пустая строка")
-    public void emptyString(){
+    public void emptyString() throws Exception {
         String text = "";
         String query = "";
         RabinKarpExtended rabin = new RabinKarpExtended(text);
