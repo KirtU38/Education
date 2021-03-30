@@ -32,3 +32,15 @@ COM+W—CTRL+SHIFT+< - выделить весь блок(метод) со ск�
 
 
 
+
+
+
+
+
+выключить клавиатуру
+sudo kextunload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/
+
+включить клавиатуру
+sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/
+
+
