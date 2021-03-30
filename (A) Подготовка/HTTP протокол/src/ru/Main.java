@@ -16,7 +16,6 @@ public class Main {}
 // Client ->     request (GET)     -> Server
 // Client <- response (HTML, JSON) <- Server
 
-
 // Request line - строка запроса, в ней указывается метод(GET, POST), потом адрес на который
 // делается запрос(здесь "/", значит это корневой адрес), а потом версия HTTP.
 
@@ -50,11 +49,6 @@ public class Main {}
 
 // Здесь body через пробел             <- Body
 
-
-
-
-
-
 // Response
 
 // HTTP/1.1 200 OK         <- Response line
@@ -73,3 +67,20 @@ public class Main {}
 // X-Content-Type-Options: nosniff
 
 // *Какой-то HTML файл*               <- Body
+
+
+
+
+// URL encoding
+// Система дресации рассчитана только на Латинские ASCII символы, поэтому Русские буквы на самом
+// деле выглядят примерно так %D0%84, это называется URL encoding.
+
+// URL encoding - преобразование НЕ ASCII символов в ASCII символы.
+
+// Пример:
+// Если в Google ввести поиск "джава", то он выдаст:
+// https://www.google.com/search?q=джава
+
+// Однако если скопировать этот текст и вставить, то получится вот так, это реальный текст,
+// просто браузер произвел URL decoding чтобы выглядело красиво:
+// https://www.google.com/search?q=%D0%B4%D0%B6%D0%B0%D0%B2%D0%B0
