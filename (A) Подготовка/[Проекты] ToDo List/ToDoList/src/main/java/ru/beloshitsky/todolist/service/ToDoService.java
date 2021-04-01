@@ -1,13 +1,12 @@
-package main.service;
+package ru.beloshitsky.todolist.service;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import main.model.ToDo;
-import main.model.ToDoRepository;
+import ru.beloshitsky.todolist.model.ToDo;
+import ru.beloshitsky.todolist.model.ToDoRepository;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,14 +24,15 @@ public class ToDoService {
   }
 
   public ToDo getToDoById(int id) {
-    if (toDoRepository.findById(id).isEmpty()) {
+    Optional<ToDo> toDo = toDoRepository.findById(id);
+    if (toDo.isEmpty()) {
       return null;
     }
-    return toDoRepository.findById(id).get();
+    return toDo.get();
   }
 
   public ToDo addToDo(ToDo toDo) {
-    toDo.setDate(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date()));
+    toDo.setDate(new Date());
     toDoRepository.save(toDo);
     return toDo;
   }
@@ -40,10 +40,11 @@ public class ToDoService {
   public void updateToDoById(int id, String text) {
     Optional<ToDo> updatedToDo = toDoRepository.findById(id);
     if (updatedToDo.isPresent()) {
-      updatedToDo.get().setId(id);
-      updatedToDo.get().setText(text);
-      updatedToDo.get().setDate(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date()));
-      toDoRepository.save(updatedToDo.get());
+      ToDo toDo = updatedToDo.get();
+      toDo.setId(id);
+      toDo.setText(text);
+      toDo.setDate(new Date());
+      toDoRepository.save(toDo);
     }
   }
 

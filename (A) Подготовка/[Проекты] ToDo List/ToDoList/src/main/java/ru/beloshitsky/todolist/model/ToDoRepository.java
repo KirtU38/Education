@@ -1,4 +1,4 @@
-package main.model;
+package ru.beloshitsky.todolist.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

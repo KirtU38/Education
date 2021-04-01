@@ -1,14 +1,15 @@
-package main;
+package ru.beloshitsky.todolist.controllers;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import main.model.ToDo;
-import main.service.ToDoService;
+import ru.beloshitsky.todolist.model.ToDo;
+import ru.beloshitsky.todolist.service.ToDoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
+import java.util.List;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -33,8 +34,9 @@ public class ToDoController {
   }
 
   @PostMapping
-  public ToDo add(ToDo toDo) {
-    return toDoService.addToDo(toDo);
+  public ResponseEntity<ToDo> add(ToDo toDo) {
+    ToDo addedToDo = toDoService.addToDo(toDo);
+    return ResponseEntity.ok(addedToDo);
   }
 
   @PutMapping("{id}")
@@ -50,8 +52,12 @@ public class ToDoController {
   }
 
   @DeleteMapping
-  public List<ToDo> deleteAll() {
-    return toDoService.deleteAllToDos();
+  public ResponseEntity<List<ToDo>> deleteAll() {
+    List<ToDo> listAfterClearing = toDoService.deleteAllToDos();
+    if (listAfterClearing.isEmpty()) {
+      return ResponseEntity.ok(listAfterClearing);
+    }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 
   @DeleteMapping("{id}")
