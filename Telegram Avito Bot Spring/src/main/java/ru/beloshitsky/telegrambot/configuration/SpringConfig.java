@@ -1,8 +1,10 @@
 package ru.beloshitsky.telegrambot.configuration;
 
-import org.springframework.boot.SpringBootConfiguration;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import ru.beloshitsky.telegrambot.messages.Message;
 
 import java.io.IOException;
@@ -14,8 +16,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@EnableAspectJAutoProxy
-@SpringBootConfiguration
+@Slf4j
+@ComponentScan("ru/beloshitsky/telegrambot")
+@PropertySource("classpath:application.properties")
+@Configuration
 public class SpringConfig {
 
   @Bean("mapOfCities")
@@ -34,6 +38,7 @@ public class SpringConfig {
 
   @Bean("mapOfMessages")
   public Map<String, Message> mapOfMessages(List<Message> listOfMessages) {
-    return listOfMessages.stream().collect(Collectors.toMap(Message::getId, Function.identity()));
+    Map<String, Message> collect = listOfMessages.stream().collect(Collectors.toMap(Message::getId, Function.identity()));
+    return collect;
   }
 }

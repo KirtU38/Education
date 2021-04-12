@@ -1,13 +1,11 @@
 package ru.beloshitsky.telegrambot;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.beloshitsky.telegrambot.configuration.SpringConfig;
 
-@SpringBootApplication
-@EnableScheduling
 public class Main {
   public static void main(String[] args) {
-    SpringApplication.run(Main.class, args);
+    AnnotationConfigApplicationContext applicationContext =
+        new AnnotationConfigApplicationContext(SpringConfig.class);
   }
 }

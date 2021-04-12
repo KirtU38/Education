@@ -7,7 +7,7 @@ import java.util.concurrent.Future;
 
 public class Loader {
 
-    private static final String FILE_NAME = "res/data-1572M.xml";
+    private static final String FILE_NAME = "/Users/egor/IdeaProjects/Resources/data-1572M.xml";
     public static int SIZE = 20_000_000;
     public static final ExecutorService service = Executors.newFixedThreadPool(4);
 

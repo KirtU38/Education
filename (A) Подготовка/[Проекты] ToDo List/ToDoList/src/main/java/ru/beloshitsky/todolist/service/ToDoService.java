@@ -3,9 +3,9 @@ package ru.beloshitsky.todolist.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Service;
 import ru.beloshitsky.todolist.model.ToDo;
 import ru.beloshitsky.todolist.model.ToDoRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,12 +23,9 @@ public class ToDoService {
     return new ArrayList<>(toDoRepository.findAll());
   }
 
-  public ToDo getToDoById(int id) {
+  public ToDo getToDo(int id) {
     Optional<ToDo> toDo = toDoRepository.findById(id);
-    if (toDo.isEmpty()) {
-      return null;
-    }
-    return toDo.get();
+    return toDo.orElse(null);
   }
 
   public ToDo addToDo(ToDo toDo) {
@@ -37,15 +34,17 @@ public class ToDoService {
     return toDo;
   }
 
-  public void updateToDoById(int id, String text) {
+  public ToDo updateToDo(int id, String text) {
     Optional<ToDo> updatedToDo = toDoRepository.findById(id);
     if (updatedToDo.isPresent()) {
-      ToDo toDo = updatedToDo.get();
-      toDo.setId(id);
-      toDo.setText(text);
-      toDo.setDate(new Date());
-      toDoRepository.save(toDo);
+      ToDo newToDo = updatedToDo.get();
+      newToDo.setId(id);
+      newToDo.setText(text);
+      newToDo.setDate(new Date());
+      toDoRepository.save(newToDo);
+      return newToDo;
     }
+    return null;
   }
 
   public void deleteToDo(int id) {

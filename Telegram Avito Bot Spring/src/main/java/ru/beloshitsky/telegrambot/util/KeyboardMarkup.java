@@ -18,8 +18,9 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Component
 public class KeyboardMarkup {
+
   BotConfig botConfig;
-  
+
   public ReplyKeyboardMarkup getHelpButtonMarkup() {
     // Кнопка
     KeyboardButton button = new KeyboardButton();
@@ -34,7 +35,7 @@ public class KeyboardMarkup {
     replyKeyboardMarkup.setKeyboard(listOfRows);
     return replyKeyboardMarkup;
   }
-  
+
   public InlineKeyboardMarkup getAvitoLinkMarkup(String cityInEnglish, String product) {
     // Кнопка
     InlineKeyboardButton button = new InlineKeyboardButton();

@@ -109,9 +109,9 @@ $(function () {
         var dataArray = $('#edit-form form').serializeArray();
         var todoId = dataArray[0]['value'];
         var data = dataArray[1]['name'] + '=' + dataArray[1]['value'];
-        
+
         $.ajax({
-            method: "PUT",
+            method: "PATCH",
             url: '/todos/' + todoId,
             data: data,
             success: function () {

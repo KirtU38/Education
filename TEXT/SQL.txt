@@ -1,0 +1,1367 @@
+Установка с Докера
+
+Скачать Docker - это приложение которое запускает "контейнеры"
+
+docker pull mysql - ввести в командной строке Terminal
+
+docker run --rm --name skill-sql -e MYSQL_ROOT_PASSWORD=test -e MYSQL_DATABASE=skillbox -d mysql     - ввести в Терминал, стартует сервер
+
+docker exec -it skill-sql mysql -ptest    - ввести в Терминале, подключиться к MySQL серверу
+
+exit - выйти (отключиться) из MySQL чтобы загрузить "дамп"
+
+docker exec -i skill-sql mysql -ptest --default-character-set=utf8 skillbox < /users/egor/downloads/skillbox_sql_dump.sql  - в Терминале, загрузить дамп , где "./some/folder/dump.sql" - это путь к файлу у меня было "/users//egor/downloads/skillbox.sql"
+
+docker exec -it skill-sql mysql -ptest     - подключиться заново
+
+SHOW TABLES IN skillbox;        - ввести название таблицы и проверить все ли загрузилось
+
+
+charset utf8;    - в терминале, если ????? вместо русских букв
+
+
+
+
+
+Запуск
+
+docker run --rm --name skill-sql -e MYSQL_ROOT_PASSWORD=test -e MYSQL_DATABASE=skillbox -d mysql - запускает сервер, его можно посмотреть в самом Докере
+
+docker exec -i skill-sql mysql -ptest --default-character-set=utf8 skillbox < /users/egor/downloads/skillbox_sql_dump.sql - загружаем дамп
+
+docker exec -it skill-sql mysql -ptest - подключаемся к mysql серверу
+
+show tables in skillbox; - показать таблицы
+
+USE skillbox; - начать использовать таблицу
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Нормальная установка
+
+Скачать MySQL с MySQL community server в интернете
+
+Скачать установочник
+
+Установить
+
+Поставить пароль(обычно прям в установочнике)
+
+В Настойках системы в самом Маке найти новый значок MySQL и нажать там Start MySQL SERVER
+
+СРАЗУ КАК ПОДКЛЮЧИЛИСЬ, ВВЕСТИ:
+charset utf8;    - в терминале, если ????? вместо русских букв, нужно ввести именно вначале
+
+ПЕРВЫЙ СПОСОБ ПОДКЛЮЧЕНИЯ К MYSQL
+1) echo 'export PATH=/usr/local/mysql/bin:$PATH' >> ~/.bash_profile    - открыть терминал и ввести там эту строчку, это добавит знание об sql в bash_profile
+
+mysql -u root -p    - потом ввести это и ввести пароль, это подключит нас к серверу, а дальше всё просто(если сервер не запущен то ниче не будет)
+
+
+ВТОРОЙ СПОСОБ
+2) /usr/local/mysql/bin/mysql -u root -ppassword     - это подключит нас к sql, где сначала идет просто путь до запуска mysql, потом юзер и пароль
+
+
+
+
+
+
+create database name;
+
+drop database name;
+
+show databases;
+
+use database name -> source d:/usr.sql   - загрузить в базу данных дамп
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                 !!!Databases, БД, базы данных, создать бащу данных!!!
+
+
+CREATE DATABASE name;
+
+DROP DATABASE name;
+
+SHOW DATABASES;        - показать все базы данных на сервере
+
+USE DATABASE name      - выбрать таблицу
+
+SOURCE d:/usr.sql      - после выбора таблицы, можно загрузить в базу данных дамп
+
+
+
+
+
+                                                                  !!!Table, таблицы, запросы к таблицам!!!
+
+
+CREATE TABLE stock(
+    id int AUTO_INCREMENT,
+    shopID INT,
+    markID INT,
+    quantity INT,
+    PRIMARY KEY(id),
+    FOREIGN KEY(shopID) REFERENCES shop(id),   - несколько foreign keys
+    FOREIGN KEY(markID) REFERENCES mark(id));
+
+
+CREATE TABLE mark(
+    id int AUTO_INCREMENT,
+    name VARCHAR(255),
+    manufacturerID int,
+    PRIMARY KEY(id),
+    FOREIGN KEY(manufacturerID)
+    REFERENCES manufacturer(id));
+
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)   - ЛУЧШИЙ ПРИМЕР
+);
+
+
+
+CREATE TABLE PurchaseList(
+    student_name VARCHAR(500) AUTO_INCREMENT,   - VARCHAR = String, 500 это ограничение кол-ва знаков
+    course_name VARCHAR(500), 
+    price INT,                  
+    subscription_date DATETIME
+    PRIMARY KEY(student_name));   - PRIMARY KEY в конце
+
+CREATE TABLE Users(                  - Так тоже можно таблицу создать
+id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(255),
+age INT);
+
+DROP TABLE Courses;  - удалить всю таблицу Courses;
+
+ALTER TABLE Users         - добавить в таблицу Users колонку(column) с Email'ом
+ADD Email varchar(255);
+
+ALTER TABLE Users   - удалить из таблицы колонку(column) age
+DROP COLUMN age;    
+
+ALTER TABLE Users                - изменить тип данных конолнки name на VARCHAR(500)
+MODIFY COLUMN name VARCHAR(500);
+
+                                                                   !!!Rows, запросы к полям в таблице, ряды!!!
+
+INSERT INTO Students (name, age, id) VALUES ("Egor", 25, 101) - вставить
+DELETE FROM Users WHERE id = 24;
+UPDATE Students SET name = "Misha" WHERE id = 101; - изменить значение
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Список команд:
+
+USE skillbox; - выбрать раздел базы данных skillbox
+
+SHOW TABLES; - показать таблицы внутри
+
+DESCRIBE Students; - показать поле Students внутри skillbox как таблицу
+
+INSERT INTO ... (name, age) VALUES ("Egor", 25) - вставить
+
+SELECT ... FROM ...
+   1) DISTINCT - SELECT DISTINCT name FROM Students;
+
+WHERE
+
+ORDER BY
+   1) DESC
+   2) ACS
+
+LIMIT
+
+SELECT ... AS ...
+
+JOIN ... ON ...
+
+() UNION ()
+   1)UNION ALL
+
+SELECT AVG() - среднее
+
+MAX - максимальное
+
+MIN - минимальное
+
+SUM - сумма всех значений
+
+COUNT - посчитать кол-во строк или чего либо
+
+GROUP BY - для множественной агрегации, например AVG() выведет не 1 строку, а 6 строк разного типа и средние значения для них
+
+DATEDIFF() - DATEDIFF(NOW(), date2) вывести разницу в датах в днях, NOW() выводит сейчас
+
+IF(age > 50, "OLD", "YOUNG") - создать колонку по названию условия, и в колонке писать "OLD" если условие выполняется и "YOUNG" если нет
+
+CONCAT("My name is ", name) - создать колонку с текстом который внутри, принимает переменные
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Все команды заканчиваются на ; или \G
+
+Дамп - это сами таблицы, их нужно загрузить на сервер перед тем как работать с ними
+
+
+
+
+USE skillbox; - выбрать раздел базы данных skillbox
+
+SHOW TABLES; - показать таблицы внутри
+
+DESCRIBE Students; - показать поле Students внутри skillbox как таблицу
+
+describe Students\G - посмотреть структуру таблицы Students внутри таблицы, \G чтобы вывести инфу построчно
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         
+
+
+
+
+
+
+
+
+
+                                                   Добавление и удаление из таблицы, модификация данных, table, alter table
+
+
+
+
+
+Вставка/Удаление INSERT INTO, UPDATE, DROP:
+
+INSERT INTO Students (name, age, id) VALUES ("Egor", 25, 101) - вставить
+
+UPDATE Students SET name = "Misha" WHERE id = 101; - изменить значение
+
+DROP TABLE Courses;  - удалить всю таблицу Couurses;
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE, Таблицы:
+
+CREATE TABLE PurchaseList(
+student_name VARCHAR(500) AUTO_INCREMENT PRIMARY_KEY,   - VARCHAR = String, 500 это ограничение кол-ва знаков
+course_name VARCHAR(500), 
+price INT,                  
+subscription_date DATETIME); - DATETIME тип переменной даты, очень удобно
+
+
+ИЛИ
+
+
+CREATE TABLE PurchaseList(
+student_name VARCHAR(500) AUTO_INCREMENT,   - VARCHAR = String, 500 это ограничение кол-ва знаков
+course_name VARCHAR(500), 
+price INT,                  
+subscription_date DATETIME
+PRIMARY_KEY (student_name));   - PRIMARY KEY в конце
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Создание Foreign Key
+
+
+CREATE TABLE Users(       - создаем таблицу юзеров с уник ID
+id int AUTO_INCREMENT,
+name VARCHAR(50),
+age INT,
+PRIMARY KEY (id)
+);
+
+
+
+
+CREATE TABLE Messages( - создаем таблицу их сообщений
+id INT AUTO_INCREMENT,
+message VARCHAR(500),
+user_id INT,           - это поле будет Foreign Key
+PRIMARY KEY (id),
+CONSTRAINT user_id     - здесь начинается привязка
+FOREIGN KEY(user_id)   - это поле с нынешней таблицы
+REFERENCES Users(id)   - привязать к полю другой таблицы
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT SELECT
+
+Это когда мы вставляем в таблицу через SELECT, очень удобно и быстро
+
+INSERT INTO PurchaseList(student_name, course_name, price, subscription_date) SELECT Students.name AS student_name, Courses.name AS course_name, Courses.price AS price, Subscriptions.subscription_date AS subscription_date FROM Courses JOIN Subscriptions ON Subscriptions.course_id = Courses.id JOIN Students ON Subscriptions.student_id = Students.id;
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ALTER TABLE, изменить таблицу
+
+ALTER TABLE Users         - добавить в таблицу Users колонку(column) с Email'ом
+ADD Email varchar(255);
+
+
+
+ALTER TABLE Users   - удалить из таблицы колонку(column) age
+DROP COLUMN age;
+
+
+
+ALTER TABLE Users                - изменить тип данных конолнки name на VARCHAR(500)
+MODIFY COLUMN name VARCHAR(500);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Выборка данных
+
+Каждое выражение должно содержать SELECT FROM, остальные опциональны
+
+Важно использовать именно такую структуру:       SELECT FROM -> WHERE -> ORDER BY -> LIMIT
+
+
+SELECT name, type FROM Courses; - я выбираю имя и тип из таблицы Courses
+
+SELECT * FROM STUDENTS; - выбрать ВСЮ инфу обо ВСЕХ студентах
+
+
+
+
+
+
+
+
+
+
+
+
+Фильтрация
+
+WHERE - клучевая фраза в фильтрации запроса
+
+
+
+
+
+SELECT * FROM Courses WHERE type="PROGRAMMING"; - выбрать все поля в курсах, у которых тип "Programming"
+
+SELECT name FROM Students WHERE age > 35; - выбрать всех студентов(имена), у которых возраст больше 35 лет
+
+SELECT * FROM Teachers WHERE salary > 20000; - выбрать все поля у учителей, зп которых выше 20 тыс
+
+
+Несколько условий выборки
+
+SELECT * FROM Teachers WHERE salary > 20000 AND age < 30; - выбрать все поля у учителей, зп которых выше 20 тыс, и возраст меньше 30 лет
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Сортировка выборки
+
+ORDER BY - отсортировать по какому то полю
+
+DESC - descending, отсортировать по убыванию
+
+ASC - ascending, отсортировать по возрастанию
+
+
+
+SELECT * Students ORDER BY age; - выбрать всех студентов отсортированных по возрасту
+
+SELECT * Students ORDER BY age DESC; - выбрать всех студентов отсортированных по убыванию возраста
+
+
+Множественная сортировка
+
+SELECT * FROM Teachers ORDER BY age DESC, salary ASC; - отсортировать всех учителей сначала по возрасту(по убыванию), а те у кого один возраст - по зарплате(по возрастанию)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LIMIT - Ограничение числа выборки записей
+
+LIMIT - ключевое слово
+
+
+
+
+SELECT * FROM Teachers ORDER BY age LIMIT 3; - показать топ 3 молодых учителей по возрасту
+
+
+
+БЛИЦ
+
+SELECT names, duration, students_count FROM Courses WHERE type="PROGRAMMING" ORDER BY price LIMIT 3; - из таблицы Courses выбрать только 3 самых дешевых курса типа "Programming", и показать название курса, длительности и кол-во студентов на этом курсе
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Выбор только УНИКАЛЬНЫХ значений
+
+DISTINCT - выбрать только уникальные значения, ставится после SELECT, перед именем поля
+
+
+
+SELECT type FROM Courses; - выдаст большой список одинаковых типов, потому что там много курсов и для каждого проставлен тип
+
+SELECT DISTINCT type FROM Courses; - выдаст только уникальные типы, там будет всего 4 (Программирование, Дизайн, Маркетинг, Менеджмент)
+
+SELECT DISTINCT type, duration FROM Courses; - выбрать уникальные сочетания типа И длительности 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Обьединение таблиц в одну выборку
+
+UNION - ключевое слово "обьединить"
+
+Чтобы он работал, в обоих запросах должно быть ОБЯЗАТЕЛЬНО одинаковое кол-во выбираемых колонок
+
+По умолчанию выкидывает дубликаты(DISTINCT)
+
+UNION ALL - чтобы отключить выборку только уникальных элементов (NOT DISTINCT)
+
+(сложная выборка) UNION (сложная выборка) - выборки заносим в скобки () 
+
+
+
+
+
+
+SELECT name FROM Students UNION SELECT name FROM Teachers; - список из имен ВСЕХ студентов И ВСЕХ преподавателей без дубликатов(если они есть)
+
+SELECT age, name FROM Teachers UNION ALL SELECT age, name FROM Students; - выбрать имена и возраст всех студентов и учителей, без выкидывания дубликатов(если вдруг один человек и студенто и учитель)
+
+(SELECT name FROM Students ORDER BY age LIMIT 3) UNION ALL (SELECT name FROM Teachers ORDER BY age DESC LIMIT 3) - Если обьединяем сложные выборки заносим их в скобки
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Соединение таблиц по связанным полям
+
+Отличие от UNION - UNION просто визуально обьединяет колонки в один лист, а JOIN соединяет именно по информации. Можно думать так 
+"Если мне в SELECT нужно вывести значения из нескольких таблиц и они связаны, то использую JOIN"
+
+
+JOIN - ключевое слово
+
+
+
+
+SELECT price, Courses.name, Teachers.name         - здесь есть поля одновременно из таблицы Courses и Teachers
+FROM Teachers                                     - выбираем таблицу Teachers
+JOIN Courses ON Courses.teacher_id = Teachers.id  - подсоединяем Courses по соотношению teacher_id
+ORDER BY price;                                   - вывести цену курса, имя курса и имя учителя который ведет(Courses и Teachers связаны полем teacher_id)
+
+                                             
+
+
+
+SELECT Courses.name, Students.name, Subscriptions.subscription_date   - выбираем поля
+FROM Courses                                                          - выбираем основную таблицу
+JOIN Subscriptions ON Courses.id = Subscriptions.course_id            - подсоединяем Подписки по соотношению id курса
+JOIN Students ON Students.id = Subscriptions.student_id               - и студентов по id студента
+WHERE type="DESIGN"                                                   - выбираем только курсы по дизайну
+ORDER BY subscription_date                                            - сортируем по дате подписки
+LIMIT 3;                                                              - вывести топ 3 Имя курса, Имя студента и дату подписки, отсортированные по дате подписки
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Подзапросы
+
+По сути это похоже на JOIN, только JOIN выбирает из двух таблиц связанных хотябы одним общим полем, а подзапросы используют когда между таблицами нет связи
+
+Подзапрос работает по принципу цикла for(), для каждого поля из таблицы Students будет проверяться подзапрос ()
+
+
+SELECT age,name,                                                                   - показать возраст и имя студента
+(SELECT COUNT(*) FROM Teachers WHERE Teachers.age > Students.age) as older_count   - для каждого элемента(студента) из Students будет проверяться это условие
+FROM Students                                                                      - выбираем age и name именно из Students
+ORDER BY older_count;                                                              - узнать сколько преподователей старше каждого студента в списке
+
+
+SELECT name,price,(SELECT avg(price) from Courses) from Courses;                   - показать имя и цену на курс, а потом показать среднюю цену курса вообще
+
+
+Подзапрос в SELECT должен возвращать 1 ряд и 1 колонку.
+(SELECT Teachers.name FROM Teachers WHERE Teachers.age > Students.age limit 1) - даже так можно
+(SELECT count(*) FROM Teachers WHERE Teachers.age > Students.age)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Изменение названия колонки
+
+SELECT salary * 12 AS annual_salary FROM Teachers; - вывести зарплаты умноженные на 12(годовая) и названю ее annual_salary
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Математические выражения AVG, MAX и тд
+
+Это всё агрегирующие функции - в конце возвращают всегда одну строку
+
+Их можно группировать и проводить агрегацию по отдельным группам через GROUP BY (об этом ниже в Агрегации)
+
+AVG - среднее
+
+MAX - максимальное
+
+MIN - минимальное
+
+SUM - сумма всех значений
+
+COUNT - посчитать кол-во строк или чего либо
+
+
+
+
+
+
+
+SELECT AVG(age) as average_age FROM Teachers WHERE salary > 10000; -  показать ср возраст среди учителей у кого зп больше 10 тыс и назвать колонку average_age
+
+SELECT SUM(price) as price_of_all_courses FROM Courses; - сумму этих полей, здесь сумма цен всех курсов
+
+SELECT SUM(duration * 60) as duration_of_all_courses FROM Courses; -  длительность всех курсов в минутах
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Разница дат, подсчет дней, даты, работа с датами
+
+DATEDIFF(date1, date2) - ключевое слово, считает разницу в датах по дням 
+
+SELECT DATEDIFF(NOW(), registration_date), name FROM Students; - вывести как много дней прошло с даты регистрации студента
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+IF условный оператор
+
+IF(age > 40, "OLD", "YOUNG") - создает колонку, если условие выполняет пишет туда первое значение, если нет то второе
+
+SELECT name, IF (students_count > 500, "FULL", "NOT FULL") FROM Courses; - 2 колонки: имя, вторая создает колонку по названию условия и выводит FULL если условие выполняется и NOT FULL если не выполняется
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concat вывод текста, работа с текстом
+
+CONCAT() - создать колонку, где по JAVA принципам будут склеены строки с переменными
+
+SELECT CONCAT("Buy new course ", name, " it's only ", price, " rub") AS Advertisment FROM Courses; - создать колонку, назвать ее Advertisment и вывести в неё текст который внутри
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Агрегация данных, агрегирующие функции
+
+Агрегация - обьединение нескольких элементов в один
+
+Агрегирующая функция - ф-я которая применяется не к каждой строчке в выборке, а ко всей выборке целиком
+
+В результате нам возвращается одна строка, вне зависимости сколько строк мы выбирали
+
+Функции:
+
+COUNT
+AVG
+MAX
+MIN
+SUM
+
+
+
+
+
+
+
+
+
+
+
+
+Агрегация среди групп данных
+
+GROUP BY - Группирует колонки по выбранному признаку и считает агрегацию в этих группах отдельнр Используется только при агрегации с AVG, MAX и тд 
+
+Читать так: сначала SQL собирает группы, а только потом делает всю агрегацию в каждой отдельной группе
+
+SELECT AVG(price) FROM ... GROUP BY ... ORDER BY
+
+
+
+
+
+
+SELECT type, AVG(price) FROM Courses GROUP BY type; - сгруппировать все курсы по типу(Маркетинг и тд) и вывести тип курса и среднюю цену за этот тип курса 
+
+
+SELECT Teachers.name, COUNT(*)                     - колонки имя учителя, кол-во курсов (изначально считает кол-во курсов вообще)
+FROM Courses                                       - из Курсов
+JOIN Teachers ON Teachers.id = Courses.teacher_id  - здесь фильтруем COUNT(*) соотнося учителей только с курсами которые они ведут
+GROUP BY Teachers.id                               - группируем курсы по учителю, если один учитель веден неск курсов, они будут посчитаны через COUNT(*)
+ORDER BY COUNT(*) DESC LIMIT 5;                    - вывести то, сколько курсов ведут преподаватели
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Работа с датами, дата, DATE
+
+TIMEDIFF(date1, date2) - показать разницу между 2 датами в секундах
+
+TIMESTAMPDIFF(MONTH, date1, date2) - показать разницу двух дат в месяцах(можно также DAY, YEAR, HOUR и тд)
+
+MONTH(date) - извлечь из строки типа DATE месяц
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+среда
+10:00
+git базы данных и ооп
+
+Сделать так, что я программирование просто люблю, попробовал и понравилось, а не то что хочу бабки
+CI почитать что такое
+Development lifecycle, все начинается с требования, потом код ревью, quality assurance(тестировщики),
+Требование от бизнеса, разработчики пишут код, код ревью, QA(тесты), одобрение, UAT user acceptance testing
+
+Знание ролей в scrum
+В scrum история это требования к функциональности
+Если просят срочно изменить что-то во время спринта, то сначала определить приоритет, если она супер важна, то убрать что-то с текущего спринта, но по правильному учесть это в след спринт 
+Тесты и типы тестов 
+Salesforce чтобы поднять продажи и улучшить работу с клиентами, много статистика, анализ данных, продаж и тд
+Salesforce это платформа, использующая язык APEX
+CSV
+parent-child это как иерархия внутри системы, то есть если мы продаем Кока-коле сахар и краситель, то у нас будет иерархия Кола вверху, снизу сахар и краситель.
+я не боюсь APEX, я знаю что он похож на Java, и очень много ресурсов по этой теме и я 
+
+Что вам нравится в работе в Aquiva labs?
+Что делать как новичок? Какие навыки самые важные вначала?
+По вашему что интересней декларативное п
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UNION
+Обьеденить Колонки из разных Таблиц в одну Колонку, просто кинуть всё туда в кучу.
+UNION убирает дубликаты, UNION ALL не убирает.
+1) Должно обьединяться одинаковое кол-во колонок
+2) Тип данных должен быть одинаковым
+
+
+SELECT...
+FROM...
+WHERE...
+ORDER BY...
+LIMIT...
+
+ SELECT (DISTINCT, CONCAT(), IF(), SUM())...
+ FROM...
+JOIN (LEFT JOIN, RIGHT JOIN)...
+ WHERE...(AND, OR, (NOT) IN, (NOT) LIKE)...
+GROUP BY...
+HAVING...exp1 > 10 (OR, AND) exp2 IS NULL(IS NOT NULL)
+ ORDER BY...exp1(DESC, ASC), exp2(DESC, ASC)
+ LIMIT...(3, 10, 1000)
+
+
+
+
+
+
+
+WHERE age IN (15, 25, 30) - фильтровать по значения указанным внутри IN
+WHERE mark.name LIKE "cor%" - выбрать машины, имя у которых начинается на "cor", % это wild card, то есть мы может матчить короче
+
+
+
+
+
+FOREIGN KEY - нужен чтобы определить явное отношение между таблицами, то есть если у таблицы колонка помечена FK, 
+              то мы не можем в эту колонку добавить значение, которого нет в таблице от которого мы берем этот FK.
+
+PRIMARY KEY - не обязателен, но он гаранитрует уникальность значений в колонке.
+
+
+
+Мы можем JOIN таблицы, даже когда между ними нет FOREIGN KEY отношений, главное чтобы у колонок совпадали тип данных.
+Однако даже если JOIN по типа INT - DECIMAL, или даже INT - VARCHAR, то поля будут конвертированы в тип друг друга, и мы сможем сделать JOIN.
+НО, если в таблице с VARCHAR колонкой в ней будет реально текст "hey", вместо только чисел("14","2"), то будет ошибка.
+
+
+
+
+
+
+
+
+INDEX
+Индекс позволяет нам ускорить процессы поиска и фильтрации в указанных колонках.
+Ускоряется JOIN, WHERE, тк там идет поиск по Колонкам.
+Без Индекса БД перебирает подряд все Ряды, однако с Индексом поиск очень сильно ускоряется.
+Однако Индекс замедляет работу БД (добавление элементов особенно), тк при каждой модификации происходит дополнительная работа.
+
+(INDEX, UNIQUE, FULLTEXT)
+INDEX - НЕ гарантирует уникальность Индекса.
+UNIQUE - гарантирует уникальность Индекса.
+FULLTEXT - создан для большого текста, НЕ уникальный.
+PRIMARY KEY - гарантирует уникальность и NOT NULL, может быть только 1 primary key
+
+Индекс можно добавлять при создании Таблицы, либо позже:
+CREATE INDEX idx_manufacturer_name ON manufacturer (name)
+
+Можно делать Композитный Индекс
+CREATE INDEX idx_manufacturer_name ON manufacturer (name, email, age)
+
+Тогда идексы будут для сочетаний:
+(name)
+(name, email)
+(name, email, age)
+
+
+
+
+
+
+
+
+
+SUBQUERY, Подзапросы
+Подзапрос по сути возвращает: просто значение, лист значений, целую таблицу.
+Можно использовать в:
+1) SELECT ()
+2) WHERE (price > (), IN (), )
+3) FROM () as (newName)
+4) JOIN () as (newName) 
+
+
+
+
+select y.shopName, y.markName, y.sum, concat(y.shopName," has ", y.markName," quantity=",y.sum) - обычно мы не можем использовать здесь CONCAT на аггрегированную колонку SUM, 
+from(                                                                                             тк аггрегация происходит после SELECT и потом CONCAT, однако с Подзапросом можно без проблем
+select shop.name as shopName, mark.name as markName, sum(stock.quantity) as sum
+from shop
+join stock on stock.shopID = shop.id
+join mark on mark.id = stock.markID
+join manufacturer on manufacturer.id = mark.manufacturerID
+group by shop.id, mark.name
+) as y
+
+
+
+
+
+
+Модификации
+
+Rows:
+INSERT INTO Students (name, age, id) VALUES ("Egor", 25, 101)
+DELETE FROM Users WHERE id = 24
+UPDATE Students SET name = "Misha" WHERE id = 101
+
+Tables:
+CREATE TABLE Users(...)
+DROP TABLE Courses
+ALTER TABLE Users       
+  ADD Email varchar(255)
+  DROP COLUMN age   
+  MODIFY COLUMN name VARCHAR(500)
+  RENAME COLUMN birthDate TO birth_date;
+
+Databases:
+CREATE DATABASE name
+DROP DATABASE name
+SHOW DATABASES
+USE DATABASE name 
+
+
+
+
+
+
+Relationships
+Отношения таблиц бывают:
+1) One-to-One  - допустим есть таблица Users и Contacts, где Колонки (email, phone, skype, user_ID), здесь вся инфа о контактах юзера заключена в один Ряд, а значит:
+   У Одного Юзера может быть Один Контакт.
+
+2) One-to-Many - допустим есть таблица Users и Contacts, где Колонки (contact, user_ID), здесь поле контакт может содержать ОДИН произвольный контакт, 
+   а значит может быть отдельный Ряд для каждого контакта, но для того же Юзера, а значит:
+   У Одного Юзера может быть Множество Контактов.
+
+3) Many-to-Many - чаще всего обьединяются отдельной таблицей.
+   Допустим есть таблицы Users, Services (Netflix, Yandex), Subscriptions (user_id, service_id), в такой таблице:
+   Один Юзер может быть подписан на Множество Сервисов, но и Один Сервис может иметь Множество подписавшихся Юзеров.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

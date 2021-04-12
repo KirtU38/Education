@@ -8,7 +8,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-import ru.beloshitsky.telegrambot.advices.annotations.LogArgs;
 import ru.beloshitsky.telegrambot.configuration.BotConfig;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ public class AvitoHTMLParser {
   BotConfig botConfig;
   AvitoTagsParser tagsParser;
 
-  @LogArgs
   public List<Double> getListOfPricesFromURL(String URLCityPageProduct) {
     Document htmlDoc = getHTML(URLCityPageProduct);
     if (htmlDoc == null) {
@@ -48,6 +46,7 @@ public class AvitoHTMLParser {
   }
 
   private Document getHTML(String URL) {
+    log.info("URL: {}", URL);
     Document htmlDoc;
     try {
       htmlDoc =
@@ -55,7 +54,7 @@ public class AvitoHTMLParser {
               .userAgent(
                   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                       + "(KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36")
-              .referrer("http://www.google.com")
+              .referrer("https://www.google.com")
               .get();
     } catch (IOException e) {
       log.error("Couldn't fetch the URL");
