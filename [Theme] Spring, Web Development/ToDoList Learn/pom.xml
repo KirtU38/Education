@@ -41,7 +41,7 @@
             <!--Это собственно сам Spring boot-->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.1.4.RELEASE</version>
+            <version>2.5.12</version>
         </dependency>
         <dependency>
             <!--Для работы с базами данных, позволяет extend JpaRepository-->
